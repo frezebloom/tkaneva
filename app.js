@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const staticAsset = require("static-asset");
 
+const routes = require("./routes");
 const config = require("./config");
 
 //express
@@ -15,9 +16,7 @@ app.use(bodyParser.json());
 app.use(staticAsset(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.render("index", { title: "Hey", message: "Hello there!" });
-});
+app.use("/", routes.products);
 
 app.listen(config.PORT, () =>
   console.log(`Start server on port ${config.PORT}`)
