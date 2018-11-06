@@ -1,0 +1,110 @@
+.header {
+  position: fixed;
+  user-select: none;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: $headerHeight;
+  font-size: 15px;
+  background-color: #364a5d;
+  z-index: 888;
+  white-space: nowrap;
+  .container {
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $freeSpace 0 $freeSpace;
+
+    .header-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-logo {
+      display: flex;
+      font-size: 15px;
+      font-family: "Raleway", sans-serif;
+      font-weight: bold;
+      color: #f5f5f5;
+    }
+    .header-contact-phone {
+      margin-left: $freeSpace + 25;
+      font-size: 16px;
+      color: #d8d8d8;
+      font-weight: bold;
+    }
+
+    .header-menu {
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      li {
+        margin: 10px;
+        white-space: pre-line;
+      }
+      a {
+        text-decoration: none;
+        color: #f5f5f5;
+        font-family: "Raleway", sans-serif;
+      }
+      a:hover {
+        color: #8d96b2;
+      }
+    }
+    .header-search {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: $whiteColor;
+
+      input {
+        outline: none;
+        border: 0;
+        width: 175px;
+      }
+      img {
+        margin-left: 10px;
+        width: 45px;
+        height: 21px;
+      }
+    }
+
+    .header-search-field {
+      font-size: 14px;
+      border: none;
+      padding: 5px 5px 5px 5px;
+      color: #353c44;
+    }
+
+    .header-search-button {
+      height: 36px;
+      max-width: 100px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+      background: #3f9e65;
+      color: $whiteColor;
+      transition: 0.3s ease-out;
+    }
+
+    .header-search-button:hover {
+      background: #54b47e;
+    }
+
+    .header-cart-link {
+      background-color: #495b6c;
+      color: $whiteColor;
+      padding: $freeSpace - 1;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .header-shopping-cart-button img {
+      cursor: pointer;
+      height: 30px;
+    }
+  }
+}
