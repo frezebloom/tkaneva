@@ -1,3 +1,4 @@
-import item from "./test";
+import Minicart from "./minicart";
 
-console.log(item);
+const shoping = new Minicart();
+shoping.open();

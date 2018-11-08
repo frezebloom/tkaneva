@@ -6,10 +6,10 @@
   z-index: 999;
   width: 300px;
   height: 100%;
-  box-shadow: inset 3px 0 9px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: inset 3px 0 9px 0 #0000001f;
   background-color: white;
   transition: margin-left 0.5s, margin-right 0.5s;
-  .minicart_header {
+  .minicart-header {
     background-color: #495b6c;
     color: white;
     text-align: center;
