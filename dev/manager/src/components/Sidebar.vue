@@ -2,8 +2,10 @@
   <div class="sidebar">
     <ul class="sidebar-menu">
       <li class="sidebar-menu-header">Навигация</li>
-      <li class="sidebar-menu-category">Товары</li>
-        <ul class="sidebar-menu-subcategory">
+      <li class="sidebar-menu-category" @click="open">Товары</li> 
+        <ul 
+          v-bind:class="{ active: isActive }" 
+          class="sidebar-menu-subcategory">
           <li><a href="#">Добавить</a></li>
           <li><a href="#">Редактировать</a></li>
           <li><a href="#">Архив</a></li>
@@ -16,12 +18,23 @@
 </template>
 <script>
 export default {
-  name: "Sidebar"
+  name: "Sidebar",
+  data: () => {
+    return {
+      isActive: false
+    };
+  },
+  methods: {
+    open() {
+      this.isActive = !this.isActive;
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 @import "../styles/variables.scss";
 .sidebar {
+  display: flex;
   background-color: $colorBlack;
   padding-bottom: 10px;
   width: 230px;
@@ -37,11 +50,28 @@ export default {
 }
 .sidebar-menu-category {
   color: #b8c7ce;
+  padding: 12px 55px 12px 15px;
+  display: block;
 }
 .sidebar-menu-subcategory {
-  font-size: 12px;
+  display: block;
+  // line-height: 0;
+  overflow: hidden;
   background-color: #2c3b41;
+  max-height: 0px;
+  transition: max-height 0.5s;
+}
+.sidebar-menu-subcategory a {
+  padding: 5px 5px 5px 15px;
+  display: block;
+  font-size: 14px;
   color: #b8c7ce;
+}
+.sidebar-menu-subcategory a:before {
+  content: "⚬ ";
+}
+.active {
+  max-height: 100%;
 }
 </style>
 
