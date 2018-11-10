@@ -3,8 +3,14 @@
     <ul class="sidebar-menu">
       <li class="sidebar-menu-header">Навигация</li>
       <li class="sidebar-menu-category">Товары</li>
-      <li class="sidebar-menu-category">Пользователи</li>
+        <ul class="sidebar-menu-subcategory">
+          <li><a href="#">Добавить</a></li>
+          <li><a href="#">Редактировать</a></li>
+          <li><a href="#">Архив</a></li>
+        </ul>
       <li class="sidebar-menu-category">Заказы</li>
+      <li class="sidebar-menu-category">Пользователи</li>
+      
     </ul>
   </div>
 </template>
@@ -16,7 +22,6 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/variables.scss";
 .sidebar {
-  display: flex;
   background-color: $colorBlack;
   padding-bottom: 10px;
   width: 230px;
@@ -31,6 +36,11 @@ export default {
   padding: 8px 8px 8px 15px;
 }
 .sidebar-menu-category {
+  color: #b8c7ce;
+}
+.sidebar-menu-subcategory {
+  font-size: 12px;
+  background-color: #2c3b41;
   color: #b8c7ce;
 }
 </style>
