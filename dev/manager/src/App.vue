@@ -20,5 +20,6 @@ export default {
 @import "./styles/reset.scss";
 #app {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #fcf0f5;
 }
 </style>
