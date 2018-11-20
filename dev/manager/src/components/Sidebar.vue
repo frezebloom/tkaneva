@@ -6,7 +6,13 @@
         <ul 
           v-bind:class="{ active: isActive }" 
           class="sidebar-menu-subcategory">
-          <li><a href="#">Добавить</a></li>
+    
+            <li>
+              <a href="#">
+                <router-link to="/newproduct">Добавить</router-link>
+              </a>
+            </li>
+         
           <li><a href="#">Редактировать</a></li>
           <li><a href="#">Архив</a></li>
         </ul>
