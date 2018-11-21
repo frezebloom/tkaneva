@@ -1,8 +1,15 @@
 <template>
   <div class="newproduct">
-    <div class="newproduct-header">
-      <h3>Добавить</h3>
-    </div>
-    
+    <Form />
   </div>
 </template>
+<script>
+import Form from "@/components/Form.vue";
+
+export default {
+  name: "App",
+  components: {
+    Form
+  }
+};
+</script>

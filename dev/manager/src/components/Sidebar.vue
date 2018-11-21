@@ -8,10 +8,9 @@
           class="sidebar-menu-subcategory">
     
             <li>
-              <a href="#">
                 <router-link to="/newproduct">Добавить</router-link>
-              </a>
             </li>
+   
          
           <li><a href="#">Редактировать</a></li>
           <li><a href="#">Архив</a></li>
