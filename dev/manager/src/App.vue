@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <Header />
+    <Header/>
     <div class="wrapper">
-      <Sidebar />
-      <Content />
+      <Sidebar/>
+      <Content/>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
 @import "./styles/reset.scss";
 #app {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #fcf0f5;
+  background-color: #ecf0f5;
 }
 .wrapper {
   display: flex;

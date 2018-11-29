@@ -1,8 +1,6 @@
 <template>
   <header class="header">
-    <div class="header-logo">
-      System Manager
-    </div>
+    <div class="header-logo">System Manager</div>
   </header>
 </template>
 <script>
