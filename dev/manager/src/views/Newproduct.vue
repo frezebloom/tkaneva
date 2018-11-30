@@ -9,9 +9,9 @@
         { name: 'Состав', type: 'text' },
         { name: 'Производитель', type: 'select' },
         { name: 'Цвет', type: 'select' },
-        { name: 'Изображения', type: 'file' },
         { name: 'Цена', type: 'text' },
         { name: 'Скидка', type: 'text' },
+        { name: 'Изображения', type: 'file' },
         { name: 'В наличии', type: 'checkbox' },
       ]"
     />
@@ -28,13 +28,6 @@ export default {
 };
 </script>
 <style lang="scss">
-h3 {
-  font-weight: 500;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-.newproduct {
-  margin: 20px;
-}
+@import "../styles/typography.scss";
 </style>
 

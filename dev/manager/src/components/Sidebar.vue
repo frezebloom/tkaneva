@@ -2,22 +2,23 @@
   <div class="sidebar">
     <ul class="sidebar-menu">
       <li class="sidebar-menu-header">Навигация</li>
-      <li class="sidebar-menu-category" @click="open">Товары</li> 
-        <ul 
-          v-bind:class="{ active: isActive }" 
-          class="sidebar-menu-subcategory">
-    
-            <li>
-                <router-link to="/newproduct">Добавить</router-link>
-            </li>
-   
-         
-          <li><a href="#">Редактировать</a></li>
-          <li><a href="#">Архив</a></li>
-        </ul>
+      <li class="sidebar-menu-category" @click="open">Продукты</li>
+      <ul v-bind:class="{ active: isActive }" class="sidebar-menu-subcategory">
+        <li>
+          <router-link to="/newproduct">Товары</router-link>
+        </li>
+        <li>
+          <router-link to="/category">Категории</router-link>
+        </li>
+        <li>
+          <a href="#">Производитель</a>
+        </li>
+        <li>
+          <a href="#">Цвет</a>
+        </li>
+      </ul>
       <li class="sidebar-menu-category">Заказы</li>
       <li class="sidebar-menu-category">Пользователи</li>
-      
     </ul>
   </div>
 </template>

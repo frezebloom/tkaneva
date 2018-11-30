@@ -34,9 +34,13 @@ label {
   background-color: $colorWhite;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
+.product-form-wrapper {
+  width: 50%;
+  margin-bottom: 10px;
+}
 .product-form-input {
   display: block;
-  width: 50%;
+  width: 90%;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
