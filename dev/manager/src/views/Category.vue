@@ -1,7 +1,7 @@
 <template>
   <div class="category">
     <h3>Категории</h3>
-    <Table/>
+    <Table />
   </div>
 </template>
 <script>

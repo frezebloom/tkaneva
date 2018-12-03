@@ -5,6 +5,7 @@
 </template>
 <style lang="scss" scoped>
 .content {
+  width: 100%;
   margin: 20px;
 }
 </style>

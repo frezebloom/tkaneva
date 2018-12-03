@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="table-wrapper">
     <table>
       <tr>
         <th>№</th>
@@ -12,6 +12,18 @@
         <td>Щелк</td>
         <td>Smith</td>
         <td>50</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Вязь</td>
+        <td>Jackson</td>
+        <td>94</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Вязь</td>
+        <td>Jackson</td>
+        <td>94</td>
       </tr>
       <tr>
         <td>2</td>
