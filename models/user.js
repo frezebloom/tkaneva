@@ -30,12 +30,12 @@ module.exports = function(sequelize, Sequelize) {
     password: {
       type: Sequelize.STRING,
       allowNull: false
-    }
+    },
 
-    // status: {
-    //   type: Sequelize.ENUM("active", "inactive"),
-    //   defaultValue: "active"
-    // }
+    status: {
+      type: Sequelize.ENUM("active", "inactive"),
+      defaultValue: "active"
+    }
   });
 
   return User;

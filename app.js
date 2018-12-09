@@ -4,15 +4,16 @@ const path = require("path");
 const staticAsset = require("static-asset");
 
 const models = require("./models");
-const routes = require("./routes");
+// const routes = require("./routes");
 const config = require("./config");
 
-//initilization
+//Initilization
 const app = express();
+const router = express.Router();
 const passport = require("passport");
 const session = require("express-session");
 
-//sets and uses
+//Sets and uses
 app.use(
   session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
 );
@@ -35,8 +36,10 @@ models.sequelize
     console.log(err, "Something went wrong with the Database Update!");
   });
 
-app.use("/", routes.products);
+//Routes
+require("./routes/products.js")(router);
 
+//Startin server
 app.listen(config.PORT, () =>
   console.log(`Start server on port ${config.PORT}`)
 );
