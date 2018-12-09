@@ -3,13 +3,12 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const staticAsset = require("static-asset");
 
-const models = require("./models");
-// const routes = require("./routes");
 const config = require("./config");
+const models = require("./models");
+const routes = require("./routes");
 
 //Initilization
 const app = express();
-const router = express.Router();
 const passport = require("passport");
 const session = require("express-session");
 
@@ -37,7 +36,7 @@ models.sequelize
   });
 
 //Routes
-require("./routes/products.js")(router);
+app.use("/", routes.products);
 
 //Startin server
 app.listen(config.PORT, () =>
