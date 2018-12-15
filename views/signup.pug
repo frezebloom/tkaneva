@@ -1,0 +1,19 @@
+include includes/header.pug
+include includes/minicart.pug
+div(class="main")
+  div(class="container")
+    div(class="content")
+      form(method='POST' name="signup" action='/signup')
+        div.form-group
+          label(for='email') Email Address:
+          input(type='email', name='email' placeholder='name@email.com')
+        div.form-group
+          label(for='firstname') Firstname:
+          input(type='text', name='firstname')
+        div.form-group
+          label(for='lastname') Lastname:
+          input(type='text', name='lastname')
+        div.form-group
+          label(for='password') Password:
+          input(type='password', name='password')
+  include includes/footer.pug

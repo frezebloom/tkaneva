@@ -1,6 +1,7 @@
 const products = require("./products");
-const manager = require("./products");
+const signup = require("./signup");
 
 module.exports = {
-  products
+  products,
+  signup
 };

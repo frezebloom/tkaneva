@@ -6,7 +6,7 @@ const staticAsset = require("static-asset");
 const config = require("./config");
 const models = require("./models");
 const routes = require("./routes");
-
+// const signup = require("./routes/signup");
 //Initilization
 const app = express();
 const passport = require("passport");
@@ -37,8 +37,9 @@ models.sequelize
 
 //Routes
 app.use("/", routes.products);
-
+app.use("/", routes.signup);
 //Startin server
+
 app.listen(config.PORT, () =>
   console.log(`Start server on port ${config.PORT}`)
 );
