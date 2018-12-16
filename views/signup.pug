@@ -1,8 +1,8 @@
 include includes/header.pug
 include includes/minicart.pug
-div(class="main")
-  div(class="container")
-    div(class="content")
+div.main
+  div.container
+    div.content
       form(method='POST' name="signup" action='/signup')
         div.form-group
           label(for='email') Email Address:
@@ -16,4 +16,6 @@ div(class="main")
         div.form-group
           label(for='password') Password:
           input(type='password', name='password')
+        div.form-group
+          input(type="submit", value="регистрация")
   include includes/footer.pug
