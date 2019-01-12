@@ -5,7 +5,8 @@
     "database": "tkaneva",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "logging": true
   },
   "test": {
     "username": "root",
@@ -13,7 +14,8 @@
     "database": "fasttrack",
     "host": "localhost",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "logging": true
   },
   "production": {
     "username": "root",
@@ -24,6 +26,7 @@
     "define": {
       "timestamps": false
     },
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "logging": false
   }
 }
