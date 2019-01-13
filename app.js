@@ -36,10 +36,11 @@ models.sequelize
   });
 
 //Routes
+app.use("/", routes.api);
 app.use("/", routes.products);
 app.use("/", routes.signup);
-//Startin server
 
+//Startin server
 app.listen(config.PORT, () =>
   console.log(`Start server on port ${config.PORT}`)
 );
