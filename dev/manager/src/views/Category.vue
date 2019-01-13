@@ -1,7 +1,13 @@
 <template>
   <div class="category">
-    <h3>Категории</h3>
-    <Table />
+    <div class="category-header">
+      <h3>Категории</h3>
+      <div class="category-header-btn-group">
+        <div class="btn-add">+</div>
+        <div class="btn-delete">-</div>
+      </div>
+    </div>
+    <Table/>
   </div>
 </template>
 <script>

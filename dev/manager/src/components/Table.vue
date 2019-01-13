@@ -11,25 +11,33 @@
         <td>1</td>
         <td>Щелк</td>
         <td>Smith</td>
-        <td>50</td>
+        <td>
+          <input type="checkbox">
+        </td>
       </tr>
       <tr>
         <td>2</td>
         <td>Вязь</td>
         <td>Jackson</td>
-        <td>94</td>
+        <td>
+          <input type="checkbox">
+        </td>
       </tr>
       <tr>
         <td>2</td>
         <td>Вязь</td>
         <td>Jackson</td>
-        <td>94</td>
+        <td>
+          <input type="checkbox">
+        </td>
       </tr>
       <tr>
         <td>2</td>
         <td>Вязь</td>
         <td>Jackson</td>
-        <td>94</td>
+        <td>
+          <input type="checkbox">
+        </td>
       </tr>
     </table>
   </div>
