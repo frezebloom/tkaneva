@@ -3,7 +3,7 @@ module.exports = {
     firstname: "Mikhail",
     lastname: "Yarema"
   },
-  render: function(req, res) {
-    res.send(this.user);
+  getUser: function(req, res) {
+    res.json(req.body.id);
   }
 };
