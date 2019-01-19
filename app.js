@@ -2,23 +2,19 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const staticAsset = require("static-asset");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
 const config = require("./config");
 const models = require("./models");
 const routes = require("./routes");
-// const signup = require("./routes/signup");
+const jwtStrategry = require("./strategies/jwt");
+
 //Initilization
 const app = express();
-const passport = require("passport");
-const session = require("express-session");
+passport.use(jwtStrategry);
 
 //Sets and uses
-app.use(
-  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.set("view engine", "pug");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -40,6 +36,13 @@ app.use("/", routes.api);
 app.use("/", routes.products);
 app.use("/", routes.signup);
 
+app.get(
+  "/protected",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    return res.status(200).send("YAY! this is a protected Route");
+  }
+);
 //Startin server
 app.listen(config.PORT, () =>
   console.log(`Start server on port ${config.PORT}`)
