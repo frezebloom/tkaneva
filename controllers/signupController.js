@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const config = require("../config/config");
 
 module.exports = {
   tokenList: {},
@@ -9,19 +10,18 @@ module.exports = {
       password: data.password
     };
     // do the database authentication here, with user name and password combination.
-    const token = jwt.sign(user, config.secret, {
-      expiresIn: config.tokenLife
+    const token = jwt.sign(user, config.SECRET_KEY, {
+      expiresIn: config.TOKEN_LIFE
     });
-    const refreshToken = jwt.sign(user, config.refreshTokenSecret, {
-      expiresIn: config.refreshTokenLife
+    const refreshToken = jwt.sign(user, config.REFRESH_TOKEN_SECRET, {
+      expiresIn: config.REFRESH_TOKEN_LIFE
     });
     const response = {
       status: "Logged in",
       token: token,
       refreshToken: refreshToken
     };
-    tokenList[refreshToken] = response;
+    this.tokenList[refreshToken] = response;
     res.status(200).json(response);
-    res.render("signup");
   }
 };

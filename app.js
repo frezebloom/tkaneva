@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const staticAsset = require("static-asset");
 
-const config = require("./config");
+const config = require("./config/config");
 const models = require("./models");
 const routes = require("./routes");
 

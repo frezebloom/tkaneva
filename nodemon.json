@@ -5,6 +5,8 @@
     "PORT": 3000,
     "SECRET_KEY": "BLACK_BURGER",
     "REFRESH_TOKEN_SECRET": "WHITE_BURGER",
+    "TOKEN_LIFE": 300,
+    "REFRESH_TOKEN_LIFE": 86400,
     "DB_NAME": "tkaneva",
     "DB_USERNAME": "juxx",
     "DB_PASSWORD": "12345678"

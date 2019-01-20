@@ -2,7 +2,7 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 
-const config = require("../config");
+const config = require("../config/config");
 
 settings = {
   host: "localhost",
