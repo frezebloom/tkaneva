@@ -23,5 +23,27 @@ module.exports = {
     };
     this.tokenList[refreshToken] = response;
     res.status(200).json(response);
+  },
+  token: (req, res) => {
+    // refresh the damn token
+    const data = req.body;
+    // if refresh token exists
+    if (data.refreshToken.indexOf(this.tokenList) !== -1) {
+      const user = {
+        email: data.email,
+        name: data.name
+      };
+      const token = jwt.sign(user, config.SECRET_KEY, {
+        expiresIn: config.TOKEN_LIFE
+      });
+      const response = {
+        token: token
+      };
+      // update the token in the list
+      this.tokenList[data.refreshToken].token = token;
+      res.status(200).json(response);
+    } else {
+      res.status(404).send("Invalid request");
+    }
   }
 };
