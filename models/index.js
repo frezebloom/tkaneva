@@ -11,7 +11,13 @@ settings = {
   logging: false
 };
 
-var sequelize = new Sequelize("tkaneva", "root", "frezeblooM18", settings);
+var sequelize = new Sequelize(
+  config.DB_NAME,
+  config.DB_USERNAME,
+  config.DB_PASSWORD,
+  settings
+);
+
 var db = {};
 
 fs.readdirSync(__dirname)

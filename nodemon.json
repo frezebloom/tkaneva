@@ -3,7 +3,11 @@
   "env": {
     "NODE_ENV": "development",
     "PORT": 3000,
-    "MONGO_URL": "mongodb://localhost/tkaneva"
+    "SECRET_KEY": "BLACK_BURGER",
+    "REFRESH_TOKEN_SECRET": "WHITE_BURGER",
+    "DB_NAME": "tkaneva",
+    "DB_USERNAME": "juxx",
+    "DB_PASSWORD": "12345678"
   },
   "ext": "js,.json",
   "watch": "./"
