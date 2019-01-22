@@ -13,11 +13,11 @@ module.exports = {
     const token = jwt.sign(user, config.SECRET_KEY, {
       expiresIn: config.TOKEN_LIFE
     });
-    const refreshToken = jwt.sign(user, config.REFRESH_TOKEN_SECRET, {
-      expiresIn: config.REFRESH_TOKEN_LIFE
+    const refreshToken = jwt.sign(user, config.SECRET_KEY_REFRESH, {
+      expiresIn: config.TOKEN_LIFE_REFRESH
     });
     const response = {
-      token: token,
+      accessToken: token,
       refreshToken: refreshToken
     };
     this.tokenList[refreshToken] = response;
