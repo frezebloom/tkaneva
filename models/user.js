@@ -16,7 +16,7 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     },
 
-    username: {
+    login: {
       type: Sequelize.TEXT
     },
 
