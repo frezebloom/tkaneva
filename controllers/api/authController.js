@@ -18,7 +18,8 @@ module.exports = {
     });
     const response = {
       accessToken: token,
-      refreshToken: refreshToken
+      refreshToken: refreshToken,
+      expiresIn: Date.now() + config.TOKEN_LIFE * 1000
     };
     this.tokenList[refreshToken] = response;
     res.status(200).json(response);
