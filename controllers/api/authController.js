@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const config = require("../config/config");
+const config = require("../../config/config");
 
 module.exports = {
   tokenList: {},
@@ -17,14 +17,13 @@ module.exports = {
       expiresIn: config.REFRESH_TOKEN_LIFE
     });
     const response = {
-      status: "Logged in",
       token: token,
       refreshToken: refreshToken
     };
     this.tokenList[refreshToken] = response;
     res.status(200).json(response);
   },
-  token: (req, res) => {
+  refreshToken: (req, res) => {
     // refresh the damn token
     const data = req.body;
     // if refresh token exists

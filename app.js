@@ -30,7 +30,7 @@ models.sequelize
 //Routes
 app.use("/", routes.api);
 app.use("/", routes.products);
-app.use("/api", routes.signup);
+app.use("/api", routes.auth);
 
 //Startin server
 app.listen(config.PORT, () =>
