@@ -1,9 +1,9 @@
 const api = require("./api");
 const products = require("./products");
-const signup = require("./signup");
+const auth = require("./auth");
 
 module.exports = {
   api,
   products,
-  signup
+  auth
 };
