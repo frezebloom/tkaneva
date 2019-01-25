@@ -15,8 +15,8 @@ import Content from "@/components/Content.vue";
 export default {
   name: "App",
   components: {
-    Header,
-    Sidebar,
+    // Header,
+    // Sidebar,
     Content
   }
 };
