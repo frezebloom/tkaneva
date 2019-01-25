@@ -18,18 +18,26 @@
       </span>
     </div>
     <div class="login-footer">
-      <Button value="Войти"/>
+      <div v-on:click="signup">
+        <Button value="Войти"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Button from "@/components/Button.vue";
-
+import SignupService from "@/services/signupService";
 export default {
   name: "Login",
   components: {
     Button
+  },
+  methods: {
+    signup() {
+      const response = SignupService.fetchToken();
+      console.log(response);
+    }
   }
 };
 </script>
