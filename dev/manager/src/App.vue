@@ -25,7 +25,7 @@ export default {
 @import "./styles/reset.scss";
 #app {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #ecf0f5;
+  background-color: #f4f4f4;
 }
 .wrapper {
   display: flex;
