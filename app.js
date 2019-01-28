@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const staticAsset = require("static-asset");
+var cors = require("cors");
 
 const config = require("./config/config");
 const models = require("./models");
@@ -9,6 +10,7 @@ const routes = require("./routes");
 
 //Initilization
 const app = express();
+app.use(cors());
 
 //Sets and uses
 app.set("view engine", "pug");
