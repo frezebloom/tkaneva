@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  var Color = sequelize.define("color", {
+  const Color = sequelize.define("color", {
     color_id: {
       autoIncrement: true,
       primaryKey: true,

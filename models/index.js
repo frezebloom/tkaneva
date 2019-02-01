@@ -1,6 +1,6 @@
-var fs = require("fs");
-var path = require("path");
-var Sequelize = require("sequelize");
+const fs = require("fs");
+const path = require("path");
+const Sequelize = require("sequelize");
 
 const config = require("../config/config");
 
@@ -11,21 +11,21 @@ settings = {
   logging: false
 };
 
-var sequelize = new Sequelize(
+const sequelize = new Sequelize(
   config.DB_NAME,
   config.DB_USERNAME,
   config.DB_PASSWORD,
   settings
 );
 
-var db = {};
+const db = {};
 
 fs.readdirSync(__dirname)
   .filter(function(file) {
     return file.indexOf(".") !== 0 && file !== "index.js";
   })
   .forEach(function(file) {
-    var model = sequelize.import(path.join(__dirname, file));
+    const model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 

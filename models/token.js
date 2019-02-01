@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  var Token = sequelize.define("token", {
+  const Token = sequelize.define("token", {
     token_id: {
       autoIncrement: true,
       primaryKey: true,
@@ -16,6 +16,10 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     }
   });
+
+  Token.associate = models => {
+    Token.belongsTo(models.user);
+  };
 
   return Token;
 };

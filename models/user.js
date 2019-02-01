@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  var User = sequelize.define("user", {
+  const User = sequelize.define("user", {
     user_id: {
       autoIncrement: true,
       primaryKey: true,
@@ -37,6 +37,10 @@ module.exports = function(sequelize, Sequelize) {
       defaultValue: "active"
     }
   });
+
+  // User.associate = models => {
+  //   User.hasMany(models.token);
+  // };
 
   return User;
 };

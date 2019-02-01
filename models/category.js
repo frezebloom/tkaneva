@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  var Category = sequelize.define("category", {
+  const Category = sequelize.define("category", {
     category_id: {
       autoIncrement: true,
       primaryKey: true,

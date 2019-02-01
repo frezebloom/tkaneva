@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  var Brand = sequelize.define("brand", {
+  const Brand = sequelize.define("brand", {
     brand_id: {
       autoIncrement: true,
       primaryKey: true,
