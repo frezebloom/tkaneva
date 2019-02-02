@@ -38,9 +38,12 @@ module.exports = function(sequelize, Sequelize) {
     }
   });
 
-  // User.associate = models => {
-  //   User.hasMany(models.token);
-  // };
+  User.associate = models => {
+    User.hasOne(models.token, {
+      foreignKey: "fk_customerid",
+      targetKey: "user_id"
+    });
+  };
 
   return User;
 };
