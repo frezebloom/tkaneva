@@ -20,14 +20,14 @@ export default new Router({
       component: Login
     },
     {
-      path: "/newproduct",
-      name: "newproduct",
-      component: () => import("./views/Newproduct.vue")
+      path: "/product/new",
+      name: "new product",
+      component: () => import("./views/NewProduct.vue")
     },
     {
-      path: "/category",
-      name: "category",
-      component: () => import("./views/Category.vue")
+      path: "/product/category",
+      name: "product category",
+      component: () => import("./views/ProductCategory.vue")
     },
     {
       path: "/about",

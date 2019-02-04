@@ -5,10 +5,10 @@
       <li class="sidebar-menu-category" @click="open">Продукты</li>
       <ul v-bind:class="{ active: isActive }" class="sidebar-menu-subcategory">
         <li>
-          <router-link to="/newproduct">Товары</router-link>
+          <router-link to="/product/new">Товары</router-link>
         </li>
         <li>
-          <router-link to="/category">Категории</router-link>
+          <router-link to="/product/category">Категории</router-link>
         </li>
         <li>
           <a href="#">Производитель</a>
@@ -18,7 +18,15 @@
         </li>
       </ul>
       <li class="sidebar-menu-category">Заказы</li>
-      <li class="sidebar-menu-category">Пользователи</li>
+      <li class="sidebar-menu-category">Учетные записи</li>
+      <ul v-bind:class="{ active: isActive }" class="sidebar-menu-subcategory">
+        <li>
+          <router-link to="/newproduct">Пользователи</router-link>
+        </li>
+        <li>
+          <router-link to="/category">Категории</router-link>
+        </li>
+      </ul>
     </ul>
   </div>
 </template>
