@@ -2,8 +2,8 @@
   <div class="sidebar">
     <ul class="sidebar-menu">
       <li class="sidebar-menu-header">Навигация</li>
-      <li class="sidebar-menu-category" @click="open">Продукты</li>
-      <ul v-bind:class="{ active: isActive }" class="sidebar-menu-subcategory">
+      <li class="sidebar-menu-category" @click="open('product')">Продукты</li>
+      <ul v-bind:class="{ active: isActive.product }" class="sidebar-menu-subcategory">
         <li>
           <router-link to="/product/new">Товары</router-link>
         </li>
@@ -18,8 +18,8 @@
         </li>
       </ul>
       <li class="sidebar-menu-category">Заказы</li>
-      <li class="sidebar-menu-category">Учетные записи</li>
-      <ul v-bind:class="{ active: isActive }" class="sidebar-menu-subcategory">
+      <li class="sidebar-menu-category" @click="open('user')">Учетные записи</li>
+      <ul v-bind:class="{ active: isActive.user }" class="sidebar-menu-subcategory">
         <li>
           <router-link to="/newproduct">Пользователи</router-link>
         </li>
@@ -35,12 +35,20 @@ export default {
   name: "Sidebar",
   data: () => {
     return {
-      isActive: false
+      isActive: {
+        product: false,
+        user: false
+      }
     };
   },
   methods: {
-    open() {
-      this.isActive = !this.isActive;
+    open(element) {
+      Object.keys(this.isActive).forEach(item => {
+        if (this.isActive[item] !== this.isActive[element])
+          this.isActive[item] = false;
+      });
+
+      this.isActive[element] = !this.isActive[element];
     }
   }
 };
