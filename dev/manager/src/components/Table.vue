@@ -1,50 +1,22 @@
 <template>
-  <div class="table-wrapper">
-    <table>
-      <tr>
-        <th>№</th>
-        <th>Название</th>
-        <th>Позиция</th>
-        <th>Действие</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Щелк</td>
-        <td>Smith</td>
-        <td>
-          <input type="checkbox">
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Вязь</td>
-        <td>Jackson</td>
-        <td>
-          <input type="checkbox">
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Вязь</td>
-        <td>Jackson</td>
-        <td>
-          <input type="checkbox">
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Вязь</td>
-        <td>Jackson</td>
-        <td>
-          <input type="checkbox">
-        </td>
-      </tr>
-    </table>
-  </div>
+  <table>
+    <th v-for="item in title" :key="item.id">{{item}}</th>
+    <tr v-for="item in data" :key="item.id">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.mail}}</td>
+      <td>{{item.group}}</td>
+      <td>{{item.status}}</td>
+    </tr>
+  </table>
 </template>
 <script>
 export default {
-  name: "Table"
+  name: "Table",
+  props: {
+    data: Array,
+    title: Array
+  }
 };
 </script>
 <style lang="scss" scoped>

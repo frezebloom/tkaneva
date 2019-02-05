@@ -21,10 +21,10 @@
       <li class="sidebar-menu-category" @click="open('user')">Учетные записи</li>
       <ul v-bind:class="{ active: isActive.user }" class="sidebar-menu-subcategory">
         <li>
-          <router-link to="/newproduct">Пользователи</router-link>
+          <router-link to="/users">Пользователи</router-link>
         </li>
         <li>
-          <router-link to="/category">Категории</router-link>
+          <router-link to="/category">Группы</router-link>
         </li>
       </ul>
     </ul>
