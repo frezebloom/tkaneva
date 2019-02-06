@@ -1,0 +1,29 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar-btn-group {
+  display: flex;
+}
+.btn {
+  border-radius: 3px;
+  position: relative;
+  padding: 15px 5px;
+  margin: 0 0 10px 10px;
+  min-width: 80px;
+  height: 60px;
+  text-align: center;
+  color: #545454;
+  border: 1px solid #dcdcdc;
+  background-color: #f4f4f4;
+  font-size: 12px;
+  cursor: pointer;
+}
+.btn:hover {
+  border: 1px solid #8a8a8a;
+}
+img {
+  height: 17px;
+  width: 17px;
+}

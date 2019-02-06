@@ -1,6 +1,9 @@
 <template>
   <div class="btn">
-    <div class="btn-val">{{value}}</div>
+    <div class="btn-val">
+      {{value}}
+      <img alt="password" :src="path">
+    </div>
   </div>
 </template>
 
@@ -8,7 +11,8 @@
 export default {
   name: "HelloWorld",
   props: {
-    value: String
+    value: String,
+    path: String
   }
 };
 </script>

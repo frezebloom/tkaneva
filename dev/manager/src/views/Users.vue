@@ -1,21 +1,28 @@
 <template>
   <div class="users">
-    <div class="users-header">
+    <Topbar title="Пользователи"/>
+    <!-- <div class="users-header">
       <h3>Пользователи</h3>
       <div class="users-header-btn-group">
-        <div class="btn-add">+</div>
+        <div class="btn-add">
+          <Button value="+"/>
+        </div>
         <div class="btn-delete">-</div>
       </div>
-    </div>
+    </div>-->
     <Table v-bind:data="users" v-bind:title="['№', 'Имя', 'Почта', 'Группа', 'Статус']"/>
   </div>
 </template>
 <script>
 import Table from "@/components/Table.vue";
+import Button from "@/components/Button.vue";
+import Topbar from "@/components/Topbar.vue";
 export default {
   name: "Users",
   components: {
-    Table
+    Table,
+    Button,
+    Topbar
   },
   data: () => {
     return {
