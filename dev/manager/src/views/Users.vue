@@ -1,27 +1,17 @@
 <template>
   <div class="users">
-    <Topbar title="Пользователи"/>
-    <!-- <div class="users-header">
-      <h3>Пользователи</h3>
-      <div class="users-header-btn-group">
-        <div class="btn-add">
-          <Button value="+"/>
-        </div>
-        <div class="btn-delete">-</div>
-      </div>
-    </div>-->
+    <Topbar title="Пользователи" v-on:clickEvent="handler($event)"/>
     <Table v-bind:data="users" v-bind:title="['№', 'Имя', 'Почта', 'Группа', 'Статус']"/>
   </div>
 </template>
 <script>
 import Table from "@/components/Table.vue";
-import Button from "@/components/Button.vue";
 import Topbar from "@/components/Topbar.vue";
+import router from "@/router.js";
 export default {
   name: "Users",
   components: {
     Table,
-    Button,
     Topbar
   },
   data: () => {
@@ -50,6 +40,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    handler: event => {
+      router.push(`/users/${event}`);
+    }
   }
 };
 </script>
