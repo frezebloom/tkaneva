@@ -1,7 +1,7 @@
 <template>
   <div class="users">
     <Topbar title="Пользователи" v-on:clickEvent="handler($event)"/>
-    <Table v-bind:data="users" v-bind:title="['№', 'Имя', 'Почта', 'Группа', 'Статус']"/>
+    <Table v-bind:data="users" v-bind:title="['№', 'Имя', 'Фамилия', 'Почта', 'Группа', 'Статус']"/>
   </div>
 </template>
 <script>
@@ -19,21 +19,24 @@ export default {
       users: [
         {
           id: "1",
-          name: "Михаил Ярема",
+          firstname: "Михаил",
+          lastname: "Ярема",
           mail: "juxx@bk.ru",
           group: "admin",
           status: "Включено"
         },
         {
           id: "2",
-          name: "Валерия Ярема",
+          firstname: "Валерия",
+          lastname: "Ярема",
           mail: "valera@bk.ru",
           group: "admin",
           status: "Включено"
         },
         {
           id: "3",
-          name: "Бортик Снежана",
+          firstname: "Бортик",
+          lastname: "Снежана",
           mail: "bortic@bk.ru",
           group: "manager",
           status: "Включено"

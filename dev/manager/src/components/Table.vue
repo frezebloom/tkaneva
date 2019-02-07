@@ -3,7 +3,8 @@
     <th v-for="item in title" :key="item.id">{{item}}</th>
     <tr v-for="item in data" :key="item.id">
       <td>{{item.id}}</td>
-      <td>{{item.name}}</td>
+      <td>{{item.firstname}}</td>
+      <td>{{item.lastname}}</td>
       <td>{{item.mail}}</td>
       <td>{{item.group}}</td>
       <td>{{item.status}}</td>
