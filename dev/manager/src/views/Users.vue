@@ -1,21 +1,31 @@
 <template>
   <div class="users">
     <Topbar title="Пользователи" v-on:clickEvent="handler($event)"/>
-    <Table v-bind:data="users" v-bind:title="['№', 'Имя', 'Фамилия', 'Почта', 'Группа', 'Статус']"/>
+    <table>
+      <th v-for="item in title" :key="item.id">{{item}}</th>
+
+      <tr v-for="item in users" :key="item.id">
+        <td>{{item.id}}</td>
+        <td>{{item.firstname}}</td>
+        <td>{{item.lastname}}</td>
+        <td>{{item.mail}}</td>
+        <td>{{item.group}}</td>
+        <td>{{item.status}}</td>
+      </tr>
+    </table>
   </div>
 </template>
 <script>
-import Table from "@/components/Table.vue";
 import Topbar from "@/components/Topbar.vue";
 import router from "@/router.js";
 export default {
   name: "Users",
   components: {
-    Table,
     Topbar
   },
   data: () => {
     return {
+      title: ["№", "Имя", "Фамилия", "Почта", "Группа", "Статус"],
       users: [
         {
           id: "1",
@@ -51,3 +61,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+@import "../styles/variables.scss";
+@import "../styles/table.scss";
+</style>
+
