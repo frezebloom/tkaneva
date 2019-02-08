@@ -1,9 +1,6 @@
 <template>
   <div class="btn">
-    <div class="btn-val">
-      {{value}}
-      <img alt="password" :src="path">
-    </div>
+    <div class="btn-val">{{value}}</div>
   </div>
 </template>
 
