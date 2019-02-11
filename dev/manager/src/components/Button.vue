@@ -1,15 +1,21 @@
 <template>
-  <div class="btn">
+  <div :class="styles" class="btn">
     <div class="btn-val">{{value}}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Button",
   props: {
-    value: String,
-    path: String
+    value: {
+      type: String,
+      required: true
+    },
+    styles: {
+      type: String,
+      default: "default"
+    }
   }
 };
 </script>
@@ -28,5 +34,22 @@ export default {
 }
 .btn-val {
   padding: 7px 25px 7px 25px;
+}
+.default {
+  background-color: #fbfbfb;
+  color: #707070;
+  border: 1px double #dfdfdf;
+}
+.success {
+  background-color: #3d9970;
+  color: #fff;
+}
+.warning {
+  background-color: #f39c12;
+  color: #fff;
+}
+.danger {
+  background-color: #dd4b39;
+  color: #fff;
 }
 </style>

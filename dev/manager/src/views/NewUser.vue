@@ -3,39 +3,51 @@
     <form v-on:submit.prevent class="form">
       <div class="form-header">Создать акаунт</div>
       <div class="form-wrapper">
-        <label for="form-label">Имя</label>
+        <label class="form-label">Имя</label>
         <input class="form-input" type="text">
       </div>
       <div class="form-wrapper">
-        <label for="form-label">Фамилия</label>
+        <label class="form-label">Фамилия</label>
         <input class="form-input" type="text">
       </div>
       <div class="form-wrapper">
-        <label for="form-label">Почта</label>
+        <label class="form-label">Почта</label>
         <input class="form-input" type="text">
       </div>
       <div class="form-wrapper">
-        <label for="form-label">Группа</label>
+        <label class="form-label">Группа</label>
         <input class="form-input" type="select">
       </div>
       <div class="form-wrapper">
-        <label for="form-label">Статус</label>
+        <label class="form-label">Статус</label>
         <input class="form-input" type="text">
       </div>
       <div class="form-wrapper">
-        <label for="form-label">Пароль</label>
+        <label class="form-label">Пароль</label>
         <input class="form-input" type="password">
       </div>
       <div class="form-wrapper">
-        <label for="form-label">Повторите пароль</label>
+        <label class="form-label">Повторите пароль</label>
         <input class="form-input" type="password">
+      </div>
+      <div class="form-footer">
+        <div class="form-footer-wrapper">
+          <Button value="Создать" styles="success"/>
+        </div>
+        <div class="form-footer-wrapper">
+          <Button value="Отмена" styles="default"/>
+        </div>
       </div>
     </form>
   </div>
 </template>
 <script>
+import Button from "@/components/Button.vue";
 export default {
-  name: "NewUser"
+  name: "NewUser",
+  components: {
+    Button
+  }
 };
 </script>
 <style lang="scss" scoped>

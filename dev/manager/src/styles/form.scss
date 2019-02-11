@@ -1,5 +1,5 @@
 .form {
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
   overflow: auto;
   background-color: #f9f9f9;
@@ -26,13 +26,44 @@
   color: #525252;
   line-height: 18px;
 }
+.form-label {
+  float: left;
+  width: 140px;
+  padding-top: 5px;
+  text-align: right;
+  display: block;
+  margin-bottom: 5px;
+  color: #333333;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+}
 .form-input {
-  outline: none;
-  border: 0;
-  min-width: 300px;
-  border: 1px solid #d5d5d5;
-  height: 44px;
-  padding: 10px;
-  margin: 20px 0 0 0;
+  width: 400px;
+  height: 18px;
+  padding: 14px;
+  margin-left: 20px;
+  margin-bottom: 9px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #555555;
+  border: 1px solid #cccccc;
   border-radius: 3px;
+}
+.form-input:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(82, 168, 236, 0.6);
+  outline: 0;
+}
+.form-footer {
+  display: flex;
+  justify-content: center;
+  padding: 17px 100px 18px;
+  margin-top: 18px;
+  background-color: #eeeeee;
+  border-top: 1px solid #ddd;
+}
+.form-footer-wrapper {
+  margin: 5px;
 }
