@@ -33,7 +33,7 @@
 <script>
 export default {
   name: "Sidebar",
-  data: () => {
+  data() {
     return {
       isActive: {
         product: false,

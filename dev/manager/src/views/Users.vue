@@ -23,7 +23,7 @@ export default {
   components: {
     Topbar
   },
-  data: () => {
+  data() {
     return {
       title: ["№", "Имя", "Фамилия", "Почта", "Группа", "Статус"],
       users: [
@@ -55,7 +55,7 @@ export default {
     };
   },
   methods: {
-    handler: event => {
+    handler(event) {
       router.push(`/users/${event}`);
     }
   }

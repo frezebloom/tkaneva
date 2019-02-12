@@ -4,34 +4,30 @@
       <div class="form-header">Создать акаунт</div>
       <div class="form-wrapper">
         <label class="form-label">Имя</label>
-        <input class="form-input" type="text">
+        <input v-model="user.firstname" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Фамилия</label>
-        <input class="form-input" type="text">
+        <input v-model="user.lastname" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Почта</label>
-        <input class="form-input" type="text">
+        <input v-model="user.mail" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Группа</label>
-        <input class="form-input" type="select">
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Статус</label>
-        <input class="form-input" type="text">
+        <input v-model="user.group" class="form-input" type="select">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Пароль</label>
-        <input class="form-input" type="password">
+        <input v-model="user.password" class="form-input" type="password">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Повторите пароль</label>
-        <input class="form-input" type="password">
+        <input v-model="user.confrimPassword" class="form-input" type="password">
       </div>
       <div class="form-footer">
-        <div class="form-footer-wrapper">
+        <div @click="greet" class="form-footer-wrapper">
           <Button value="Создать" styles="success"/>
         </div>
         <div class="form-footer-wrapper">
@@ -47,6 +43,23 @@ export default {
   name: "NewUser",
   components: {
     Button
+  },
+  data() {
+    return {
+      user: {
+        firstname: "",
+        lastname: "",
+        mail: "",
+        group: "",
+        password: "",
+        confrimPassword: ""
+      }
+    };
+  },
+  methods: {
+    greet() {
+      console.log(2);
+    }
   }
 };
 </script>
