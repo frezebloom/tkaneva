@@ -36,8 +36,8 @@ export default {
   methods: {
     signup() {
       const response = SignupService.fetchToken();
-      response.then(data => {
-        console.log(data.data);
+      response.then(response => {
+        console.log(response.data);
       });
     }
   }
