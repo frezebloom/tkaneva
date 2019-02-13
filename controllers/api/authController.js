@@ -3,7 +3,7 @@ const config = require("../../config/config");
 
 module.exports = {
   tokenList: {},
-  signup: function(req, res) {
+  signup(req, res) {
     const data = req.body;
     const user = {
       name: data.name,
@@ -24,7 +24,7 @@ module.exports = {
     this.tokenList[refreshToken] = response;
     res.status(200).json(response);
   },
-  refreshToken: (req, res) => {
+  refreshToken(req, res) {
     // refresh the damn token
     const data = req.body;
     // if refresh token exists

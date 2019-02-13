@@ -30,8 +30,8 @@ models.sequelize
   });
 
 //Routes
-app.use("/", routes.api);
 app.use("/", routes.products);
+app.use("/api", routes.api);
 app.use("/api", routes.auth);
 
 //Startin server
