@@ -12,7 +12,7 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Почта</label>
-        <input v-model="user.mail" class="form-input" type="text">
+        <input v-model="user.email" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Группа</label>
@@ -50,7 +50,7 @@ export default {
       user: {
         firstname: "",
         lastname: "",
-        mail: "",
+        email: "",
         group: "",
         password: "",
         confrimPassword: ""

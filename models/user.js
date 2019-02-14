@@ -16,15 +16,15 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     },
 
-    login: {
-      type: Sequelize.TEXT
-    },
-
     email: {
       type: Sequelize.STRING,
       validate: {
         isEmail: true
       }
+    },
+
+    group: {
+      type: Sequelize.TEXT
     },
 
     password: {

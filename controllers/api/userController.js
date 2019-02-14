@@ -1,5 +1,6 @@
 module.exports = {
   create(req, res) {
-    const user = req.body.user;
+    const { firstname, lastname, email, group, password } = req.body.user;
+    console.log(email);
   }
 };
