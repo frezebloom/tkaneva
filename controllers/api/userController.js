@@ -15,8 +15,12 @@ module.exports = {
       email: email,
       group: group,
       password: passwordToSave
-    }).then(user => {
-      res.send(user);
-    });
+    })
+      .then(user => {
+        res.status(201).json(user);
+      })
+      .catch(error => {
+        res.status(404).send("Invalid request");
+      });
   }
 };
