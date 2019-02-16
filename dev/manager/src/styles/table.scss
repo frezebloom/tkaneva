@@ -12,6 +12,12 @@ td {
   border-top: 1px solid #dee2e6;
   padding: 10px;
 }
+tr:hover {
+  background-color: #ececec;
+}
 .isActive {
+  background-color: #d1ecd6;
+}
+.isActive:hover {
   background-color: #d1ecd6;
 }
