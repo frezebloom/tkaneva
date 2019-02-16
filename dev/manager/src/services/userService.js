@@ -1,9 +1,12 @@
 import api from "@/services/api";
 
 export default {
-  sendUserData(user) {
+  createUser(user) {
     return api().post("/api/user/create", {
       user
     });
+  },
+  getUsers() {
+    return api().get("/api/users/get");
   }
 };

@@ -27,7 +27,7 @@
         <input v-model="user.confrimPassword" class="form-input" type="password">
       </div>
       <div class="form-footer">
-        <div @click="send" class="form-footer-wrapper">
+        <div @click="create" class="form-footer-wrapper">
           <Button value="Создать" styles="success"/>
         </div>
         <div class="form-footer-wrapper">
@@ -39,7 +39,7 @@
 </template>
 <script>
 import Button from "@/components/Button.vue";
-import newUserService from "@/services/newUserService";
+import userService from "@/services/userService";
 export default {
   name: "NewUser",
   components: {
@@ -58,11 +58,15 @@ export default {
     };
   },
   methods: {
-    send() {
-      const response = newUserService.sendUserData(this.user);
-      response.then(response => {
-        console.log(response.data);
-      });
+    create() {
+      const response = userService.createUser(this.user);
+      response
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
@@ -70,4 +74,3 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/form.scss";
 </style>
-

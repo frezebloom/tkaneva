@@ -5,10 +5,10 @@
       <th v-for="item in title" :key="item.id">{{item}}</th>
 
       <tr v-for="item in users" :key="item.id">
-        <td>{{item.id}}</td>
+        <td>{{item.user_id}}</td>
         <td>{{item.firstname}}</td>
         <td>{{item.lastname}}</td>
-        <td>{{item.mail}}</td>
+        <td>{{item.email}}</td>
         <td>{{item.group}}</td>
         <td>{{item.status}}</td>
       </tr>
@@ -18,6 +18,7 @@
 <script>
 import Topbar from "@/components/Topbar.vue";
 import router from "@/router.js";
+import userService from "@/services/userService";
 export default {
   name: "Users",
   components: {
@@ -26,33 +27,19 @@ export default {
   data() {
     return {
       title: ["№", "Имя", "Фамилия", "Почта", "Группа", "Статус"],
-      users: [
-        {
-          id: "1",
-          firstname: "Михаил",
-          lastname: "Ярема",
-          mail: "juxx@bk.ru",
-          group: "admin",
-          status: "Включено"
-        },
-        {
-          id: "2",
-          firstname: "Валерия",
-          lastname: "Ярема",
-          mail: "valera@bk.ru",
-          group: "admin",
-          status: "Включено"
-        },
-        {
-          id: "3",
-          firstname: "Бортик",
-          lastname: "Снежана",
-          mail: "bortic@bk.ru",
-          group: "manager",
-          status: "Включено"
-        }
-      ]
+      users: []
     };
+  },
+  mounted() {
+    const users = userService.getUsers();
+    users
+      .then(users => {
+        this.users = users.data;
+        console.log(users.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   methods: {
     handler(event) {
