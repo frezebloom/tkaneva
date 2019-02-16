@@ -17,7 +17,11 @@
         <td>{{item.group}}</td>
         <td>{{item.status}}</td>
         <td>
-          <input type="checkbox">
+          <input
+            type="checkbox"
+            :checked="checked(item.user_id)"
+            @click.stop="select(item.user_id)"
+          >
         </td>
       </tr>
     </table>
@@ -55,6 +59,7 @@ export default {
     },
     select(user_id) {
       const index = this.selectElements.indexOf(user_id);
+
       if (index !== -1) {
         this.selectElements.splice(index, 1);
       } else {
@@ -63,8 +68,18 @@ export default {
     },
     isActive(user_id) {
       const index = this.selectElements.indexOf(user_id);
+
       if (index !== -1) {
         return "isActive";
+      } else {
+        return "";
+      }
+    },
+    checked(user_id) {
+      const index = this.selectElements.indexOf(user_id);
+
+      if (index !== -1) {
+        return "checked";
       } else {
         return "";
       }
