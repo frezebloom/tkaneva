@@ -1,16 +1,24 @@
 <template>
   <div class="users">
-    <Topbar title="Пользователи" v-on:clickEvent="handler($event)"/>
+    <Topbar title="Пользователи" @clickEvent="handler($event)"/>
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
 
-      <tr v-for="item in users" :key="item.id">
+      <tr
+        @click="select(item.user_id)"
+        :class="isActive(item.user_id)"
+        v-for="item in users"
+        :key="item.id"
+      >
         <td>{{item.user_id}}</td>
         <td>{{item.firstname}}</td>
         <td>{{item.lastname}}</td>
         <td>{{item.email}}</td>
         <td>{{item.group}}</td>
         <td>{{item.status}}</td>
+        <td>
+          <input type="checkbox">
+        </td>
       </tr>
     </table>
   </div>
@@ -27,7 +35,8 @@ export default {
   data() {
     return {
       title: ["№", "Имя", "Фамилия", "Почта", "Группа", "Статус"],
-      users: []
+      users: [],
+      selectElements: []
     };
   },
   mounted() {
@@ -35,7 +44,6 @@ export default {
     users
       .then(users => {
         this.users = users.data;
-        console.log(users.data);
       })
       .catch(error => {
         console.log(error);
@@ -44,6 +52,22 @@ export default {
   methods: {
     handler(event) {
       router.push(`/users/${event}`);
+    },
+    select(user_id) {
+      const index = this.selectElements.indexOf(user_id);
+      if (index !== -1) {
+        this.selectElements.splice(index, 1);
+      } else {
+        this.selectElements.push(user_id);
+      }
+    },
+    isActive(user_id) {
+      const index = this.selectElements.indexOf(user_id);
+      if (index !== -1) {
+        return "isActive";
+      } else {
+        return "";
+      }
     }
   }
 };

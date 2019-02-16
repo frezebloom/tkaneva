@@ -6,8 +6,12 @@ table {
   border-top: 2px solid #e6e6e6;
   background-color: $colorWhite;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 td {
   border-top: 1px solid #dee2e6;
   padding: 10px;
+}
+.isActive {
+  background-color: #d1ecd6;
 }

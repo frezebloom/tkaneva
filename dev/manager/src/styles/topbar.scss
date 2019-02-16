@@ -5,6 +5,7 @@
 }
 .topbar-btn-group {
   display: flex;
+  user-select: none;
 }
 .btn {
   border-radius: 3px;
