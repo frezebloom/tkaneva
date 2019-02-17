@@ -4,9 +4,9 @@ const config = require("../../config/config");
 module.exports = {
   tokenList: {},
   signup(req, res) {
-    const data = req.body;
+    const { name, password } = req.body;
     const user = {
-      name: data.name,
+      name: login,
       password: data.password
     };
     // do the database authentication here, with user name and password combination.

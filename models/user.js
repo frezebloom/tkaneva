@@ -16,6 +16,11 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     },
 
+    login: {
+      type: Sequelize.STRING,
+      notEmpty: true
+    },
+
     email: {
       type: Sequelize.STRING,
       validate: {
@@ -33,8 +38,8 @@ module.exports = function(sequelize, Sequelize) {
     },
 
     status: {
-      type: Sequelize.ENUM("active", "inactive"),
-      defaultValue: "active"
+      type: Sequelize.ENUM("Вкл", "Выкл"),
+      defaultValue: "Вкл"
     }
   });
 

@@ -6,7 +6,7 @@
         <img alt="login" src="../assets/icons/user.svg">
       </div>
       <span class="header-search-icon">
-        <input class="login-form-input" placeholder="Логин" autocomplete="off">
+        <input v-model="login" class="login-form-input" placeholder="Логин" autocomplete="off">
       </span>
     </div>
     <div class="login-form-wrapper">
@@ -14,7 +14,13 @@
         <img alt="password" src="../assets/icons/key.svg">
       </div>
       <span>
-        <input type="password" class="login-form-input" placeholder="Пароль" autocomplete="off">
+        <input
+          v-model="password"
+          type="password"
+          class="login-form-input"
+          placeholder="Пароль"
+          autocomplete="off"
+        >
       </span>
     </div>
     <div class="login-footer">
@@ -27,15 +33,21 @@
 
 <script>
 import Button from "@/components/Button.vue";
-import SignupService from "@/services/signupService";
+import signupService from "@/services/signupService";
 export default {
   name: "Login",
   components: {
     Button
   },
+  data() {
+    return {
+      login: "",
+      password: ""
+    };
+  },
   methods: {
     signup() {
-      const response = SignupService.fetchToken();
+      const response = signupService.fetchToken(this.login, this.password);
       response.then(response => {
         console.log(response.data);
       });
