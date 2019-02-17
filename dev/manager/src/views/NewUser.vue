@@ -11,6 +11,10 @@
         <input v-model="user.lastname" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
+        <label class="form-label">Логин</label>
+        <input v-model="user.login" class="form-input" type="text">
+      </div>
+      <div class="form-wrapper">
         <label class="form-label">Почта</label>
         <input v-model="user.email" class="form-input" type="text">
       </div>
@@ -50,6 +54,7 @@ export default {
       user: {
         firstname: "",
         lastname: "",
+        login: "",
         email: "",
         group: "",
         password: "",

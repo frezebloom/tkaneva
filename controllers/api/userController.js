@@ -4,7 +4,14 @@ const User = db.user;
 
 module.exports = {
   create(req, res) {
-    const { firstname, lastname, email, group, password } = req.body.user;
+    const {
+      firstname,
+      lastname,
+      login,
+      email,
+      group,
+      password
+    } = req.body.user;
 
     const salt = bcrypt.genSaltSync(10);
     const passwordToSave = bcrypt.hashSync(password, salt);
@@ -12,6 +19,7 @@ module.exports = {
     User.create({
       firstname: firstname,
       lastname: lastname,
+      login: login,
       email: email,
       group: group,
       password: passwordToSave

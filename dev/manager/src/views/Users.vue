@@ -13,6 +13,7 @@
         <td>{{item.user_id}}</td>
         <td>{{item.firstname}}</td>
         <td>{{item.lastname}}</td>
+        <td>{{item.login}}</td>
         <td>{{item.email}}</td>
         <td>{{item.group}}</td>
         <td>{{item.status}}</td>
@@ -38,7 +39,7 @@ export default {
   },
   data() {
     return {
-      title: ["№", "Имя", "Фамилия", "Почта", "Группа", "Статус"],
+      title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус"],
       users: [],
       selectElements: []
     };
