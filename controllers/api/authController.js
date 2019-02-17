@@ -4,16 +4,17 @@ const config = require("../../config/config");
 module.exports = {
   tokenList: {},
   signup(req, res) {
-    const { name, password } = req.body;
-    const user = {
-      name: login,
-      password: data.password
-    };
+    const { login, password } = req.body;
+    console.log(login);
+    // const user = {
+    //   name: login,
+    //   password: password
+    // };
     // do the database authentication here, with user name and password combination.
-    const token = jwt.sign(user, config.SECRET_KEY, {
+    const token = jwt.sign(req.body, config.SECRET_KEY, {
       expiresIn: config.TOKEN_LIFE
     });
-    const refreshToken = jwt.sign(user, config.SECRET_KEY_REFRESH, {
+    const refreshToken = jwt.sign(req.body, config.SECRET_KEY_REFRESH, {
       expiresIn: config.TOKEN_LIFE_REFRESH
     });
     const response = {
