@@ -1,29 +1,41 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const config = require("../../config/config");
+const db = require("../../models/index");
+
+const User = db.user;
 
 module.exports = {
   tokenList: {},
   signup(req, res) {
     const { login, password } = req.body;
-    console.log(login);
-    // const user = {
-    //   name: login,
-    //   password: password
-    // };
-    // do the database authentication here, with user name and password combination.
-    const token = jwt.sign(req.body, config.SECRET_KEY, {
-      expiresIn: config.TOKEN_LIFE
-    });
-    const refreshToken = jwt.sign(req.body, config.SECRET_KEY_REFRESH, {
-      expiresIn: config.TOKEN_LIFE_REFRESH
-    });
-    const response = {
-      accessToken: token,
-      refreshToken: refreshToken,
-      expiresIn: Date.now() + config.TOKEN_LIFE * 1000
-    };
-    this.tokenList[refreshToken] = response;
-    res.status(200).json(response);
+
+    User.findOne({ where: { login: login } })
+      .then(user => {
+        if (bcrypt.compareSync(password, user.password)) {
+          const token = jwt.sign(req.body, config.SECRET_KEY, {
+            expiresIn: config.TOKEN_LIFE
+          });
+
+          const refreshToken = jwt.sign(req.body, config.SECRET_KEY_REFRESH, {
+            expiresIn: config.TOKEN_LIFE_REFRESH
+          });
+
+          const response = {
+            accessToken: token,
+            refreshToken: refreshToken,
+            expiresIn: Date.now() + config.TOKEN_LIFE * 1000
+          };
+
+          this.tokenList[refreshToken] = response;
+          res.status(200).json(response);
+        } else {
+          res.status(401).send("Unauthorized");
+        }
+      })
+      .catch(error => {
+        res.status(401).send("Unauthorized");
+      });
   },
   refreshToken(req, res) {
     // refresh the damn token

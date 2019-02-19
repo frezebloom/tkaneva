@@ -1,5 +1,6 @@
-var bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const db = require("../../models/index");
+
 const User = db.user;
 
 module.exports = {
@@ -25,7 +26,7 @@ module.exports = {
       password: passwordToSave
     })
       .then(user => {
-        res.status(201).json(user);
+        res.status(201).send("Ok");
       })
       .catch(error => {
         res.status(404).send("Invalid request");
@@ -35,7 +36,7 @@ module.exports = {
   get(req, res) {
     User.findAll()
       .then(users => {
-        res.status(200).json(users);
+        res.status(200).json("Ok");
       })
       .catch(error => {
         res.status(404).send("Invalid request");
