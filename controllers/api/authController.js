@@ -22,6 +22,8 @@ module.exports = {
           });
 
           const response = {
+            userId: user.user_id,
+            permission: user.group,
             accessToken: token,
             refreshToken: refreshToken,
             expiresIn: Date.now() + config.TOKEN_LIFE * 1000
