@@ -36,7 +36,7 @@ module.exports = {
   get(req, res) {
     User.findAll()
       .then(users => {
-        res.status(200).json("Ok");
+        res.status(200).json(users);
       })
       .catch(error => {
         res.status(404).send("Invalid request");
