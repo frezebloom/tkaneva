@@ -6,7 +6,22 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.INTEGER
     },
 
-    token: {
+    access_token: {
+      type: Sequelize.STRING,
+      notEmpty: true
+    },
+
+    refresh_token: {
+      type: Sequelize.STRING,
+      notEmpty: true
+    },
+
+    access_token_life: {
+      type: Sequelize.STRING,
+      notEmpty: true
+    },
+
+    refresh_token_life: {
       type: Sequelize.STRING,
       notEmpty: true
     }
