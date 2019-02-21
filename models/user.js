@@ -45,7 +45,7 @@ module.exports = function(sequelize, Sequelize) {
 
   User.associate = models => {
     User.hasOne(models.token, {
-      foreignKey: "fk_customerid",
+      foreignKey: "user_id",
       targetKey: "user_id"
     });
   };

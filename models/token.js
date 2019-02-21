@@ -1,6 +1,6 @@
 module.exports = function(sequelize, Sequelize) {
   const Token = sequelize.define("token", {
-    user_id: {
+    token_id: {
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER
@@ -29,7 +29,7 @@ module.exports = function(sequelize, Sequelize) {
 
   Token.associate = models => {
     Token.belongsTo(models.user, {
-      foreignKey: "fk_customerid",
+      foreignKey: "user_id",
       targetKey: "user_id"
     });
   };
