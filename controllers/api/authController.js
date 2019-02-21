@@ -31,38 +31,39 @@ module.exports = {
             token,
             refreshToken
           };
-        } else {
-          res.status(401).send("Unauthorized");
         }
       })
       .then(data => {
-        Token.create({
+        const { user_id } = data.user;
+
+        const tokenData = {
           access_token: data.token,
           refresh_token: data.refreshToken,
           access_token_life: Date.now() + config.TOKEN_LIFE * 1000,
           refresh_token_life: Date.now() + config.TOKEN_LIFE_REFRESH * 1000,
           user_id: data.user.user_id
-        })
-          .then(tokenData => {
-            const {
-              access_token,
-              refresh_token,
-              access_token_life,
-              user_id
-            } = tokenData;
+        };
 
-            const response = {
-              access_token,
-              refresh_token,
-              access_token_life,
-              user_id
-            };
+        Token.findOne({ where: { user_id: user_id } }).then(token => {
+          if (!token) {
+            Token.create(tokenData)
+              .then(() => {
+                res.status(200).json(tokenData);
+              })
+              .catch(error => {
+                res.status(404).send("Invalid request");
+              });
+          } else {
+            Token.update(tokenData, { where: { user_id: user_id } })
+              .then(() => {
+                res.status(200).json(tokenData);
+              })
+              .catch(error => {
+                res.status(404).send("Invalid request");
+              });
+          }
+        });
 
-            res.status(200).json(response);
-          })
-          .catch(error => {
-            res.status(404).send("Invalid request");
-          });
         return true;
       })
       .catch(error => {
