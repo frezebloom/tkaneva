@@ -71,25 +71,43 @@ module.exports = {
       });
   },
   refreshToken(req, res) {
-    // refresh the damn token
-    const data = req.body;
-    // if refresh token exists
-    if (data.refreshToken.indexOf(this.tokenList) !== -1) {
-      const user = {
-        email: data.email,
-        name: data.name
-      };
-      const token = jwt.sign(user, config.SECRET_KEY, {
-        expiresIn: config.TOKEN_LIFE
+    const { user_id, refresh_token } = req.body;
+
+    Token.findOne({ where: { user_id: user_id }, include: [User] })
+      .then(data => {
+        if (
+          refresh_token === data.refresh_token &&
+          data.refresh_token_life > Date.now()
+        ) {
+          const payload = {
+            user: data.user.login,
+            email: data.user.email
+          };
+
+          const token = jwt.sign(payload, config.SECRET_KEY, {
+            expiresIn: config.TOKEN_LIFE
+          });
+
+          const tokenData = {
+            access_token: token,
+            refresh_token: data.refresh_token,
+            access_token_life: Date.now() + config.TOKEN_LIFE * 1000,
+            refresh_token_life: data.refresh_token_life,
+            user_id: data.user_id
+          };
+
+          Token.update(tokenData, { where: { user_id: data.user_id } })
+            .then(() => {
+              res.status(200).json(tokenData);
+            })
+            .catch(error => {
+              res.status(404).send("Invalid request");
+            });
+        }
+        return true;
+      })
+      .catch(error => {
+        res.status(401).send("Unauthorized");
       });
-      const response = {
-        token: token
-      };
-      // update the token in the list
-      this.tokenList[data.refreshToken].token = token;
-      res.status(200).json(response);
-    } else {
-      res.status(404).send("Invalid request");
-    }
   }
 };
