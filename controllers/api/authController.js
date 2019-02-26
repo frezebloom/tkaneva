@@ -41,14 +41,20 @@ module.exports = {
           refresh_token: data.refreshToken,
           access_token_life: Date.now() + config.TOKEN_LIFE * 1000,
           refresh_token_life: Date.now() + config.TOKEN_LIFE_REFRESH * 1000,
-          user_id: data.user.user_id
+          user_id: user_id
+        };
+
+        const response = {
+          userId: tokenData.user_id,
+          accessToken: tokenData.access_token,
+          refreshToken: tokenData.refresh_token
         };
 
         Token.findOne({ where: { user_id: user_id } }).then(token => {
           if (!token) {
             Token.create(tokenData)
               .then(() => {
-                res.status(200).json(tokenData);
+                res.status(200).json(response);
               })
               .catch(error => {
                 res.status(404).send("Invalid request");
@@ -56,7 +62,7 @@ module.exports = {
           } else {
             Token.update(tokenData, { where: { user_id: user_id } })
               .then(() => {
-                res.status(200).json(tokenData);
+                res.status(200).json(response);
               })
               .catch(error => {
                 res.status(404).send("Invalid request");
@@ -96,9 +102,15 @@ module.exports = {
             user_id: data.user_id
           };
 
+          const response = {
+            userId: tokenData.user_id,
+            accessToken: tokenData.access_token,
+            refreshToken: tokenData.refresh_token
+          };
+
           Token.update(tokenData, { where: { user_id: data.user_id } })
             .then(() => {
-              res.status(200).json(tokenData);
+              res.status(200).json(response);
             })
             .catch(error => {
               res.status(404).send("Invalid request");
