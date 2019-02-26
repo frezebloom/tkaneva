@@ -47,10 +47,12 @@ export default {
   },
   methods: {
     signup() {
-      const response = signupService.fetchToken(this.login, this.password);
-      response.then(response => {
-        console.log(response.data);
-      });
+      const { login, password } = this;
+
+      // const response = signupService.fetchToken(this.login, this.password);
+      // response.then(response => {
+      //   console.log(response.data);
+      // });
     }
   }
 };

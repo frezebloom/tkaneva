@@ -22,7 +22,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "./styles/reset.scss";
+@import "../styles/reset.scss";
 #app {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #f4f4f4;
