@@ -33,7 +33,8 @@
 
 <script>
 import Button from "@/components/Button.vue";
-import signupService from "@/services/signupService";
+
+import { AUTH_REQUEST } from "@/store/types/auth";
 export default {
   name: "Login",
   components: {
@@ -48,11 +49,7 @@ export default {
   methods: {
     signup() {
       const { login, password } = this;
-
-      // const response = signupService.fetchToken(this.login, this.password);
-      // response.then(response => {
-      //   console.log(response.data);
-      // });
+      this.$store.dispatch(AUTH_REQUEST, { login, password });
     }
   }
 };
