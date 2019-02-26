@@ -8,29 +8,46 @@ import {
 } from "../types/auth";
 
 const state = {
+  userId: localStorage.getItem("userId") || "",
   accessToken: localStorage.getItem("accessToken") || "",
   refreshToken: localStorage.getItem("refreshToken") || "",
-  userId: localStorage.getItem("userId") || "",
-  status: ""
+  status: "unknown"
 };
 
 const actions = {
   [AUTH_REQUEST]({ commit, dispatch }, user) {
     const response = signupService.fetchToken(user.login, user.password);
-    response.then(response => {
-      console.log(response);
-      // const { access_token, refresh_token, user_id } = response.data;
-      // console.log(response.data);
-      // localStorage.setItem("accessToken", access_token);
-      // localStorage.setItem("refreshToken", refresh_token);
-      // localStorage.setItem("userId", user_id);
-    });
+
+    commit(AUTH_REQUEST);
+
+    response
+      .then(response => {
+        const { userId, accessToken, refreshToken } = response.data;
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+
+        commit(AUTH_SUCCESS, response.data);
+      })
+      .catch(error => {
+        commit(AUTH_ERROR, error);
+        localStorage.clear();
+      });
   }
 };
 
 const mutations = {
   [AUTH_REQUEST]: state => {
     state.status = "loading";
+  },
+  [AUTH_SUCCESS]: (state, data) => {
+    state.userId = data.userId;
+    state.accessToken = data.accessToken;
+    state.refreshToken = data.refreshToken;
+    state.status = "success";
+  },
+  [AUTH_ERROR]: state => {
+    state.status = "error";
   }
 };
 
