@@ -63,6 +63,12 @@ export default new Router({
       beforeEnter: ifAuthenticated
     },
     {
+      path: "/users/edit",
+      name: "user edit",
+      component: () => import("./views/NewUser.vue"),
+      beforeEnter: ifAuthenticated
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
