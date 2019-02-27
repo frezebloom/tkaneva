@@ -25,7 +25,7 @@
     </div>
     <div class="login-footer">
       <div v-on:click="signup">
-        <Button value="Войти"/>
+        <Button value="Войти" styles="success"/>
       </div>
     </div>
   </div>
