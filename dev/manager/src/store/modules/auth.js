@@ -3,8 +3,8 @@ import signupService from "@/services/signupService";
 import {
   AUTH_REQUEST,
   AUTH_ERROR,
-  AUTH_SUCCESS,
-  AUTH_LOGOUT
+  AUTH_SUCCESS
+  // AUTH_LOGOUT
 } from "../types/auth";
 
 const state = {
@@ -14,8 +14,13 @@ const state = {
   status: "unknown"
 };
 
+const getters = {
+  isAuthenticated: state => !!state.accessToken,
+  authStatus: state => state.status //пока не исользуется
+};
+
 const actions = {
-  [AUTH_REQUEST]({ commit, dispatch }, user) {
+  [AUTH_REQUEST]({ commit }, user) {
     const response = signupService.fetchToken(user.login, user.password);
 
     commit(AUTH_REQUEST);
@@ -23,7 +28,7 @@ const actions = {
     response
       .then(response => {
         const { userId, accessToken, refreshToken } = response.data;
-        localStorage.setItem("userId", userId);
+        localStorage.setItem("userId", userId); // пока не используется, уйдёт в отдельный модуль
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
 
@@ -41,10 +46,10 @@ const mutations = {
     state.status = "loading";
   },
   [AUTH_SUCCESS]: (state, data) => {
+    state.status = "success";
     state.userId = data.userId;
     state.accessToken = data.accessToken;
     state.refreshToken = data.refreshToken;
-    state.status = "success";
   },
   [AUTH_ERROR]: state => {
     state.status = "error";
@@ -53,6 +58,7 @@ const mutations = {
 
 export default {
   state,
+  getters,
   actions,
   mutations
 };
