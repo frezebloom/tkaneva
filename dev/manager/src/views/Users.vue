@@ -30,8 +30,8 @@
 </template>
 <script>
 import Topbar from "@/components/Topbar.vue";
-import router from "@/router.js";
 import userService from "@/services/userService";
+
 export default {
   name: "Users",
   components: {
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     handler(event) {
-      router.push(`/users/${event}`);
+      this.$router.push(`/users/${event}`);
     },
     select(user_id) {
       const index = this.selectElements.indexOf(user_id);

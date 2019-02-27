@@ -21,27 +21,35 @@ const getters = {
 
 const actions = {
   [AUTH_REQUEST]({ commit }, user) {
-    const response = signupService.fetchToken(user.login, user.password);
+    return new Promise((resolve, reject) => {
+      const response = signupService.fetchToken(user.login, user.password);
 
-    commit(AUTH_REQUEST);
+      commit(AUTH_REQUEST);
 
-    response
-      .then(response => {
-        const { userId, accessToken, refreshToken } = response.data;
-        localStorage.setItem("userId", userId); // пока не используется, уйдёт в отдельный модуль
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+      response
+        .then(response => {
+          const { userId, accessToken, refreshToken } = response.data;
+          localStorage.setItem("userId", userId); // пока не используется, уйдёт в отдельный модуль
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
 
-        commit(AUTH_SUCCESS, response.data);
-      })
-      .catch(error => {
-        commit(AUTH_ERROR, error);
-        localStorage.clear();
-      });
+          commit(AUTH_SUCCESS, response.data);
+
+          resolve(response.data);
+        })
+        .catch(error => {
+          commit(AUTH_ERROR, error);
+          localStorage.clear();
+          reject(error);
+        });
+    });
   },
   [AUTH_LOGOUT]({ commit }) {
-    commit(AUTH_LOGOUT);
-    localStorage.clear();
+    return new Promise((resolve, reject) => {
+      commit(AUTH_LOGOUT);
+      localStorage.clear();
+      resolve();
+    });
   }
 };
 
@@ -59,7 +67,8 @@ const mutations = {
     state.status = "error"; // пока не используется
   },
   [AUTH_LOGOUT]: state => {
-    state.token = "";
+    state.accessToken = "";
+    state.status = "unknown"; // пока не используется
   }
 };
 

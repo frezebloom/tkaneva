@@ -49,7 +49,9 @@ export default {
   methods: {
     signup() {
       const { login, password } = this;
-      this.$store.dispatch(AUTH_REQUEST, { login, password });
+      this.$store.dispatch(AUTH_REQUEST, { login, password }).then(() => {
+        this.$router.push("/");
+      });
     }
   }
 };

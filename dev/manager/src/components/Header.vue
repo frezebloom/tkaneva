@@ -13,7 +13,9 @@ export default {
   name: "Header",
   methods: {
     logout() {
-      this.$store.dispatch(AUTH_LOGOUT);
+      this.$store.dispatch(AUTH_LOGOUT).then(() => {
+        this.$router.push("/login");
+      });
     }
   }
 };

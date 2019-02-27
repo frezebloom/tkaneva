@@ -2,12 +2,12 @@
   <div id="app">
     <div v-if="isAuthenticated">
       <Header/>
-    </div>
-    <div class="wrapper">
-      <div v-if="isAuthenticated">
+      <div class="wrapper">
         <Sidebar/>
+        <Content/>
       </div>
-
+    </div>
+    <div v-else>
       <Content/>
     </div>
   </div>
