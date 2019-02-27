@@ -7,7 +7,7 @@
 .content {
   position: relative;
   width: 100%;
-  margin: 20px;
+  padding: 20px;
 }
 </style>
 
