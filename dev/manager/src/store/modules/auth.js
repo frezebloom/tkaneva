@@ -3,15 +3,15 @@ import signupService from "@/services/signupService";
 import {
   AUTH_REQUEST,
   AUTH_ERROR,
-  AUTH_SUCCESS
-  // AUTH_LOGOUT
+  AUTH_SUCCESS,
+  AUTH_LOGOUT
 } from "../types/auth";
 
 const state = {
   userId: localStorage.getItem("userId") || "",
   accessToken: localStorage.getItem("accessToken") || "",
   refreshToken: localStorage.getItem("refreshToken") || "",
-  status: "unknown"
+  status: "unknown" //пока не исользуется
 };
 
 const getters = {
@@ -38,6 +38,10 @@ const actions = {
         commit(AUTH_ERROR, error);
         localStorage.clear();
       });
+  },
+  [AUTH_LOGOUT]({ commit }) {
+    commit(AUTH_LOGOUT);
+    localStorage.clear();
   }
 };
 
@@ -53,6 +57,9 @@ const mutations = {
   },
   [AUTH_ERROR]: state => {
     state.status = "error"; // пока не используется
+  },
+  [AUTH_LOGOUT]: state => {
+    state.token = "";
   }
 };
 
