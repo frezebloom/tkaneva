@@ -2,8 +2,25 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
+import store from "./store";
 
 Vue.use(Router);
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next("/");
+};
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next("/login");
+};
 
 export default new Router({
   mode: "history",
@@ -12,32 +29,38 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      beforeEnter: ifAuthenticated
     },
     {
       path: "/login",
       name: "login",
-      component: Login
+      component: Login,
+      beforeEnter: ifNotAuthenticated
     },
     {
       path: "/product/new",
       name: "new product",
-      component: () => import("./views/NewProduct.vue")
+      component: () => import("./views/NewProduct.vue"),
+      beforeEnter: ifAuthenticated
     },
     {
       path: "/product/category",
       name: "product category",
-      component: () => import("./views/ProductCategory.vue")
+      component: () => import("./views/ProductCategory.vue"),
+      beforeEnter: ifAuthenticated
     },
     {
       path: "/users",
       name: "users",
-      component: () => import("./views/Users.vue")
+      component: () => import("./views/Users.vue"),
+      beforeEnter: ifAuthenticated
     },
     {
       path: "/users/new",
       name: "new user",
-      component: () => import("./views/NewUser.vue")
+      component: () => import("./views/NewUser.vue"),
+      beforeEnter: ifAuthenticated
     },
     {
       path: "/about",

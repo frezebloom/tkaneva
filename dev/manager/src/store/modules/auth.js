@@ -43,16 +43,16 @@ const actions = {
 
 const mutations = {
   [AUTH_REQUEST]: state => {
-    state.status = "loading";
+    state.status = "loading"; // пока не используется
   },
   [AUTH_SUCCESS]: (state, data) => {
-    state.status = "success";
-    state.userId = data.userId;
+    state.status = "success"; // пока не используется
+    state.userId = data.userId; // пока не используется, уйдёт в отдельный модуль
     state.accessToken = data.accessToken;
     state.refreshToken = data.refreshToken;
   },
   [AUTH_ERROR]: state => {
-    state.status = "error";
+    state.status = "error"; // пока не используется
   }
 };
 
