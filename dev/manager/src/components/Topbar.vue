@@ -6,7 +6,7 @@
         <img alt="Создать" src="../assets/icons/add.svg">
         <div>Создать</div>
       </div>
-      <div class="btn">
+      <div class="btn" v-on:click="$emit('clickEvent', 'edit')">
         <img alt="Изменить" src="../assets/icons/edit.svg">
         <div>Изменить</div>
       </div>

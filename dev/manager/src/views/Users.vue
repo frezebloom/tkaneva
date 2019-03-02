@@ -1,6 +1,6 @@
 <template>
   <div class="users">
-    <Topbar title="Пользователи" @clickEvent="handler($event)"/>
+    <Topbar title="Пользователи" @clickEvent="route($event)"/>
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
 
@@ -55,8 +55,18 @@ export default {
       });
   },
   methods: {
-    handler(event) {
+    route(event) {
+      const { users, selectElements } = this;
+      const selectUsers = this.getSelectUsers(users, selectElements);
       this.$router.push(`/users/${event}`);
+    },
+    getSelectUsers(users, selectElements) {
+      const selectUsers = users.filter(user => {
+        if (selectElements.includes(user.user_id)) {
+          return user;
+        }
+      });
+      return selectUsers;
     },
     select(user_id) {
       const index = this.selectElements.indexOf(user_id);

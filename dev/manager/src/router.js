@@ -64,8 +64,8 @@ export default new Router({
     },
     {
       path: "/users/edit",
-      name: "user edit",
-      component: () => import("./views/NewUser.vue"),
+      name: "edit user",
+      component: () => import("./views/EditUser.vue"),
       beforeEnter: ifAuthenticated
     },
     {
