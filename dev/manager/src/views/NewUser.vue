@@ -42,7 +42,7 @@
   </div>
 </template>
 <script>
-import Button from "@/components/Button.vue";
+import Button from "@/components/Button";
 import userService from "@/services/userService";
 export default {
   name: "NewUser",

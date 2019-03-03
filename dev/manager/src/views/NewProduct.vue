@@ -2,7 +2,7 @@
   <div class="newproduct">
     <h3>Добавить новый товар</h3>
     <ProductForm
-      v-bind:input="[
+      :input="[
         { name: 'Категория', type: 'select' },
         { name: 'Название', type: 'text' }, 
         { name: 'Описание', type: 'text' }, 

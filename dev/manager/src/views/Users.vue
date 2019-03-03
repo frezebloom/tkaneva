@@ -57,10 +57,12 @@ export default {
   methods: {
     route(event) {
       const { users, selectElements } = this;
+
       const selectUsers = this.getSelectUsers(users, selectElements);
+
       this.$router.push({
         name: event,
-        params: selectUsers
+        params: { selectUsers }
       });
     },
     getSelectUsers(users, selectElements) {
@@ -69,6 +71,7 @@ export default {
           return user;
         }
       });
+
       return selectUsers;
     },
     select(user_id) {

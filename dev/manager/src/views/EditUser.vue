@@ -1,17 +1,27 @@
 <template>
-  <div class="edit-user"></div>
+  <div class="edit-user">
+    <Tabs :tabs="this.users"/>
+    <NewUser/>
+  </div>
 </template>
 <script>
+import Tabs from "@/components/Tabs";
+import NewUser from "@/views/NewUser";
+
 export default {
   name: "EditUser",
-  props: {
-    selectUsers: {
-      type: Array,
-      required: false
-    }
+  components: {
+    Tabs,
+    NewUser
+  },
+  data() {
+    return {
+      users: []
+    };
   },
   created() {
-    console.log(this.$route.params);
+    const { selectUsers } = this.$route.params;
+    if (selectUsers) this.users = selectUsers;
   }
 };
 </script>
