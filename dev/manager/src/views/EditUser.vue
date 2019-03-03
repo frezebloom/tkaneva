@@ -3,6 +3,16 @@
 </template>
 <script>
 export default {
-  name: "EditUser"
+  name: "EditUser",
+  props: {
+    selectUsers: {
+      type: Array,
+      required: false
+    }
+  },
+  created() {
+    console.log(this.$route.params);
+  }
 };
 </script>
+

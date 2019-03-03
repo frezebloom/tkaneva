@@ -2,11 +2,11 @@
   <div class="topbar">
     <h3>{{title}}</h3>
     <div class="topbar-btn-group">
-      <div class="btn" v-on:click="$emit('clickEvent', 'new')">
+      <div class="btn" v-on:click="$emit('clickRoute', 'new user')">
         <img alt="Создать" src="../assets/icons/add.svg">
         <div>Создать</div>
       </div>
-      <div class="btn" v-on:click="$emit('clickEvent', 'edit')">
+      <div class="btn" v-on:click="$emit('clickRoute', 'edit user')">
         <img alt="Изменить" src="../assets/icons/edit.svg">
         <div>Изменить</div>
       </div>
