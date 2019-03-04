@@ -1,18 +1,18 @@
 <template>
   <div class="edit-user">
     <Tabs :tabs="this.users"/>
-    <NewUser/>
+    <UserForm/>
   </div>
 </template>
 <script>
 import Tabs from "@/components/Tabs";
-import NewUser from "@/views/NewUser";
+import UserForm from "@/components/UserForm";
 
 export default {
   name: "EditUser",
   components: {
     Tabs,
-    NewUser
+    UserForm
   },
   data() {
     return {
