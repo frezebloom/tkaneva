@@ -45,7 +45,7 @@
 import Button from "@/components/Button";
 import userService from "@/services/userService";
 export default {
-  name: "NewUser",
+  name: "UserForm",
   components: {
     Button
   },

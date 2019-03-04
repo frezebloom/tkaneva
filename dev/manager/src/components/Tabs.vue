@@ -2,7 +2,12 @@
   <div class="tabs">
     <div class="tabs-wrapper">
       <!-- нужно переделать на универсальный id и поле name -->
-      <div class="tab" v-for="tab in faketabs" :key="tab.user_id">{{ tab.firstname }}</div>
+      <div
+        class="tab"
+        v-for="(tab, index) in tabs"
+        :key="tab.user_id"
+        @click="show(index)"
+      >{{ tab.firstname }}</div>
     </div>
   </div>
 </template>
@@ -40,6 +45,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    show(index) {
+      console.log(index);
+    }
   }
 };
 </script>
