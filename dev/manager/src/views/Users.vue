@@ -108,4 +108,3 @@ export default {
 @import "../styles/variables.scss";
 @import "../styles/table.scss";
 </style>
-

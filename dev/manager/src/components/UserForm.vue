@@ -59,7 +59,7 @@
       <div class="form-wrapper">
         <label class="form-label">Повторите пароль</label>
         <input
-          :value="state.confrimPassword"
+          :value="state.password"
           @input="inputHandler($event, 'confrimPassword')"
           class="form-input"
           type="password"
