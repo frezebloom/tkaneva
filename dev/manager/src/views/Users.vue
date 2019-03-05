@@ -1,6 +1,6 @@
 <template>
   <div class="users">
-    <Topbar title="Пользователи" @clickRoute="route($event)"/>
+    <Topbar title="Пользователи" @eventClickTopBar="route($event)"/>
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
 

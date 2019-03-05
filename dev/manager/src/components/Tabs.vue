@@ -6,7 +6,7 @@
         class="tab"
         v-for="(tab, index) in tabs"
         :key="tab.user_id"
-        @click="show(index)"
+        @click="$emit('eventClickTab', index)"
       >{{ tab.firstname }}</div>
     </div>
   </div>
@@ -47,7 +47,7 @@ export default {
     };
   },
   methods: {
-    show(index) {
+    eventClickTab(index) {
       console.log(index);
     }
   }

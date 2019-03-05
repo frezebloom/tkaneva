@@ -4,31 +4,31 @@
       <div class="form-header">Создать акаунт</div>
       <div class="form-wrapper">
         <label class="form-label">Имя</label>
-        <input v-model="user.firstname" class="form-input" type="text">
+        <input :value="state.firstname" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Фамилия</label>
-        <input v-model="user.lastname" class="form-input" type="text">
+        <input :value="state.lastname" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Логин</label>
-        <input v-model="user.login" class="form-input" type="text">
+        <input :value="state.login" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Почта</label>
-        <input v-model="user.email" class="form-input" type="text">
+        <input :value="state.email" class="form-input" type="text">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Группа</label>
-        <input v-model="user.group" class="form-input" type="select">
+        <input :value="state.group" class="form-input" type="select">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Пароль</label>
-        <input v-model="user.password" class="form-input" type="password">
+        <input :value="state.password" class="form-input" type="password">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Повторите пароль</label>
-        <input v-model="user.confrimPassword" class="form-input" type="password">
+        <input :value="state.confrimPassword" class="form-input" type="password">
       </div>
       <div class="form-footer">
         <div @click="create" class="form-footer-wrapper">
@@ -49,14 +49,20 @@ export default {
   components: {
     Button
   },
+  props: {
+    state: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       user: {
-        firstname: "",
-        lastname: "",
-        login: "",
-        email: "",
-        group: "",
+        firstname: this.state.firstname,
+        lastname: this.state.lastname,
+        login: this.state.login,
+        email: this.state.email,
+        group: this.state.group,
         password: "",
         confrimPassword: ""
       }
