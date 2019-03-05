@@ -23,28 +23,6 @@ export default {
   },
   data() {
     return {
-      faketabs: [
-        {
-          id: 1,
-          firstname: "Mikhail"
-        },
-        {
-          id: 2,
-          firstname: "Valeria"
-        },
-        {
-          id: 3,
-          firstname: "Oleg"
-        },
-        {
-          id: 4,
-          firstname: "Pavel"
-        },
-        {
-          id: 5,
-          firstname: "Zina"
-        }
-      ],
       activeTab: 0
     };
   },
