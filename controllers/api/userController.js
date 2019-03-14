@@ -29,11 +29,11 @@ module.exports = {
     const passwordToSave = bcrypt.hashSync(password, this.salt);
 
     User.create({
-      firstname: firstname,
-      lastname: lastname,
-      login: login,
-      email: email,
-      group: group,
+      firstname,
+      lastname,
+      login,
+      email,
+      group,
       password: passwordToSave
     })
       .then(user => {
