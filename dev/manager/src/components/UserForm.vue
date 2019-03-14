@@ -49,21 +49,11 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Пароль</label>
-        <input
-          :value="state.password"
-          @input="inputHandler($event, 'password')"
-          class="form-input"
-          type="password"
-        >
+        <input @input="inputHandler($event, 'password')" class="form-input" type="password">
       </div>
       <div class="form-wrapper">
         <label class="form-label">Повторите пароль</label>
-        <input
-          :value="state.password"
-          @input="inputHandler($event, 'confrimPassword')"
-          class="form-input"
-          type="password"
-        >
+        <input @input="inputHandler($event, 'confrimPassword')" class="form-input" type="password">
       </div>
       <div class="form-footer">
         <div @click="create" class="form-footer-wrapper">
@@ -106,6 +96,7 @@ export default {
   methods: {
     inputHandler(event, params) {
       this.user[params] = event.target.value;
+      console.log(this.user);
     },
     create() {
       const response = userService.createUser(this.user);
