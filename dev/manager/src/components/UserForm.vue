@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       user: {
-        firs_tname: "",
+        first_name: "",
         last_name: "",
         login: "",
         email: "",
@@ -96,7 +96,6 @@ export default {
   methods: {
     inputHandler(event, params) {
       this.user[params] = event.target.value;
-      console.log(this.user);
     },
     create() {
       const response = userService.createUser(this.user);
