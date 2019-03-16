@@ -1,14 +1,13 @@
 <template>
   <div class="tabs">
     <div class="tabs-wrapper">
-      <!-- нужно переделать на универсальный id и поле name -->
       <div
         class="tab"
         v-for="(tab, index) in tabs"
-        :key="tab.user_id"
+        :key="tab.id"
         :class="{ active: activeTab === index }"
         @click="eventClickTab(index)"
-      >{{ tab.firstname }}</div>
+      >{{ tab.fullName }}</div>
     </div>
   </div>
 </template>

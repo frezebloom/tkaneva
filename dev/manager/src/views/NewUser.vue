@@ -14,8 +14,8 @@ export default {
   data() {
     return {
       user: {
-        firstname: "",
-        lastname: "",
+        first_name: "",
+        last_name: "",
         login: "",
         email: "",
         group: "",

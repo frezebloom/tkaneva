@@ -18,8 +18,8 @@ module.exports = {
 
   create(req, res) {
     const {
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       login,
       email,
       group,
@@ -29,8 +29,8 @@ module.exports = {
     const passwordToSave = bcrypt.hashSync(password, this.salt);
 
     User.create({
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       login,
       email,
       group,
@@ -47,8 +47,8 @@ module.exports = {
   update(req, res) {
     const {
       id,
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       login,
       email,
       group,
@@ -59,8 +59,8 @@ module.exports = {
 
     User.update(
       {
-        firstname,
-        lastname,
+        first_name,
+        last_name,
         login,
         email,
         group,

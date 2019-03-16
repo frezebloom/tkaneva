@@ -11,8 +11,8 @@
         :key="item.id"
       >
         <td>{{item.user_id}}</td>
-        <td>{{item.firstname}}</td>
-        <td>{{item.lastname}}</td>
+        <td>{{item.first_name}}</td>
+        <td>{{item.last_name}}</td>
         <td>{{item.login}}</td>
         <td>{{item.email}}</td>
         <td>{{item.group}}</td>

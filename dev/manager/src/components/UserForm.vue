@@ -5,8 +5,8 @@
       <div class="form-wrapper">
         <label class="form-label">Имя</label>
         <input
-          :value="state.firstname"
-          @input="inputHandler($event, 'firstname')"
+          :value="state.first_name"
+          @input="inputHandler($event, 'first_name')"
           class="form-input"
           type="text"
         >
@@ -14,8 +14,8 @@
       <div class="form-wrapper">
         <label class="form-label">Фамилия</label>
         <input
-          :value="state.lastname"
-          @input="inputHandler($event, 'lastname')"
+          :value="state.last_name"
+          @input="inputHandler($event, 'last_name')"
           class="form-input"
           type="text"
         >
@@ -83,8 +83,8 @@ export default {
   data() {
     return {
       user: {
-        firstname: "",
-        lastname: "",
+        firs_tname: "",
+        last_name: "",
         login: "",
         email: "",
         group: "",
