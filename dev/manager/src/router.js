@@ -59,8 +59,8 @@ export default new Router({
     {
       path: "/users/new",
       name: "new user",
-      component: () => import("./views/NewUser.vue"),
-      beforeEnter: ifAuthenticated
+      component: () => import("./views/NewUser.vue")
+      // beforeEnter: ifAuthenticated
     },
     {
       path: "/users/edit",
