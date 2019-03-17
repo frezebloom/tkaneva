@@ -56,8 +56,8 @@
         <input @input="inputHandler($event, 'confrimPassword')" class="form-input" type="password">
       </div>
       <div class="form-footer">
-        <div @click="create" class="form-footer-wrapper">
-          <Button value="Создать" styles="success"/>
+        <div @click="saveChange" class="form-footer-wrapper">
+          <Button value="Сохранить" styles="success"/>
         </div>
         <div class="form-footer-wrapper">
           <Button value="Отмена" styles="default"/>
@@ -83,6 +83,7 @@ export default {
   data() {
     return {
       user: {
+        user_id: this.state.user_id || "",
         first_name: "",
         last_name: "",
         login: "",
@@ -93,19 +94,33 @@ export default {
       }
     };
   },
+  updated() {
+    console.log(this.state.user_id);
+  },
   methods: {
     inputHandler(event, params) {
       this.user[params] = event.target.value;
     },
-    create() {
-      const response = userService.createUser(this.user);
-      response
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    saveChange() {
+      if (!this.state.user_id) {
+        const user = userService.createUser(this.user);
+        user
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        const user = userService.updateUser(this.user);
+        user
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   }
 };

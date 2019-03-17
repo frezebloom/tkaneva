@@ -8,5 +8,10 @@ export default {
     return api().post("/api/user/create", {
       user
     });
+  },
+  updateUser(user) {
+    return api().put("/api/user/update", {
+      user
+    });
   }
 };
