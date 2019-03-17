@@ -46,7 +46,7 @@ module.exports = {
 
   update(req, res) {
     const {
-      id,
+      user_id,
       first_name,
       last_name,
       login,
@@ -54,9 +54,7 @@ module.exports = {
       group,
       password
     } = req.body.user;
-
     const passwordToSave = bcrypt.hashSync(password, this.salt);
-
     User.update(
       {
         first_name,
@@ -67,10 +65,14 @@ module.exports = {
         password: passwordToSave
       },
       {
-        where: { id }
+        where: { user_id }
       }
-    ).then(() => {
-      res.status(200).send("updated successfully a customer with id = " + id);
-    });
+    )
+      .then(() => {
+        res.status(200).send("updated successfully a customer with id = " + id);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
