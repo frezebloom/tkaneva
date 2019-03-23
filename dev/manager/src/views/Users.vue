@@ -1,5 +1,6 @@
 <template>
   <div class="users">
+    <Check/>
     <Topbar title="Пользователи" @eventClickTopBar="route($event)"/>
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
@@ -30,12 +31,14 @@
 </template>
 <script>
 import Topbar from "@/components/Topbar.vue";
+import Check from "@/components/Check.vue";
 import userService from "@/services/userService";
 
 export default {
   name: "Users",
   components: {
-    Topbar
+    Topbar,
+    Check
   },
   data() {
     return {
