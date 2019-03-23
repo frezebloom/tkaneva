@@ -84,18 +84,15 @@ export default {
     return {
       user: {
         user_id: this.state.user_id || "",
-        first_name: "",
-        last_name: "",
-        login: "",
-        email: "",
-        group: "",
+        first_name: this.state.first_name || "",
+        last_name: this.state.last_name || "",
+        login: this.state.login || "",
+        email: this.state.email || "",
+        group: this.state.group || "",
         password: "",
         confrimPassword: ""
       }
     };
-  },
-  updated() {
-    console.log(this.state.user_id);
   },
   methods: {
     inputHandler(event, params) {
