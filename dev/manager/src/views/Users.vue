@@ -1,6 +1,11 @@
 <template>
   <div class="users">
-    <Check :title="checkTitle" :question="checkQuestion"/>
+    <Check
+      :hideCheck="hideCheck"
+      :header="checkHeader"
+      :question="checkQuestion"
+      @eventClickCheck="check($event)"
+    />
     <Topbar title="Пользователи" @eventClickTopBar="route($event)"/>
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
@@ -43,7 +48,8 @@ export default {
   data() {
     return {
       title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус"],
-      checkTitle: "Удаление",
+      hideCheck: false,
+      checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
       selectElements: []
@@ -69,6 +75,16 @@ export default {
           params: { selectUsers }
         });
       } else {
+        this.hideCheck = !this.hideCheck;
+      }
+    },
+    check(event) {
+      if (!event) {
+        this.hideCheck = !this.hideCheck;
+      } else {
+        this.hideCheck = !this.hideCheck;
+        const { users, selectElements } = this;
+        const selectUsers = this.getSelectUsers(users, selectElements);
         console.log(selectUsers);
       }
     },
