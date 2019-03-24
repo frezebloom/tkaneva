@@ -1,6 +1,6 @@
 <template>
   <div class="users">
-    <Check/>
+    <Check :title="checkTitle" :question="checkQuestion"/>
     <Topbar title="Пользователи" @eventClickTopBar="route($event)"/>
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
@@ -43,6 +43,8 @@ export default {
   data() {
     return {
       title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус"],
+      checkTitle: "Удаление",
+      checkQuestion: "Вы действительно хотите удалить?",
       users: [],
       selectElements: []
     };
