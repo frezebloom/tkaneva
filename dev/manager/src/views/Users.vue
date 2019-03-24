@@ -62,13 +62,15 @@ export default {
   methods: {
     route(event) {
       const { users, selectElements } = this;
-
       const selectUsers = this.getSelectUsers(users, selectElements);
-
-      this.$router.push({
-        name: event,
-        params: { selectUsers }
-      });
+      if (event !== "delete") {
+        this.$router.push({
+          name: event,
+          params: { selectUsers }
+        });
+      } else {
+        console.log(selectUsers);
+      }
     },
     getSelectUsers(users, selectElements) {
       const selectUsers = users.filter(user => {

@@ -10,7 +10,7 @@
         <img alt="Изменить" src="../assets/icons/edit.svg">
         <div>Изменить</div>
       </div>
-      <div class="btn">
+      <div class="btn" @click="$emit('eventClickTopBar', 'delete')">
         <img alt="Удалить" src="../assets/icons/delete.svg">
         <div>Удалить</div>
       </div>
