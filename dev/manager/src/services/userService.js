@@ -15,7 +15,7 @@ export default {
     });
   },
   deleteUser(user) {
-    return api().delete("/api/user/delete", {
+    return api().post("/api/user/delete", {
       user
     });
   }

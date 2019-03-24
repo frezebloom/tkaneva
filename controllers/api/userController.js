@@ -36,10 +36,10 @@ module.exports = {
       group,
       password: passwordToSave
     })
-      .then(user => {
+      .then(() => {
         res.status(201).send("Ok");
       })
-      .catch(error => {
+      .catch(() => {
         res.status(404).send("Invalid request");
       });
   },
@@ -69,14 +69,26 @@ module.exports = {
       }
     )
       .then(() => {
-        res.status(200).send("updated successfully a customer with id = " + id);
+        res.status(201).send("Ok");
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
+        res.status(404).send("Invalid request");
       });
   },
 
   delete(req, res) {
-    console.log(req.body);
+    const { id } = req.body.user;
+    console.log(id);
+    User.destroy({
+      where: {
+        id
+      }
+    })
+      .then(() => {
+        res.status(200).send("Ok");
+      })
+      .catch(error => {
+        res.status(404).send("Invalid request" + error);
+      });
   }
 };
