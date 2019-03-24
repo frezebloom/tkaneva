@@ -13,5 +13,10 @@ export default {
     return api().put("/api/user/update", {
       user
     });
+  },
+  deleteUser(user) {
+    return api().delete("/api/user/delete", {
+      user
+    });
   }
 };

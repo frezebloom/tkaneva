@@ -77,6 +77,6 @@ module.exports = {
   },
 
   delete(req, res) {
-    ///
+    console.log(req.body);
   }
 };

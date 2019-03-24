@@ -15,7 +15,7 @@ router.put("/user/update", (req, res) => {
   userController.update(req, res);
 });
 
-router.delete("user/delete", (req, res) => {
+router.delete("/user/delete", (req, res) => {
   userController.delete(req, res);
 });
 
