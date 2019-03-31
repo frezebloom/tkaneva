@@ -12,7 +12,7 @@ module.exports = {
         res.status(200).json(users);
       })
       .catch(error => {
-        res.status(404).send("Invalid request");
+        res.status(404).send("Invalid request" + error);
       });
   },
 
@@ -40,7 +40,7 @@ module.exports = {
         res.status(201).send("Ok");
       })
       .catch(() => {
-        res.status(404).send("Invalid request");
+        res.status(404).send("Invalid request" + error);
       });
   },
 
@@ -72,7 +72,7 @@ module.exports = {
         res.status(201).send("Ok");
       })
       .catch(() => {
-        res.status(404).send("Invalid request");
+        res.status(404).send("Invalid request" + error);
       });
   },
 
