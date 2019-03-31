@@ -81,7 +81,7 @@ module.exports = {
     console.log(id);
     User.destroy({
       where: {
-        id
+        user_id: id
       }
     })
       .then(() => {
