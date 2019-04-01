@@ -65,6 +65,7 @@ module.exports = function(sequelize, Sequelize) {
       foreignKey: "user_id",
       targetKey: "user_id"
     });
+    User.hasMany(models.userGroup);
   };
 
   return User;
