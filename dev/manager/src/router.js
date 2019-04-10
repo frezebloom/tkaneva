@@ -53,19 +53,19 @@ export default new Router({
     {
       path: "/users",
       name: "users",
-      component: () => import("./views/Users.vue"),
+      component: () => import("./views/users/Users.vue"),
       beforeEnter: ifAuthenticated
     },
     {
       path: "/users/new",
       name: "new user",
-      component: () => import("./views/NewUser.vue")
+      component: () => import("./views/users/NewUser.vue")
       // beforeEnter: ifAuthenticated
     },
     {
       path: "/users/edit",
       name: "edit user",
-      component: () => import("./views/EditUser.vue"),
+      component: () => import("./views/users/EditUser.vue"),
       beforeEnter: ifAuthenticated
     },
     {

@@ -24,7 +24,7 @@
           <router-link to="/users">Пользователи</router-link>
         </li>
         <li>
-          <router-link to="/category">Группы</router-link>
+          <router-link to="/user-groups">Группы</router-link>
         </li>
       </ul>
     </ul>
