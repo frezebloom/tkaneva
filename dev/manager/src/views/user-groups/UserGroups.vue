@@ -19,10 +19,6 @@
         <td>{{item.user_id}}</td>
         <td>{{item.first_name}}</td>
         <td>{{item.last_name}}</td>
-        <td>{{item.login}}</td>
-        <td>{{item.email}}</td>
-        <td>{{item.group}}</td>
-        <td>{{item.status}}</td>
         <td>
           <input
             type="checkbox"
@@ -40,14 +36,14 @@ import Check from "@/components/Check.vue";
 import userService from "@/services/userService";
 
 export default {
-  name: "Users",
+  name: "UserGroups",
   components: {
     Topbar,
     Check
   },
   data() {
     return {
-      title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус"],
+      title: ["№", "Название", "Статус"],
       hideCheck: false,
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",

@@ -1,6 +1,6 @@
 <template>
   <div class="new-user">
-    <UserForm :state="user"/>
+    <UserForm :state="userGroup"/>
   </div>
 </template>
 <script>
@@ -13,14 +13,8 @@ export default {
   },
   data() {
     return {
-      user: {
-        first_name: "",
-        last_name: "",
-        login: "",
-        email: "",
-        group: "",
-        password: "",
-        confrimPassword: ""
+      userGroup: {
+        name: "",
       }
     };
   }

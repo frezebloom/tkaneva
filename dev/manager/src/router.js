@@ -70,8 +70,20 @@ export default new Router({
     },
     {
       path: "/user-groups",
-      name: "edit user",
+      name: "user groups",
       component: () => import("./views/user-groups/UserGroups.vue"),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: "/user-groups/new",
+      name: "new user group",
+      component: () => import("./views/user-groups/NewUserGroup.vue"),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: "/user-groups/edit",
+      name: "edit user group",
+      component: () => import("./views/user-groups/EditUserGroup.vue"),
       beforeEnter: ifAuthenticated
     },
     {
