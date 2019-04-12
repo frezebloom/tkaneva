@@ -67,7 +67,7 @@ export default {
       const selectUsers = this.getSelectUsers(users, selectElements);
       if (event !== "delete") {
         this.$router.push({
-          name: event,
+          name: event + " user group",
           params: { selectUsers }
         });
       } else {
