@@ -69,6 +69,12 @@ export default new Router({
       beforeEnter: ifAuthenticated
     },
     {
+      path: "/user-groups",
+      name: "edit user",
+      component: () => import("./views/user-groups/UserGroups.vue"),
+      beforeEnter: ifAuthenticated
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
