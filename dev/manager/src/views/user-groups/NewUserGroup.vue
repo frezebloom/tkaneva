@@ -7,7 +7,7 @@
 import UserForm from "@/components/UserForm";
 
 export default {
-  name: "NewUser",
+  name: "NewUserGroup",
   components: {
     UserForm
   },

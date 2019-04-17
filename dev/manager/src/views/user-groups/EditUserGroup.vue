@@ -9,7 +9,7 @@ import Tabs from "@/components/Tabs";
 import UserForm from "@/components/UserForm";
 
 export default {
-  name: "EditUser",
+  name: "EditUserGroup",
   components: {
     Tabs,
     UserForm
