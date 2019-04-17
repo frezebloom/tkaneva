@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-user">
+  <div class="edit-user-group">
     <Tabs :tabs="this.users" @eventClickTab="route($event)"/>
     <UserForm :state="user"/>
   </div>

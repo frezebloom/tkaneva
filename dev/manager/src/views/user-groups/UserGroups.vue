@@ -1,5 +1,5 @@
 <template>
-  <div class="users">
+  <div class="user-groups">
     <Check
       :hideCheck="hideCheck"
       :header="checkHeader"

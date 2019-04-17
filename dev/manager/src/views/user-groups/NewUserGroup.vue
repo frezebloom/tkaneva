@@ -1,5 +1,5 @@
 <template>
-  <div class="new-user">
+  <div class="new-user-group">
     <UserForm :state="userGroup"/>
   </div>
 </template>
