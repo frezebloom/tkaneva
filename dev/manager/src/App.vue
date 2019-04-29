@@ -6,6 +6,7 @@
         <Sidebar/>
         <Content/>
       </div>
+      <Footer/>
     </div>
     <div v-else>
       <Content/>
@@ -16,6 +17,7 @@
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Content from "@/components/Content.vue";
+import Footer from "@/components/Footer.vue";
 
 import { mapGetters } from "vuex";
 
@@ -24,7 +26,8 @@ export default {
   components: {
     Header,
     Sidebar,
-    Content
+    Content,
+    Footer
   },
   computed: {
     ...mapGetters(["isAuthenticated"])
@@ -33,6 +36,9 @@ export default {
 </script>
 <style lang="scss">
 @import "./styles/reset.scss";
+html {
+  overflow: hidden;
+}
 #app {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #f4f4f4;

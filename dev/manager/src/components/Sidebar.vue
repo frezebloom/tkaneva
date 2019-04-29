@@ -60,7 +60,7 @@ export default {
   background-color: $colorBlack;
   padding-bottom: 10px;
   width: 230px;
-  height: 768px;
+  height: 100vh;
   user-select: none;
 }
 .sidebar-menu-header {
