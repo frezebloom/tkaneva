@@ -1,20 +1,20 @@
 <template>
   <div class="new-user-group">
-    <UserForm :state="userGroup"/>
+    <UserGroupForm :state="userGroup"/>
   </div>
 </template>
 <script>
-import UserForm from "@/components/UserForm";
+import UserGroupForm from "@/components/UserGroupForm";
 
 export default {
   name: "NewUserGroup",
   components: {
-    UserForm
+    UserGroupForm
   },
   data() {
     return {
       userGroup: {
-        name: "",
+        name: ""
       }
     };
   }

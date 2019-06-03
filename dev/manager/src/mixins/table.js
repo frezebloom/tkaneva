@@ -1,7 +1,7 @@
 import userService from "@/services/userService";
 
 export const table = {
-    methods: {
+  methods: {
     route(event) {
       const { users, selectElements } = this;
       const selectUsers = this.getSelectUsers(users, selectElements);
@@ -70,4 +70,4 @@ export const table = {
       }
     }
   }
-}
+};
