@@ -34,7 +34,7 @@
 import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
 import userService from "@/services/userService";
-import { table } from '@/mixins/table';
+import { table } from "@/mixins/table";
 
 export default {
   name: "UserGroups",
@@ -62,6 +62,20 @@ export default {
       .catch(error => {
         console.log(error);
       });
+  },
+  methods: {
+    route(event) {
+      const { users, selectElements } = this;
+      const selectUsers = this.getSelectUsers(users, selectElements);
+      if (event !== "delete") {
+        this.$router.push({
+          name: event + " user group",
+          params: { selectUsers }
+        });
+      } else {
+        this.hideCheck = !this.hideCheck;
+      }
+    }
   }
 };
 </script>
