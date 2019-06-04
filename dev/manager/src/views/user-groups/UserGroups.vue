@@ -75,6 +75,33 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
       }
+    },
+    check(event) {
+      if (!event) {
+        this.hideCheck = !this.hideCheck;
+      } else {
+        this.hideCheck = !this.hideCheck;
+        const { users, selectElements } = this;
+        const selectUsers = this.getSelectUsers(users, selectElements);
+        selectUsers.forEach(item => {
+          const user = userService.deleteUser(item);
+          user
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        });
+      }
+    },
+    getSelectUsers(users, selectElements) {
+      const selectUsers = users.filter(user => {
+        if (selectElements.includes(user.user_id)) {
+          return user;
+        }
+      });
+      return selectUsers;
     }
   }
 };
