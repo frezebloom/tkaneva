@@ -5,8 +5,8 @@
       <div class="form-wrapper">
         <label class="form-label">Название</label>
         <input
-          :value="state.first_name"
-          @input="inputHandler($event, 'first_name')"
+          :value="state.name"
+          @input="inputHandler($event, 'name')"
           class="form-input"
           type="text"
         >
@@ -24,6 +24,7 @@
 </template>
 <script>
 import Button from "@/components/Button";
+import userGroupService from "@/services/userGroupService";
 export default {
   name: "UserGroupForm",
   components: {
@@ -33,6 +34,39 @@ export default {
     state: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      userGroup: {
+        name: this.state.name || ""
+      }
+    };
+  },
+  methods: {
+    inputHandler(event, params) {
+      this.userGroup[params] = event.target.value;
+    },
+    saveChange() {
+      if (!this.state.user_id) {
+        const userGroup = userGroupService.createUserGroup(this.userGroup);
+        userGroup
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        const userGroup = userGroupService.updateUser(this.userGroup);
+        userGroup
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   }
 };

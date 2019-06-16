@@ -4,7 +4,7 @@ const UserGroup = db.userGroup;
 
 module.exports = {
   create(req, res) {
-    const { name } = req.body;
+    const { name } = req.body.userGroup;
 
     UserGroup.create({
       name
