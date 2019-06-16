@@ -39,7 +39,7 @@ module.exports = {
       .then(() => {
         res.status(201).send("Ok");
       })
-      .catch(() => {
+      .catch(error => {
         res.status(404).send("Invalid request" + error);
       });
   },
