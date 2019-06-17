@@ -13,7 +13,10 @@ module.exports = function(sequelize, Sequelize) {
   });
 
   UserGroup.associate = models => {
-    UserGroup.belongsTo(models.user);
+    UserGroup.hasMany(models.user, {
+      foreignKey: "group_id",
+      targetKey: "group_id"
+    });
   };
 
   return UserGroup;

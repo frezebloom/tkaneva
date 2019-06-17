@@ -30,10 +30,6 @@ module.exports = function(sequelize, Sequelize) {
         }
       },
 
-      group: {
-        type: Sequelize.TEXT
-      },
-
       password: {
         type: Sequelize.STRING,
         allowNull: false
@@ -65,7 +61,10 @@ module.exports = function(sequelize, Sequelize) {
       foreignKey: "user_id",
       targetKey: "user_id"
     });
-    User.hasMany(models.userGroup);
+    User.belongsTo(models.userGroup, {
+      foreignKey: "group_id",
+      targetKey: "group_id"
+    });
   };
 
   return User;
