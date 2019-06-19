@@ -13,17 +13,16 @@
       <tr
         @click="select(item.user_id)"
         :class="isActive(item.user_id)"
-        v-for="item in users"
-        :key="item.id"
+        v-for="item in userGroups"
+        :key="item.group_id"
       >
-        <td>{{item.user_id}}</td>
-        <td>{{item.first_name}}</td>
-        <td>{{item.last_name}}</td>
+        <td>{{item.group_id}}</td>
+        <td>{{item.name}}</td>
         <td>
           <input
             type="checkbox"
-            :checked="checked(item.user_id)"
-            @click.stop="select(item.user_id)"
+            :checked="checked(item.group_id)"
+            @click.stop="select(item.group_id)"
           >
         </td>
       </tr>
@@ -33,6 +32,7 @@
 <script>
 import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
+import userGroupService from "@/services/userGroupService";
 import userService from "@/services/userService";
 import { table } from "@/mixins/table";
 
@@ -49,15 +49,15 @@ export default {
       hideCheck: false,
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
-      users: [],
+      userGroups: [],
       selectElements: []
     };
   },
   mounted() {
-    const users = userService.getUsers();
-    users
-      .then(users => {
-        this.users = users.data;
+    const userGroups = userGroupService.getUserGroups();
+    userGroups
+      .then(userGroups => {
+        this.userGroups = userGroups.data;
       })
       .catch(error => {
         console.log(error);

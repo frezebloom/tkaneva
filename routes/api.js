@@ -20,7 +20,7 @@ router.post("/user/delete", (req, res) => {
   userController.delete(req, res);
 });
 
-router.post("/user-group/get", (req, res) => {
+router.get("/user-group/get", (req, res) => {
   userGroupController.get(req, res);
 });
 
