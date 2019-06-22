@@ -40,7 +40,7 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Группа</label>
-        <select class="form-select" @input="inputHandler($event, 'group')">
+        <select class="form-select" @input="inputHandler($event, 'group_id')">
           <option
             v-for="(option, index) in userGroups"
             :key="index"
@@ -94,7 +94,7 @@ export default {
         last_name: this.state.last_name || "",
         login: this.state.login || "",
         email: this.state.email || "",
-        group: "worker",
+        group_id: 1,
         password: "",
         confrimPassword: ""
       }
@@ -105,26 +105,25 @@ export default {
       this.user[params] = event.target.value;
     },
     saveChange() {
-      console.log(this.user);
-      // if (!this.state.user_id) {
-      //   const user = userService.createUser(this.user);
-      //   user
-      //     .then(response => {
-      //       console.log(response.data);
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
-      // } else {
-      //   const user = userService.updateUser(this.user);
-      //   user
-      //     .then(response => {
-      //       console.log(response.data);
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
-      // }
+      if (!this.state.user_id) {
+        const user = userService.createUser(this.user);
+        user
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        const user = userService.updateUser(this.user);
+        user
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   }
 };

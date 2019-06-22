@@ -22,7 +22,7 @@ module.exports = {
       last_name,
       login,
       email,
-      group,
+      group_id,
       password
     } = req.body.user;
 
@@ -33,7 +33,7 @@ module.exports = {
       last_name,
       login,
       email,
-      group,
+      group_id,
       password: passwordToSave
     })
       .then(() => {

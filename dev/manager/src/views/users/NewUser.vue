@@ -20,7 +20,7 @@ export default {
         last_name: "",
         login: "",
         email: "",
-        group: "",
+        group_id: "",
         password: "",
         confrimPassword: ""
       },

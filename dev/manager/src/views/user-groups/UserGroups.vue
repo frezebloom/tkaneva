@@ -33,7 +33,6 @@
 import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
 import userGroupService from "@/services/userGroupService";
-import userService from "@/services/userService";
 import { table } from "@/mixins/table";
 
 export default {
