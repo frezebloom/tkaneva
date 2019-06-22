@@ -1,6 +1,6 @@
 <template>
   <div class="new-user">
-    <UserForm :state="user"/>
+    <UserForm :state="user" :userGroups="userGroups"/>
   </div>
 </template>
 <script>
@@ -23,15 +23,15 @@ export default {
         group: "",
         password: "",
         confrimPassword: ""
-      }
+      },
+      userGroups: []
     };
   },
   mounted() {
     const userGroups = userGroupService.getUserGroups();
     userGroups
       .then(userGroups => {
-        // this.userGroups = userGroups.data;
-        console.log(userGroups.data);
+        this.userGroups = userGroups.data;
       })
       .catch(error => {
         console.log(error);

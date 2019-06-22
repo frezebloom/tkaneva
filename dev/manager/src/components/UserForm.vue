@@ -78,6 +78,10 @@ export default {
     state: {
       type: Object,
       required: true
+    },
+    userGroups: {
+      type: Array,
+      required: true
     }
   },
   data() {
