@@ -40,12 +40,12 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Группа</label>
-        <select class="form-select">
+        <select class="form-select" @input="inputHandler($event, 'group')">
           <option
             v-for="(option, index) in userGroups"
             :key="index"
             :value="option.group_id"
-            :selected="index === 0 ? 'selected' : ''"
+            :selected="index === 2 ? 'selected' : ''"
           >{{ option.name }}</option>
         </select>
       </div>
@@ -94,7 +94,7 @@ export default {
         last_name: this.state.last_name || "",
         login: this.state.login || "",
         email: this.state.email || "",
-        group: this.state.group || "",
+        group: "worker",
         password: "",
         confrimPassword: ""
       }
@@ -105,25 +105,26 @@ export default {
       this.user[params] = event.target.value;
     },
     saveChange() {
-      if (!this.state.user_id) {
-        const user = userService.createUser(this.user);
-        user
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      } else {
-        const user = userService.updateUser(this.user);
-        user
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+      console.log(this.user);
+      // if (!this.state.user_id) {
+      //   const user = userService.createUser(this.user);
+      //   user
+      //     .then(response => {
+      //       console.log(response.data);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //     });
+      // } else {
+      //   const user = userService.updateUser(this.user);
+      //   user
+      //     .then(response => {
+      //       console.log(response.data);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //     });
+      // }
     }
   }
 };
