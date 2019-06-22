@@ -2,7 +2,7 @@ import api from "@/services/api";
 
 export default {
   getUsers() {
-    return api().get("/api/users/get");
+    return api().get("/api/user/get");
   },
   createUser(user) {
     return api().post("/api/user/create", {
