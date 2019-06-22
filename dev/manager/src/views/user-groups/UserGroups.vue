@@ -81,11 +81,11 @@ export default {
         this.hideCheck = !this.hideCheck;
       } else {
         this.hideCheck = !this.hideCheck;
-        const { users, selectElements } = this;
-        const selectUsers = this.getSelect(users, selectElements);
-        selectUsers.forEach(item => {
-          const user = userService.deleteUser(item);
-          user
+        const { userGroups, selectElements } = this;
+        const selectUserGroups = this.getSelect(userGroups, selectElements);
+        selectUserGroups.forEach(item => {
+          const userGroups = userGroupService.deleteUser(item);
+          userGroups
             .then(response => {
               console.log(response.data);
             })
