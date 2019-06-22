@@ -40,12 +40,14 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Группа</label>
-        <input
-          :value="state.group"
-          @input="inputHandler($event, 'group')"
-          class="form-input"
-          type="select"
-        >
+        <select class="form-select">
+          <option
+            v-for="(option, index) in userGroups"
+            :key="index"
+            :value="option.group_id"
+            :selected="index === 0 ? 'selected' : ''"
+          >{{ option.name }}</option>
+        </select>
       </div>
       <div class="form-wrapper">
         <label class="form-label">Пароль</label>
