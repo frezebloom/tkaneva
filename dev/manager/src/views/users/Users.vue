@@ -70,7 +70,7 @@ export default {
   methods: {
     route(event) {
       const { users, selectElements } = this;
-      const selectUsers = this.getSelectUsers(users, selectElements);
+      const selectUsers = this.getSelect(users, selectElements);
       if (event !== "delete") {
         this.$router.push({
           name: event + " user",
@@ -86,7 +86,7 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { users, selectElements } = this;
-        const selectUsers = this.getSelectUsers(users, selectElements);
+        const selectUsers = this.getSelect(users, selectElements);
         selectUsers.forEach(item => {
           const user = userService.deleteUser(item);
           user
@@ -99,13 +99,13 @@ export default {
         });
       }
     },
-    getSelectUsers(users, selectElements) {
-      const selectUsers = users.filter(user => {
+    getSelect(users, selectElements) {
+      const select = users.filter(user => {
         if (selectElements.includes(user.user_id)) {
           return user;
         }
       });
-      return selectUsers;
+      return select;
     }
   }
 };

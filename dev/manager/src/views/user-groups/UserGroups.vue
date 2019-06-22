@@ -65,8 +65,8 @@ export default {
   },
   methods: {
     route(event) {
-      const { users, selectElements } = this;
-      const selectUsers = this.getSelectUsers(users, selectElements);
+      const { userGroups, selectElements } = this;
+      const selectUsers = this.getSelect(userGroups, selectElements);
       if (event !== "delete") {
         this.$router.push({
           name: event + " user group",
@@ -82,7 +82,7 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { users, selectElements } = this;
-        const selectUsers = this.getSelectUsers(users, selectElements);
+        const selectUsers = this.getSelect(users, selectElements);
         selectUsers.forEach(item => {
           const user = userService.deleteUser(item);
           user
@@ -95,13 +95,13 @@ export default {
         });
       }
     },
-    getSelectUsers(users, selectElements) {
-      const selectUsers = users.filter(user => {
-        if (selectElements.includes(user.user_id)) {
-          return user;
+    getSelect(userGroups, selectElements) {
+      const select = userGroups.filter(userGroups => {
+        if (selectElements.includes(userGroups.group_id)) {
+          return userGroups;
         }
       });
-      return selectUsers;
+      return select;
     }
   }
 };

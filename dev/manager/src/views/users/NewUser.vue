@@ -6,6 +6,8 @@
 <script>
 import UserForm from "@/components/UserForm";
 
+import userGroupService from "@/services/userGroupService";
+
 export default {
   name: "NewUser",
   components: {
@@ -23,6 +25,17 @@ export default {
         confrimPassword: ""
       }
     };
+  },
+  mounted() {
+    const userGroups = userGroupService.getUserGroups();
+    userGroups
+      .then(userGroups => {
+        // this.userGroups = userGroups.data;
+        console.log(userGroups.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>
