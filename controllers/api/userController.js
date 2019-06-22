@@ -2,12 +2,19 @@ const bcrypt = require("bcrypt");
 const db = require("../../models/index");
 
 const User = db.user;
+const UserGroup = db.userGroup;
 
 module.exports = {
   salt: bcrypt.genSaltSync(10),
 
   get(req, res) {
-    User.findAll()
+    User.findAll({
+      include: [
+        {
+          model: UserGroup
+        }
+      ]
+    })
       .then(users => {
         res.status(200).json(users);
       })

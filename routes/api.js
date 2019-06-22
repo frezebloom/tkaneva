@@ -4,7 +4,7 @@ const router = express.Router();
 const userController = require("../controllers/api/userController.js");
 const userGroupController = require("../controllers/api/userGroupController.js");
 
-router.get("/users/get", (req, res) => {
+router.get("/user/get", (req, res) => {
   userController.get(req, res);
 });
 
