@@ -15,7 +15,7 @@
         <div @click="saveChange" class="form-footer-wrapper">
           <Button value="Сохранить" styles="success"/>
         </div>
-        <div class="form-footer-wrapper">
+        <div @click="$router.go(-1)" class="form-footer-wrapper">
           <Button value="Отмена" styles="default"/>
         </div>
       </div>
