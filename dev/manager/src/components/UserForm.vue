@@ -94,7 +94,7 @@ export default {
         last_name: this.state.last_name || "",
         login: this.state.login || "",
         email: this.state.email || "",
-        group_id: 1,
+        group_id: 2,
         password: "",
         confrimPassword: ""
       }
