@@ -52,4 +52,7 @@ export default {
   background-color: #dd4b39;
   color: #fff;
 }
+.nitral {
+  background-image: linear-gradient(to bottom, #0788de, #116ab8);
+}
 </style>
