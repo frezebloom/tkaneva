@@ -28,11 +28,18 @@ export default {
 .corner-dialog {
   position: fixed;
   width: 400px;
+  border-radius: 5px;
   right: 16px;
-  bottom: 60px;
+  bottom: -200px;
   padding: 32px;
   color: #435a6f;
   box-shadow: #435a6f4d 0px 0px 1px 0px, #435a6f78 0px 16px 24px -8px;
+  transition-property: bottom;
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
+}
+.corner-dialog:hover {
+  bottom: 60px;
 }
 .corner-dialog-header {
   display: flex;
@@ -54,7 +61,7 @@ export default {
   background-color: #435a6f0f;
 }
 .corner-dialog-body {
-  padding: 30px;
+  padding: 25px;
 }
 .corner-dialog-footer {
   display: flex;
