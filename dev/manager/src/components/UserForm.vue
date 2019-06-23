@@ -58,23 +58,26 @@
         <input @input="inputHandler($event, 'confrimPassword')" class="form-input" type="password">
       </div>
       <div class="form-footer">
-        <div @click="saveChange" class="form-footer-wrapper">
+        <div @click="saveChange" class="form-button">
           <Button value="Сохранить" styles="success"/>
         </div>
-        <div @click="$router.go(-1)" class="form-footer-wrapper">
+        <div @click="$router.go(-1)" class="form-button">
           <Button value="Отмена" styles="default"/>
         </div>
       </div>
     </form>
+    <CornerDialog/>
   </div>
 </template>
 <script>
 import Button from "@/components/Button";
+import CornerDialog from "@/components/CornerDialog";
 import userService from "@/services/userService";
 export default {
   name: "UserForm",
   components: {
-    Button
+    Button,
+    CornerDialog
   },
   props: {
     state: {

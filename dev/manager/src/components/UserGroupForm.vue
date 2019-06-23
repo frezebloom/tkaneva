@@ -12,10 +12,10 @@
         >
       </div>
       <div class="form-footer">
-        <div @click="saveChange" class="form-footer-wrapper">
+        <div @click="saveChange" class="form-button">
           <Button value="Сохранить" styles="success"/>
         </div>
-        <div @click="$router.go(-1)" class="form-footer-wrapper">
+        <div @click="$router.go(-1)" class="form-button">
           <Button value="Отмена" styles="default"/>
         </div>
       </div>
