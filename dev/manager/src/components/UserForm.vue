@@ -59,25 +59,22 @@
       </div>
       <div class="form-footer">
         <div @click="saveChange" class="form-button">
-          <Button value="Сохранить" styles="button"/>
+          <Button value="Сохранить" styles="success"/>
         </div>
         <div @click="$router.go(-1)" class="form-button">
           <Button value="Отмена" styles="default"/>
         </div>
       </div>
     </form>
-    <CornerDialog/>
   </div>
 </template>
 <script>
 import Button from "@/components/Button";
-import CornerDialog from "@/components/CornerDialog";
 import userService from "@/services/userService";
 export default {
   name: "UserForm",
   components: {
-    Button,
-    CornerDialog
+    Button
   },
   props: {
     state: {
@@ -97,7 +94,7 @@ export default {
         last_name: this.state.last_name || "",
         login: this.state.login || "",
         email: this.state.email || "",
-        group_id: 2,
+        group_id: 3,
         password: "",
         confrimPassword: ""
       }
@@ -113,7 +110,10 @@ export default {
         const user = userService.createUser(this.user);
         user
           .then(response => {
-            console.log(response.data);
+            this.$router.push({
+              name: "users",
+              params: { response }
+            });
           })
           .catch(error => {
             console.log(error);
@@ -122,7 +122,7 @@ export default {
         const user = userService.updateUser(this.user);
         user
           .then(response => {
-            console.log(response.data);
+            this.$router.go(-1);
           })
           .catch(error => {
             console.log(error);

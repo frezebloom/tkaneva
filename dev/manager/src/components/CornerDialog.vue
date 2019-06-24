@@ -30,9 +30,10 @@ export default {
   width: 400px;
   border-radius: 5px;
   right: 16px;
-  bottom: -200px;
+  // bottom: -200px;
   padding: 32px;
   color: #435a6f;
+  background-color: #fff;
   box-shadow: #435a6f4d 0px 0px 1px 0px, #435a6f78 0px 16px 24px -8px;
   transition-property: bottom;
   transition-duration: 0.4s;

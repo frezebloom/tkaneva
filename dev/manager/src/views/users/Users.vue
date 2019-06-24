@@ -32,11 +32,14 @@
         </td>
       </tr>
     </table>
+    <CornerDialog/>
   </div>
 </template>
 <script>
 import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
+import CornerDialog from "@/components/CornerDialog";
+
 import userService from "@/services/userService";
 import { table } from "@/mixins/table";
 
@@ -45,7 +48,8 @@ export default {
   mixins: [table],
   components: {
     Topbar,
-    Check
+    Check,
+    CornerDialog
   },
   data() {
     return {
@@ -54,7 +58,8 @@ export default {
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
-      selectElements: []
+      selectElements: [],
+      lastItem: ""
     };
   },
   mounted() {
@@ -66,6 +71,14 @@ export default {
       .catch(error => {
         console.log(error);
       });
+  },
+  created() {
+    console.log(this.$route.params);
+    // const { selectUsers } = this.$route.params;
+    // if (selectUsers) {
+    //   this.users = selectUsers;
+    //   this.user = selectUsers[0];
+    // }
   },
   methods: {
     route(event) {
