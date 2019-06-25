@@ -43,8 +43,8 @@ module.exports = {
       group_id,
       password: passwordToSave
     })
-      .then(() => {
-        res.status(201).send("Ok");
+      .then(user => {
+        res.status(201).send(user.dataValues);
       })
       .catch(error => {
         res.status(404).send("Invalid request" + error);

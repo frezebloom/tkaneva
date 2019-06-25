@@ -105,7 +105,6 @@ export default {
       this.user[params] = event.target.value;
     },
     saveChange() {
-      console.log(this.user);
       if (!this.state.user_id) {
         const user = userService.createUser(this.user);
         user

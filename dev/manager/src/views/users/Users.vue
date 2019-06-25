@@ -73,7 +73,9 @@ export default {
       });
   },
   created() {
-    console.log(this.$route.params);
+    if (this.$route.params) {
+      console.log(this.$route.params);
+    }
     // const { selectUsers } = this.$route.params;
     // if (selectUsers) {
     //   this.users = selectUsers;
