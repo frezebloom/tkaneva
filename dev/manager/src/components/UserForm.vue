@@ -109,9 +109,10 @@ export default {
         const user = userService.createUser(this.user);
         user
           .then(response => {
+            const user = response.data;
             this.$router.push({
               name: "users",
-              params: { response }
+              params: { user }
             });
           })
           .catch(error => {

@@ -73,8 +73,12 @@ export default {
       });
   },
   created() {
-    if (this.$route.params) {
-      console.log(this.$route.params);
+    const user = this.$route.params.user;
+
+    if (user) {
+      console.log(user);
+    } else {
+      console.log("пусто");
     }
     // const { selectUsers } = this.$route.params;
     // if (selectUsers) {
