@@ -32,7 +32,9 @@
         </td>
       </tr>
     </table>
-    <CornerDialog/>
+    <div class="isActive-corner-dialog">
+      <CornerDialog/>
+    </div>
   </div>
 </template>
 <script>
@@ -59,7 +61,7 @@ export default {
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
       selectElements: [],
-      lastItem: ""
+      lastUser: null
     };
   },
   mounted() {
@@ -74,17 +76,11 @@ export default {
   },
   created() {
     const user = this.$route.params.user;
-
     if (user) {
-      console.log(user);
+      this.lastUser = user;
     } else {
-      console.log("пусто");
+      this.lastUser = null;
     }
-    // const { selectUsers } = this.$route.params;
-    // if (selectUsers) {
-    //   this.users = selectUsers;
-    //   this.user = selectUsers[0];
-    // }
   },
   methods: {
     route(event) {
