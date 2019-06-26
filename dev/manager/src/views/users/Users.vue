@@ -43,6 +43,7 @@ import CornerDialog from "@/components/CornerDialog";
 
 import userService from "@/services/userService";
 import { table } from "@/mixins/table";
+import { setTimeout } from "timers";
 
 export default {
   name: "Users",
@@ -78,7 +79,9 @@ export default {
     const user = this.$route.params.user;
     if (user) {
       this.lastChange = user;
-      this.hideCornerDialog = false;
+      setTimeout(() => {
+        this.hideCornerDialog = false;
+      }, 500);
     } else {
       this.lastChange = null;
       this.hideCornerDialog = true;
