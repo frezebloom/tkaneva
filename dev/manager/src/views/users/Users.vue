@@ -9,7 +9,6 @@
     <Topbar title="Пользователи" @eventClickTopBar="route($event)"/>
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
-
       <tr
         @click="select(item.user_id)"
         :class="isActive(item.user_id)"
@@ -32,7 +31,7 @@
         </td>
       </tr>
     </table>
-    <div class="isActive-corner-dialog">
+    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
       <CornerDialog/>
     </div>
   </div>
@@ -61,7 +60,8 @@ export default {
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
       selectElements: [],
-      lastUser: null
+      lastChange: null,
+      hideCornerDialog: true
     };
   },
   mounted() {
@@ -77,9 +77,11 @@ export default {
   created() {
     const user = this.$route.params.user;
     if (user) {
-      this.lastUser = user;
+      this.lastChange = user;
+      this.hideCornerDialog = false;
     } else {
-      this.lastUser = null;
+      this.lastChange = null;
+      this.hideCornerDialog = true;
     }
   },
   methods: {
@@ -128,4 +130,5 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/variables.scss";
 @import "../../styles/table.scss";
+@import "../../styles/cornerDialog.scss";
 </style>
