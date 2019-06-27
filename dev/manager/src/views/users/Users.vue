@@ -123,9 +123,17 @@ export default {
                 item => !selectUsers.includes(item)
               );
               this.users = users;
+              this.showCornerDialog(
+                "Успех",
+                "Все выделенные аккаунты были удалены"
+              );
             })
             .catch(error => {
-              console.log(error);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору"
+              );
+              console.error(error);
             });
         });
       }
@@ -144,11 +152,9 @@ export default {
       }, 10000);
     },
     getSelect(users, selectElements) {
-      const select = users.filter(user => {
-        if (selectElements.includes(user.user_id)) {
-          return user;
-        }
-      });
+      const select = users.filter(user =>
+        selectElements.includes(user.user_id)
+      );
       return select;
     }
   }
