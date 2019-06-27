@@ -62,7 +62,7 @@ export default {
       users: [],
       selectElements: [],
       lastChange: null,
-      hideCornerDialog: true
+      hideCornerDialog: false
     };
   },
   mounted() {
@@ -88,7 +88,7 @@ export default {
       }, 10000);
     } else {
       this.lastChange = null;
-      this.hideCornerDialog = true;
+      // this.hideCornerDialog = true;
     }
   },
   methods: {

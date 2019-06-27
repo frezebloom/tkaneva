@@ -7,10 +7,7 @@
     <div class="corner-dialog-body">Новый аккаунт успешно создан</div>
     <div class="corner-dialog-footer">
       <div class="corner-dialog-button">
-        <Button value="Новый" styles="success"/>
-      </div>
-      <div class="corner-dialog-button">
-        <Button value="Изменить" styles="default"/>
+        <Button value="ОК" styles="success"/>
       </div>
     </div>
   </div>
