@@ -32,7 +32,7 @@
       </tr>
     </table>
     <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
-      <CornerDialog/>
+      <CornerDialog @eventClickCornerDialog="dialogFromUser" />
     </div>
   </div>
 </template>
@@ -122,6 +122,9 @@ export default {
             });
         });
       }
+    },
+    dialogFromUser(event) {
+      console.log(event);
     },
     getSelect(users, selectElements) {
       const select = users.filter(user => {

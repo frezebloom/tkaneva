@@ -2,11 +2,16 @@
   <div class="corner-dialog">
     <div class="corner-dialog-header">
       <div class="corner-dialog-header-title">Успех</div>
-      <div class="corner-dialog-header-close">X</div>
+      <div 
+        @click="$emit('eventClickCornerDialog', true)" 
+        class="corner-dialog-header-close">X
+      </div>
     </div>
     <div class="corner-dialog-body">Новый аккаунт успешно создан</div>
     <div class="corner-dialog-footer">
-      <div class="corner-dialog-button">
+      <div 
+        @click="$emit('eventClickCornerDialog', true)"
+         class="corner-dialog-button">
         <Button value="ОК" styles="success"/>
       </div>
     </div>

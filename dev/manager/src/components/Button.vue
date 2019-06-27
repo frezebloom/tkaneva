@@ -26,6 +26,7 @@ export default {
   text-align: center;
   border-radius: 3px;
   box-shadow: none;
+  user-select: none;
   border: 1px solid transparent;
   cursor: pointer;
 }
