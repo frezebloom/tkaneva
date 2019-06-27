@@ -78,21 +78,21 @@ module.exports = {
       .then(() => {
         res.status(201).send("Ok");
       })
-      .catch(() => {
+      .catch((error) => {
         res.status(404).send("Invalid request" + error);
       });
   },
 
   delete(req, res) {
     const { id } = req.body.user;
-    console.log(id);
     User.destroy({
       where: {
         user_id: id
       }
     })
-      .then(() => {
-        res.status(200).send("Ok");
+      .then((users) => {
+        console.log(users);
+        res.status(200).json(users);
       })
       .catch(error => {
         res.status(404).send("Invalid request" + error);
