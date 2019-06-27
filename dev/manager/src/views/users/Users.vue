@@ -62,7 +62,7 @@ export default {
       users: [],
       selectElements: [],
       lastChange: null,
-      hideCornerDialog: false
+      hideCornerDialog: true
     };
   },
   mounted() {
@@ -79,7 +79,6 @@ export default {
     const user = this.$route.params.user;
     if (user) {
       this.lastChange = user;
-
       setTimeout(() => {
         this.hideCornerDialog = false;
       }, 500);
@@ -88,7 +87,7 @@ export default {
       }, 10000);
     } else {
       this.lastChange = null;
-      // this.hideCornerDialog = true;
+      this.hideCornerDialog = true;
     }
   },
   methods: {
@@ -124,7 +123,7 @@ export default {
       }
     },
     dialogFromUser(event) {
-      console.log(event);
+      this.hideCornerDialog = event
     },
     getSelect(users, selectElements) {
       const select = users.filter(user => {
