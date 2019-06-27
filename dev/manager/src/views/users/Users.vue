@@ -32,8 +32,8 @@
       </tr>
     </table>
     <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
-      <CornerDialog 
-        @eventClickCornerDialog="dialogFromUser" 
+      <CornerDialog
+        @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
         :message="cornerDialogMessage"
       />
@@ -67,8 +67,8 @@ export default {
       selectElements: [],
       lastChange: null,
       hideCornerDialog: true,
-      cornerDialogStatus: '',
-      cornerDialogMessage: ''
+      cornerDialogStatus: "",
+      cornerDialogMessage: ""
     };
   },
   mounted() {
@@ -79,14 +79,17 @@ export default {
       })
       .catch(error => {
         console.error(error);
-        this.showCornerDialog('Ошибка', 'Не удалось связаться с сервером. Обратитесь к администратору')
+        this.showCornerDialog(
+          "Ошибка",
+          "Не удалось связаться с сервером. Обратитесь к администратору"
+        );
       });
   },
   created() {
     const user = this.$route.params.user;
     if (user) {
       this.lastChange = user;
-      this.showCornerDialog('Успех', 'Новый аккаунт успешно создан')
+      this.showCornerDialog("Успех", "Новый аккаунт успешно создан");
     } else {
       this.lastChange = null;
       this.hideCornerDialog = true;
@@ -115,8 +118,10 @@ export default {
         selectUsers.forEach(item => {
           const user = userService.deleteUser(item);
           user
-            .then(response => {
-              console.log(response.data);
+            .then(() => {
+              const users = this.users.map(item => {});
+              // item => item.id !== selectUsers.id
+              // this.users = users;
             })
             .catch(error => {
               console.log(error);
@@ -125,7 +130,7 @@ export default {
       }
     },
     dialogFromUser(event) {
-      this.hideCornerDialog = event
+      this.hideCornerDialog = event;
     },
     showCornerDialog(status, message) {
       this.cornerDialogStatus = status;

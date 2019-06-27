@@ -78,7 +78,7 @@ module.exports = {
       .then(() => {
         res.status(201).send("Ok");
       })
-      .catch((error) => {
+      .catch(error => {
         res.status(404).send("Invalid request" + error);
       });
   },
@@ -90,9 +90,8 @@ module.exports = {
         user_id: id
       }
     })
-      .then((users) => {
-        console.log(users);
-        res.status(200).json(users);
+      .then(() => {
+        res.status(200).send("Ok");
       })
       .catch(error => {
         res.status(404).send("Invalid request" + error);
