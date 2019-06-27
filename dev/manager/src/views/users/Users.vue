@@ -119,9 +119,10 @@ export default {
           const user = userService.deleteUser(item);
           user
             .then(() => {
-              const users = this.users.map(item => {});
-              // item => item.id !== selectUsers.id
-              // this.users = users;
+              const users = this.users.filter(
+                item => !selectUsers.includes(item)
+              );
+              this.users = users;
             })
             .catch(error => {
               console.log(error);
