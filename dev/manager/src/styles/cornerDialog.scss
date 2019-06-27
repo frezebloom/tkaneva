@@ -1,0 +1,58 @@
+.corner-dialog {
+  bottom: -200px;
+  border-radius: 5px;
+  padding: 32px;
+  color: #435a6f;
+  background-color: #fff;
+  box-shadow: #435a6f4d 0px 0px 1px 0px, #435a6f78 0px 16px 24px -8px;
+}
+.corner-dialog:hover {
+  bottom: 60px;
+}
+.corner-dialog-header {
+  display: flex;
+  justify-content: space-between;
+}
+.corner-dialog-header-title {
+  font-size: 20px;
+}
+.corner-dialog-header-close {
+  font-size: 16px;
+  width: 32px;
+  padding: 5px;
+  font-weight: 500;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.corner-dialog-header-close:hover {
+  background-color: #435a6f0f;
+}
+.corner-dialog-body {
+  padding: 25px;
+}
+.corner-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+.corner-dialog-button {
+  margin: 5px;
+}
+.isActive-corner-dialog {
+  width: 400px;
+  position: fixed;
+  right: 16px;
+  bottom: 65px;
+  transition-property: bottom;
+  transition-duration: 0.7s;
+  transition-timing-function: linear;
+}
+.notActive-corner-dialog {
+  width: 400px;
+  position: fixed;
+  right: 16px;
+  bottom: -180px;
+  transition-property: bottom;
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
+}

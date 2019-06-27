@@ -13,7 +13,8 @@ export default {
   bottom: 0;
   left: 0;
   padding: 1rem;
-  background-color: #367fa9;
+  opacity: 0.9;
+  background-color: #367fa8;
   text-align: center;
 }
 </style>

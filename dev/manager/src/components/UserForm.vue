@@ -58,10 +58,10 @@
         <input @input="inputHandler($event, 'confrimPassword')" class="form-input" type="password">
       </div>
       <div class="form-footer">
-        <div @click="saveChange" class="form-footer-wrapper">
+        <div @click="saveChange" class="form-button">
           <Button value="Сохранить" styles="success"/>
         </div>
-        <div class="form-footer-wrapper">
+        <div @click="$router.go(-1)" class="form-button">
           <Button value="Отмена" styles="default"/>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default {
         last_name: this.state.last_name || "",
         login: this.state.login || "",
         email: this.state.email || "",
-        group_id: 1,
+        group_id: 3,
         password: "",
         confrimPassword: ""
       }
@@ -109,7 +109,11 @@ export default {
         const user = userService.createUser(this.user);
         user
           .then(response => {
-            console.log(response.data);
+            const user = response.data;
+            this.$router.push({
+              name: "users",
+              params: { user }
+            });
           })
           .catch(error => {
             console.log(error);
@@ -118,7 +122,7 @@ export default {
         const user = userService.updateUser(this.user);
         user
           .then(response => {
-            console.log(response.data);
+            this.$router.go(-1);
           })
           .catch(error => {
             console.log(error);

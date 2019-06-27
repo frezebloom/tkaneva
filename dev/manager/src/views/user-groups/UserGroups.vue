@@ -11,8 +11,8 @@
       <th v-for="item in title" :key="item.id">{{item}}</th>
 
       <tr
-        @click="select(item.user_id)"
-        :class="isActive(item.user_id)"
+        @click="select(item.group_id)"
+        :class="isActive(item.group_id)"
         v-for="item in userGroups"
         :key="item.group_id"
       >
