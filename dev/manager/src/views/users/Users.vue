@@ -79,6 +79,7 @@ export default {
       })
       .catch(error => {
         console.error(error);
+        this.showCornerDialog('Ошибка', 'Не удалось связаться с сервером. Обратитесь к администратору')
       });
   },
   created() {
