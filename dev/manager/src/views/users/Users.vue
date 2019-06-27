@@ -79,9 +79,13 @@ export default {
     const user = this.$route.params.user;
     if (user) {
       this.lastChange = user;
+
       setTimeout(() => {
         this.hideCornerDialog = false;
       }, 500);
+      setTimeout(() => {
+        this.hideCornerDialog = true;
+      }, 10000);
     } else {
       this.lastChange = null;
       this.hideCornerDialog = true;
