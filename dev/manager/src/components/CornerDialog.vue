@@ -1,13 +1,13 @@
 <template>
   <div class="corner-dialog">
     <div class="corner-dialog-header">
-      <div class="corner-dialog-header-title">Успех</div>
+      <div class="corner-dialog-header-title">{{status}}</div>
       <div 
         @click="$emit('eventClickCornerDialog', true)" 
         class="corner-dialog-header-close">X
       </div>
     </div>
-    <div class="corner-dialog-body">Новый аккаунт успешно создан</div>
+    <div class="corner-dialog-body">{{message}}</div>
     <div class="corner-dialog-footer">
       <div 
         @click="$emit('eventClickCornerDialog', true)"
@@ -23,6 +23,16 @@ export default {
   name: "Corner-dialog",
   components: {
     Button
+  },
+  props: {
+    status: {
+      type: String,
+      required: true
+    },
+    message: {
+      type: String,
+      required: true
+    }
   }
 };
 </script>

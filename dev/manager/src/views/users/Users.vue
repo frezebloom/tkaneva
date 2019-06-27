@@ -32,7 +32,11 @@
       </tr>
     </table>
     <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
-      <CornerDialog @eventClickCornerDialog="dialogFromUser" />
+      <CornerDialog 
+        @eventClickCornerDialog="dialogFromUser" 
+        :status="cornerDialogStatus"
+        :message="cornerDialogMessage"
+      />
     </div>
   </div>
 </template>
@@ -62,7 +66,9 @@ export default {
       users: [],
       selectElements: [],
       lastChange: null,
-      hideCornerDialog: true
+      hideCornerDialog: true,
+      cornerDialogStatus: '',
+      cornerDialogMessage: ''
     };
   },
   mounted() {
@@ -72,19 +78,14 @@ export default {
         this.users = users.data;
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   },
   created() {
     const user = this.$route.params.user;
     if (user) {
       this.lastChange = user;
-      setTimeout(() => {
-        this.hideCornerDialog = false;
-      }, 500);
-      setTimeout(() => {
-        this.hideCornerDialog = true;
-      }, 10000);
+      this.showCornerDialog('Успех', 'Новый аккаунт успешно создан')
     } else {
       this.lastChange = null;
       this.hideCornerDialog = true;
@@ -124,6 +125,16 @@ export default {
     },
     dialogFromUser(event) {
       this.hideCornerDialog = event
+    },
+    showCornerDialog(status, message) {
+      this.cornerDialogStatus = status;
+      this.cornerDialogMessage = message;
+      setTimeout(() => {
+        this.hideCornerDialog = false;
+      }, 500);
+      setTimeout(() => {
+        this.hideCornerDialog = true;
+      }, 10000);
     },
     getSelect(users, selectElements) {
       const select = users.filter(user => {
