@@ -45,7 +45,7 @@
             v-for="(option, index) in userGroups"
             :key="index"
             :value="option.group_id"
-            :selected="index === 2 ? 'selected' : ''"
+            :selected="index === (state.group_id - 1) ? 'selected' : ''"
           >{{ option.name }}</option>
         </select>
       </div>
@@ -94,7 +94,7 @@ export default {
         last_name: this.state.last_name || "",
         login: this.state.login || "",
         email: this.state.email || "",
-        group_id: 3,
+        group_id: this.state.group_id || 1,
         password: "",
         confrimPassword: ""
       }
