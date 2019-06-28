@@ -34,7 +34,7 @@ export default {
         this.userGroups = userGroups.data;
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 };
