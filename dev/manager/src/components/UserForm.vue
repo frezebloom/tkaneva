@@ -121,7 +121,7 @@ export default {
       } else {
         const user = userService.updateUser(this.user);
         user
-          .then(response => {
+          .then(() => {
             this.$router.go(-1);
           })
           .catch(error => {
