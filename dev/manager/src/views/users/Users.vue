@@ -99,13 +99,34 @@ export default {
     route(event) {
       const { users, selectElements } = this;
       const selectUsers = this.getSelect(users, selectElements);
-      if (event !== "delete") {
+      if (event === "delete") {
+        if(selectUsers.length > 0) {
+          this.hideCheck = !this.hideCheck;
+        } else {
+          this.showCornerDialog(
+            "Ошибка",
+            "Выберите хотя бы один элемент для удаления"
+          );
+        }
+      }
+      if (event === "edit") {
+        if(selectUsers.length > 0) {
+          this.$router.push({
+            name: event + " user",
+            params: { selectUsers }
+          });
+        } else {
+          this.showCornerDialog(
+            "Ошибка",
+            "Выберите хотя бы один элемент для редактирования"
+          );
+        }
+      }
+      if(event === "new") {
         this.$router.push({
           name: event + " user",
           params: { selectUsers }
         });
-      } else {
-        this.hideCheck = !this.hideCheck;
       }
     },
     check(event) {
@@ -125,7 +146,7 @@ export default {
               this.users = users;
               this.showCornerDialog(
                 "Успех",
-                "Удаление успешно завершено"
+                "Операция удаления успешна завершена"
               );
             })
             .catch(error => {
