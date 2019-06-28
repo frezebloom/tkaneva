@@ -47,9 +47,9 @@ module.exports = function(sequelize, Sequelize) {
         },
         fullName: function() {
           return (
-            this.getDataValue("first_name") +
+            this.getDataValue("last_name") +
             " " +
-            this.getDataValue("last_name")
+            this.getDataValue("first_name")
           );
         }
       }
