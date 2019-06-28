@@ -7,7 +7,7 @@
         :key="tab.id"
         :class="{ active: activeTab === index }"
         @click="eventClickTab(index)"
-      >{{ tab.fullName }}</div>
+      >{{ changeString(tab.fullName) }}</div>
     </div>
   </div>
 </template>
@@ -29,6 +29,10 @@ export default {
     eventClickTab(index) {
       this.$emit("eventClickTab", index);
       this.activeTab = index;
+    },
+    changeString(string) {
+      var str = string.slice(0,11);
+      return str + '...'
     }
   }
 };
