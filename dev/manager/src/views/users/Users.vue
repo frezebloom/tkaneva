@@ -125,7 +125,7 @@ export default {
               this.users = users;
               this.showCornerDialog(
                 "Успех",
-                "Все выделенные аккаунты были удалены"
+                "Удаление успешно завершено"
               );
             })
             .catch(error => {
