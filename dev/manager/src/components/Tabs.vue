@@ -1,14 +1,12 @@
 <template>
   <div class="tabs">
-    <div class="tabs-wrapper">
-      <div
-        class="tab"
-        v-for="(tab, index) in tabs"
-        :key="tab.id"
-        :class="{ active: activeTab === index }"
-        @click="eventClickTab(index)"
-      >{{ changeString(tab.fullName) }}</div>
-    </div>
+    <div
+      class="tab"
+      v-for="(tab, index) in tabs"
+      :key="tab.id"
+      :class="{ active: activeTab === index }"
+      @click="eventClickTab(index)"
+    >{{ changeString(tab.fullName) }}</div>
   </div>
 </template>
 <script>
@@ -31,8 +29,8 @@ export default {
       this.activeTab = index;
     },
     changeString(string) {
-      var str = string.slice(0,11);
-      return str + '...'
+      var str = string.slice(0, 11);
+      return str + "...";
     }
   }
 };

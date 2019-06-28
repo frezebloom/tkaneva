@@ -48,8 +48,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.edit-user {
-  // max-width: 100%;
-}
+// .edit-user {
+//   max-width: 80%;
+// }
 </style>
 
