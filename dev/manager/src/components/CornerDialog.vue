@@ -2,17 +2,12 @@
   <div class="corner-dialog">
     <div class="corner-dialog-header">
       <div class="corner-dialog-header-title">{{status}}</div>
-      <div 
-        @click="$emit('eventClickCornerDialog', true)" 
-        class="corner-dialog-header-close">X
-      </div>
+      <div @click="$emit('eventClickCornerDialog', true)" class="corner-dialog-header-close">X</div>
     </div>
     <div class="corner-dialog-body">{{message}}</div>
     <div class="corner-dialog-footer">
-      <div 
-        @click="$emit('eventClickCornerDialog', true)"
-         class="corner-dialog-button">
-        <Button value="ОК" styles="success"/>
+      <div @click="$emit('eventClickCornerDialog', true)" class="corner-dialog-button">
+        <Button value="ОК" :styles="buttonStyle" />
       </div>
     </div>
   </div>
@@ -30,6 +25,10 @@ export default {
       required: true
     },
     message: {
+      type: String,
+      required: true
+    },
+    buttonStyle: {
       type: String,
       required: true
     }

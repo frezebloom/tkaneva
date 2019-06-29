@@ -6,7 +6,7 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar title="Пользователи" @eventClickTopBar="route($event)"/>
+    <Topbar title="Пользователи" @eventClickTopBar="route($event)" />
     <table>
       <th v-for="item in title" :key="item.id">{{item}}</th>
       <tr
@@ -27,7 +27,7 @@
             type="checkbox"
             :checked="checked(item.user_id)"
             @click.stop="select(item.user_id)"
-          >
+          />
         </td>
       </tr>
     </table>
@@ -36,6 +36,7 @@
         @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
         :message="cornerDialogMessage"
+        :buttonStyle="cornerDialogBtnStyle"
       />
     </div>
   </div>
@@ -68,7 +69,8 @@ export default {
       lastChange: null,
       hideCornerDialog: true,
       cornerDialogStatus: "",
-      cornerDialogMessage: ""
+      cornerDialogMessage: "",
+      cornerDialogBtnStyle: ""
     };
   },
   mounted() {
@@ -81,7 +83,8 @@ export default {
         console.error(error);
         this.showCornerDialog(
           "Ошибка",
-          "Не удалось связаться с сервером. Обратитесь к администратору"
+          "Не удалось связаться с сервером. Обратитесь к администратору",
+          "danger"
         );
       });
   },
@@ -89,7 +92,7 @@ export default {
     const user = this.$route.params.user;
     if (user) {
       this.lastChange = user;
-      this.showCornerDialog("Успех", "Новый аккаунт успешно создан");
+      this.showCornerDialog("Успех", "Новый аккаунт успешно создан", "success");
     } else {
       this.lastChange = null;
       this.hideCornerDialog = true;
@@ -100,17 +103,18 @@ export default {
       const { users, selectElements } = this;
       const selectUsers = this.getSelect(users, selectElements);
       if (event === "delete") {
-        if(selectUsers.length > 0) {
+        if (selectUsers.length > 0) {
           this.hideCheck = !this.hideCheck;
         } else {
           this.showCornerDialog(
             "Ошибка",
-            "Выберите хотя бы один элемент для удаления"
+            "Выберите хотя бы один элемент для удаления",
+            "warning"
           );
         }
       }
       if (event === "edit") {
-        if(selectUsers.length > 0) {
+        if (selectUsers.length > 0) {
           this.$router.push({
             name: event + " user",
             params: { selectUsers }
@@ -118,11 +122,12 @@ export default {
         } else {
           this.showCornerDialog(
             "Ошибка",
-            "Выберите хотя бы один элемент для редактирования"
+            "Выберите хотя бы один элемент для редактирования",
+            "warning"
           );
         }
       }
-      if(event === "new") {
+      if (event === "new") {
         this.$router.push({
           name: event + " user",
           params: { selectUsers }
@@ -146,13 +151,15 @@ export default {
               this.users = users;
               this.showCornerDialog(
                 "Успех",
-                "Операция удаления успешна завершена"
+                "Операция удаления успешна завершена",
+                "success"
               );
             })
             .catch(error => {
               this.showCornerDialog(
                 "Ошибка",
-                "Не удалось связаться с сервером. Обратитесь к администратору"
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
               );
               console.error(error);
             });
@@ -162,9 +169,10 @@ export default {
     dialogFromUser(event) {
       this.hideCornerDialog = event;
     },
-    showCornerDialog(status, message) {
+    showCornerDialog(status, message, style) {
       this.cornerDialogStatus = status;
       this.cornerDialogMessage = message;
+      this.cornerDialogBtnStyle = style;
       setTimeout(() => {
         this.hideCornerDialog = false;
       }, 500);
