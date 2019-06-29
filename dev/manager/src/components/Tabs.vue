@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs">
+  <div class="tabs scrolling-wrapper">
     <div
       class="tab"
       v-for="(tab, index) in tabs"
