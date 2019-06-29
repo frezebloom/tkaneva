@@ -1,6 +1,7 @@
 <template>
   <div class="edit-user">
     <Tabs :tabs="this.users" @eventClickTab="route($event)"/>
+
     <UserForm :state="user" :userGroups="userGroups"/>
   </div>
 </template> 
@@ -48,8 +49,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// .edit-user {
-//   max-width: 80%;
-// }
+.edit-user {
+  width: 100%;
+}
 </style>
 

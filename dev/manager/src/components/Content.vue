@@ -5,8 +5,7 @@
 </template>
 <style lang="scss" scoped>
 .content {
-  position: relative;
-  width: 100%;
+  width: 88%;
   padding: 20px;
 }
 </style>
