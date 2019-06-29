@@ -3,7 +3,7 @@
     <form v-on:submit.prevent class="form">
       <div class="form-header">Создать акаунт</div>
       <div class="form-wrapper">
-        <label class="form-label">Имя</label>
+        <label class="form-label">Имя *</label>
         <input
           :value="state.first_name"
           @input="inputHandler($event, 'first_name')"
@@ -12,7 +12,7 @@
         >
       </div>
       <div class="form-wrapper">
-        <label class="form-label">Фамилия</label>
+        <label class="form-label">Фамилия *</label>
         <input
           :value="state.last_name"
           @input="inputHandler($event, 'last_name')"
@@ -21,7 +21,7 @@
         >
       </div>
       <div class="form-wrapper">
-        <label class="form-label">Логин</label>
+        <label class="form-label">Логин *</label>
         <input
           :value="state.login"
           @input="inputHandler($event, 'login')"
@@ -30,7 +30,7 @@
         >
       </div>
       <div class="form-wrapper">
-        <label class="form-label">Почта</label>
+        <label class="form-label">Почта *</label>
         <input
           :value="state.email"
           @input="inputHandler($event, 'email')"
@@ -39,7 +39,7 @@
         >
       </div>
       <div class="form-wrapper">
-        <label class="form-label">Группа</label>
+        <label class="form-label">Группа *</label>
         <select class="form-select" @input="inputHandler($event, 'group_id')">
           <option
             v-for="(option, index) in userGroups"
@@ -50,11 +50,11 @@
         </select>
       </div>
       <div class="form-wrapper">
-        <label class="form-label">Пароль</label>
+        <label class="form-label">Пароль *</label>
         <input @input="inputHandler($event, 'password')" class="form-input" type="password">
       </div>
       <div class="form-wrapper">
-        <label class="form-label">Повторите пароль</label>
+        <label class="form-label">Повторите пароль *</label>
         <input @input="inputHandler($event, 'confrimPassword')" class="form-input" type="password">
       </div>
       <div class="form-footer">
