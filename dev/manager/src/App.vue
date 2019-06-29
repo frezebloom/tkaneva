@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <div v-if="isAuthenticated">
-      <Header/>
+      <Header />
       <div class="wrapper">
-        <Sidebar/>
-        <Content/>
+        <Sidebar />
+        <Content />
       </div>
-      <Footer/>
+      <Footer />
     </div>
     <div v-else>
-      <Content/>
+      <Content />
     </div>
   </div>
 </template>
