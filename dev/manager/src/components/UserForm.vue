@@ -7,6 +7,7 @@
         <input
           :value="state.first_name"
           @input="inputHandler($event, 'first_name')"
+          :class="[required.includes('first_name') ? 'form-input-error' : '', 'form-input']"
           class="form-input"
           type="text"
         />
@@ -16,7 +17,7 @@
         <input
           :value="state.last_name"
           @input="inputHandler($event, 'last_name')"
-          class="form-input form-input-error"
+          :class="[required.includes('last_name') ? 'form-input-error' : '', 'form-input']"
           type="text"
         />
       </div>
@@ -25,7 +26,7 @@
         <input
           :value="state.login"
           @input="inputHandler($event, 'login')"
-          class="form-input"
+          :class="[required.includes('login') ? 'form-input-error' : '', 'form-input']"
           type="text"
         />
       </div>
@@ -34,7 +35,7 @@
         <input
           :value="state.email"
           @input="inputHandler($event, 'email')"
-          class="form-input"
+          :class="[required.includes('email') ? 'form-input-error' : '', 'form-input']"
           type="text"
         />
       </div>
@@ -51,11 +52,17 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Пароль *</label>
-        <input @input="inputHandler($event, 'password')" class="form-input" type="password" />
+        <input 
+          @input="inputHandler($event, 'password')" 
+          :class="[required.includes('password') ? 'form-input-error' : '', 'form-input']"
+          type="password" />
       </div>
       <div class="form-wrapper">
         <label class="form-label">Повторите пароль *</label>
-        <input @input="inputHandler($event, 'confrimPassword')" class="form-input" type="password" />
+        <input 
+          @input="inputHandler($event, 'confrimPassword')" 
+          :class="[required.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
+          type="password" />
       </div>
       <div class="form-footer">
         <div @click="saveChange" class="form-button">
@@ -101,7 +108,11 @@ export default {
       required: [],
       noValid: [],
       passwordMatch: false
+
     };
+  },
+  computed: {
+
   },
   methods: {
     inputHandler(event, params) {
@@ -127,9 +138,6 @@ export default {
           }
         }
       });
-
-      
-
     },
     saveChange() {
       this.validation();
