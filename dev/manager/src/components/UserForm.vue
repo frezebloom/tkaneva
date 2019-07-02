@@ -52,20 +52,22 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Пароль *</label>
-        <input 
-          @input="inputHandler($event, 'password')" 
+        <input
+          @input="inputHandler($event, 'password')"
           :class="[errorInput.includes('password') ? 'form-input-error' : '', 'form-input']"
-          type="password" />
+          type="password"
+        />
       </div>
       <div class="form-wrapper">
         <label class="form-label">Повторите пароль *</label>
-        <input 
-          @input="inputHandler($event, 'confrimPassword')" 
+        <input
+          @input="inputHandler($event, 'confrimPassword')"
           :class="[errorInput.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
-          type="password" />
+          type="password"
+        />
       </div>
       <div class="form-footer">
-        <div @click="saveChange" class="form-button">
+        <div @click="check" class="form-button">
           <Button value="Сохранить" styles="success" />
         </div>
         <div @click="$router.go(-1)" class="form-button">
@@ -73,16 +75,27 @@
         </div>
       </div>
     </form>
+    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+      <CornerDialog
+        @eventClickCornerDialog="dialogFromUser"
+        :status="cornerDialogStatus"
+        :message="cornerDialogMessage"
+        :buttonStyle="cornerDialogBtnStyle"
+      />
+    </div>
   </div>
 </template>
 <script>
 import userService from "@/services/userService";
 
 import Button from "@/components/Button";
-import CornerDialog from "@/components/CornerDialog"
+import CornerDialog from "@/components/CornerDialog";
+
+import { cornerDialog } from "@/mixins/cornerDialog";
 
 export default {
   name: "UserForm",
+  mixins: [cornerDialog],
   components: {
     Button,
     CornerDialog
@@ -130,46 +143,55 @@ export default {
       Object.keys(this.user).forEach(item => {
         if (isEmpty(this.user[item]) && item !== "user_id") {
           this.errorInput.push(item);
-          this.errorMessage.push('Поля отмеченные звездочкой обязательны для заполнения')
+          this.errorMessage.push(
+            "Поля отмеченные звездочкой обязательны для заполнения"
+          );
         }
         if (item === "email") {
           if (!validEmail(this.user[item])) {
             this.errorInput.push(item);
-            this.errorMessage.push('Введите корректный e-mail')
+            this.errorMessage.push("Введите корректный e-mail");
           }
         }
       });
     },
-    saveChange() {
+    check() {
       this.validation();
-
-      // if (!this.state.user_id) {
-      //   const user = userService.createUser(this.user);
-      //   user
-      //     .then(response => {
-      //       const user = response.data;
-      //       this.$router.push({
-      //         name: "users",
-      //         params: { user }
-      //       });
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
-      // } else {
-      //   const user = userService.updateUser(this.user);
-      //   user
-      //     .then(() => {
-      //       this.$router.go(-1);
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
-      // }
+      if (this.errorInput.length > 0) {
+        this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
+      } else {
+        this.saveChange();
+      }
+    },
+    saveChange() {
+      if (!this.state.user_id) {
+        const user = userService.createUser(this.user);
+        user
+          .then(response => {
+            const user = response.data;
+            this.$router.push({
+              name: "users",
+              params: { user }
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        const user = userService.updateUser(this.user);
+        user
+          .then(() => {
+            this.$router.go(-1);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "../styles/form.scss";
+@import "../styles/cornerDialog.scss";
 </style>
