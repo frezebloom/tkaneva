@@ -7,7 +7,7 @@
         <input
           :value="state.first_name"
           @input="inputHandler($event, 'first_name')"
-          :class="[required.includes('first_name') ? 'form-input-error' : '', 'form-input']"
+          :class="[errorInput.includes('first_name') ? 'form-input-error' : '', 'form-input']"
           class="form-input"
           type="text"
         />
@@ -17,7 +17,7 @@
         <input
           :value="state.last_name"
           @input="inputHandler($event, 'last_name')"
-          :class="[required.includes('last_name') ? 'form-input-error' : '', 'form-input']"
+          :class="[errorInput.includes('last_name') ? 'form-input-error' : '', 'form-input']"
           type="text"
         />
       </div>
@@ -26,7 +26,7 @@
         <input
           :value="state.login"
           @input="inputHandler($event, 'login')"
-          :class="[required.includes('login') ? 'form-input-error' : '', 'form-input']"
+          :class="[errorInput.includes('login') ? 'form-input-error' : '', 'form-input']"
           type="text"
         />
       </div>
@@ -35,7 +35,7 @@
         <input
           :value="state.email"
           @input="inputHandler($event, 'email')"
-          :class="[required.includes('email') ? 'form-input-error' : '', 'form-input']"
+          :class="[errorInput.includes('email') ? 'form-input-error' : '', 'form-input']"
           type="text"
         />
       </div>
@@ -54,14 +54,14 @@
         <label class="form-label">Пароль *</label>
         <input 
           @input="inputHandler($event, 'password')" 
-          :class="[required.includes('password') ? 'form-input-error' : '', 'form-input']"
+          :class="[errorInput.includes('password') ? 'form-input-error' : '', 'form-input']"
           type="password" />
       </div>
       <div class="form-wrapper">
         <label class="form-label">Повторите пароль *</label>
         <input 
           @input="inputHandler($event, 'confrimPassword')" 
-          :class="[required.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
+          :class="[errorInput.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
           type="password" />
       </div>
       <div class="form-footer">
@@ -105,10 +105,9 @@ export default {
         password: "",
         confrimPassword: ""
       },
-      required: [],
-      noValid: [],
+      errorMessage: [],
+      errorInput: [],
       passwordMatch: false
-
     };
   },
   computed: {
@@ -130,11 +129,13 @@ export default {
 
       Object.keys(this.user).forEach(item => {
         if (isEmpty(this.user[item]) && item !== "user_id") {
-          this.required.push(item);
+          this.errorInput.push(item);
+          this.errorMessage.push('Поля отмеченные звездочкой обязательны для заполнения')
         }
         if (item === "email") {
           if (!validEmail(this.user[item])) {
-            this.noValid.push(item);
+            this.errorInput.push(item);
+            this.errorMessage.push('Введите корректный e-mail')
           }
         }
       });
