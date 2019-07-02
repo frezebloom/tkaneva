@@ -16,7 +16,7 @@
         <input
           :value="state.last_name"
           @input="inputHandler($event, 'last_name')"
-          class="form-input"
+          class="form-input form-input-error"
           type="text"
         />
       </div>
@@ -97,7 +97,10 @@ export default {
         group_id: this.state.group_id || 1,
         password: "",
         confrimPassword: ""
-      }
+      },
+      required: [],
+      noValid: [],
+      passwordMatch: false
     };
   },
   methods: {
@@ -105,9 +108,6 @@ export default {
       this.user[params] = event.target.value;
     },
     validation() {
-      const required = [];
-      const noValid = [];
-
       function isEmpty(str) {
         return typeof str === "undefined" || str === null || str === "";
       }
@@ -119,14 +119,17 @@ export default {
 
       Object.keys(this.user).forEach(item => {
         if (isEmpty(this.user[item]) && item !== "user_id") {
-          required.push(item);
+          this.required.push(item);
         }
         if (item === "email") {
           if (!validEmail(this.user[item])) {
-            noValid.push(item);
+            this.noValid.push(item);
           }
         }
       });
+
+      
+
     },
     saveChange() {
       this.validation();
