@@ -76,12 +76,16 @@
   </div>
 </template>
 <script>
-import Button from "@/components/Button";
 import userService from "@/services/userService";
+
+import Button from "@/components/Button";
+import CornerDialog from "@/components/CornerDialog"
+
 export default {
   name: "UserForm",
   components: {
-    Button
+    Button,
+    CornerDialog
   },
   props: {
     state: {
@@ -106,12 +110,8 @@ export default {
         confrimPassword: ""
       },
       errorMessage: [],
-      errorInput: [],
-      passwordMatch: false
+      errorInput: []
     };
-  },
-  computed: {
-
   },
   methods: {
     inputHandler(event, params) {

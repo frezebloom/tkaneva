@@ -66,7 +66,6 @@ export default {
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
       selectElements: [],
-      lastChange: null,
       hideCornerDialog: true,
       cornerDialogStatus: "",
       cornerDialogMessage: "",
@@ -91,10 +90,8 @@ export default {
   created() {
     const user = this.$route.params.user;
     if (user) {
-      this.lastChange = user;
       this.showCornerDialog("Успех", "Новый аккаунт успешно создан", "success");
     } else {
-      this.lastChange = null;
       this.hideCornerDialog = true;
     }
   },
