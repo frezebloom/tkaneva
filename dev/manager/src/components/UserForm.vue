@@ -92,6 +92,7 @@ import Button from "@/components/Button";
 import CornerDialog from "@/components/CornerDialog";
 
 import { cornerDialog } from "@/mixins/cornerDialog";
+import { setTimeout } from "timers";
 
 export default {
   name: "UserForm",
@@ -159,6 +160,10 @@ export default {
       this.validation();
       if (this.errorInput.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
+        setTimeout(() => {
+          this.errorMessage = [];
+          this.errorInput = [];
+        }, 10000);
       } else {
         this.saveChange();
       }
