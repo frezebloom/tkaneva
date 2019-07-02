@@ -48,11 +48,12 @@ import CornerDialog from "@/components/CornerDialog";
 
 import userService from "@/services/userService";
 import { table } from "@/mixins/table";
+import { cornerDialog } from "@/mixins/cornerDialog";
 import { setTimeout } from "timers";
 
 export default {
   name: "Users",
-  mixins: [table],
+  mixins: [table, cornerDialog],
   components: {
     Topbar,
     Check,
@@ -65,11 +66,7 @@ export default {
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
-      selectElements: [],
-      hideCornerDialog: true,
-      cornerDialogStatus: "",
-      cornerDialogMessage: "",
-      cornerDialogBtnStyle: ""
+      selectElements: []
     };
   },
   mounted() {
@@ -162,20 +159,6 @@ export default {
             });
         });
       }
-    },
-    dialogFromUser(event) {
-      this.hideCornerDialog = event;
-    },
-    showCornerDialog(status, message, style) {
-      this.cornerDialogStatus = status;
-      this.cornerDialogMessage = message;
-      this.cornerDialogBtnStyle = style;
-      setTimeout(() => {
-        this.hideCornerDialog = false;
-      }, 500);
-      setTimeout(() => {
-        this.hideCornerDialog = true;
-      }, 10000);
     },
     getSelect(users, selectElements) {
       const select = users.filter(user =>
