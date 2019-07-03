@@ -31,7 +31,7 @@ module.exports = {
       email,
       group_id,
       password
-    } = req.body;
+    } = req.body.user;
 
     const passwordToSave = bcrypt.hashSync(password, this.salt);
 
