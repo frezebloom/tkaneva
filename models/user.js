@@ -10,29 +10,48 @@ module.exports = function(sequelize, Sequelize) {
 
       first_name: {
         type: Sequelize.STRING,
-        notEmpty: true
+        validate: {
+          notEmpty: true
+        }
       },
 
       last_name: {
         type: Sequelize.STRING,
-        notEmpty: true
+        validate: {
+          notEmpty: true
+        }
       },
 
       login: {
         type: Sequelize.STRING,
-        notEmpty: true
+        validate: {
+          notEmpty: true,
+        },
+        // unique: {
+        //   msg: 'Email address already in use!'
+        // }
       },
 
       email: {
         type: Sequelize.STRING,
         validate: {
-          isEmail: true
-        }
+          isEmail: true,
+          notEmpty: true,
+          unique: {
+            args: true,
+            msg: 'Email address already in use!',
+          }
+        },
+        
+        
       },
 
       password: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        }
       },
 
       status: {
