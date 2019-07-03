@@ -5,8 +5,8 @@
       <div class="form-wrapper">
         <label class="form-label">Имя *</label>
         <input
-          :value="state.first_name"
-          @input="inputHandler($event, 'first_name')"
+          v-model="user.first_name"
+          
           :class="[errorInput.includes('first_name') ? 'form-input-error' : '', 'form-input']"
           class="form-input"
           type="text"
@@ -15,7 +15,7 @@
       <div class="form-wrapper">
         <label class="form-label">Фамилия *</label>
         <input
-          :value="state.last_name"
+          v-model="state.last_name"
           @input="inputHandler($event, 'last_name')"
           :class="[errorInput.includes('last_name') ? 'form-input-error' : '', 'form-input']"
           type="text"
@@ -24,7 +24,7 @@
       <div class="form-wrapper">
         <label class="form-label">Логин *</label>
         <input
-          :value="state.login"
+          v-model="state.login"
           @input="inputHandler($event, 'login')"
           :class="[errorInput.includes('login') ? 'form-input-error' : '', 'form-input']"
           type="text"
@@ -33,7 +33,7 @@
       <div class="form-wrapper">
         <label class="form-label">Почта *</label>
         <input
-          :value="state.email"
+          v-model="state.email"
           @input="inputHandler($event, 'email')"
           :class="[errorInput.includes('email') ? 'form-input-error' : '', 'form-input']"
           type="text"
@@ -54,6 +54,7 @@
         <label class="form-label">Пароль *</label>
         <input
           @input="inputHandler($event, 'password')"
+          v-model="state.password"
           :class="[errorInput.includes('password') ? 'form-input-error' : '', 'form-input']"
           type="password"
         />
@@ -62,6 +63,7 @@
         <label class="form-label">Повторите пароль *</label>
         <input
           @input="inputHandler($event, 'confrimPassword')"
+          v-model="state.confrimPassword"
           :class="[errorInput.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
           type="password"
         />
@@ -120,8 +122,8 @@ export default {
         login: this.state.login || "",
         email: this.state.email || "",
         group_id: this.state.group_id || 1,
-        password: "",
-        confrimPassword: ""
+        password: this.state.password || "",
+        confrimPassword: this.state.password || ""
       },
       errorMessage: [],
       errorInput: []
@@ -159,6 +161,7 @@ export default {
     check() {
       this.validation();
       if (this.errorInput.length > 0) {
+        console.log(this.user);
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         setTimeout(() => {
           this.errorMessage = [];
