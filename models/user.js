@@ -26,10 +26,20 @@ module.exports = function(sequelize, Sequelize) {
         type: Sequelize.STRING,
         validate: {
           notEmpty: true,
-        },
-        // unique: {
-        //   msg: 'Email address already in use!'
-        // }
+          isUnique: function(value, next) {
+            User.findOne({
+              where: { login: value }
+            }).done(function(error) {
+              if (error)
+                return next(
+                  JSON.stringify({
+                    login: "Указанный логин уже занят"
+                  })
+                );
+              next();
+            });
+          }
+        }
       },
 
       email: {
@@ -37,20 +47,27 @@ module.exports = function(sequelize, Sequelize) {
         validate: {
           isEmail: true,
           notEmpty: true,
-          unique: {
-            args: true,
-            msg: 'Email address already in use!',
+          isUnique: function(value, next) {
+            User.findOne({
+              where: { email: value }
+            }).done(function(error) {
+              if (error)
+                return next(
+                  JSON.stringify({
+                    login: "Указанный адрес электронной почты уже занят"
+                  })
+                );
+              next();
+            });
           }
-        },
-        
-        
+        }
       },
 
       password: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true,
+          notEmpty: true
         }
       },
 
