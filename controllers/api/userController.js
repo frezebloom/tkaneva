@@ -19,7 +19,7 @@ module.exports = {
         res.status(200).json(users);
       })
       .catch(error => {
-        res.status(404).send("Invalid request" + error);
+        res.status(404).send("Invalid request " + error);
       });
   },
 
@@ -31,7 +31,7 @@ module.exports = {
       email,
       group_id,
       password
-    } = req.body.user;
+    } = req.body;
 
     const passwordToSave = bcrypt.hashSync(password, this.salt);
 
@@ -47,7 +47,7 @@ module.exports = {
         res.status(201).send(user.dataValues);
       })
       .catch(error => {
-        res.status(404).send("Invalid request" + error);
+        res.status(404).send("Invalid request " + error);
       });
   },
 
@@ -79,7 +79,7 @@ module.exports = {
         res.status(201).send("Ok");
       })
       .catch(error => {
-        res.status(404).send("Invalid request" + error);
+        res.status(404).send("Invalid request " + error);
       });
   },
 
@@ -94,7 +94,7 @@ module.exports = {
         res.status(200).send("Ok");
       })
       .catch(error => {
-        res.status(404).send("Invalid request" + error);
+        res.status(404).send("Invalid request " + error);
       });
   }
 };
