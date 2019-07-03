@@ -6,7 +6,7 @@
         <label class="form-label">Имя *</label>
         <input
           v-model="user.first_name"
-          
+          @input="inputHandler($event, 'first_name')"
           :class="[errorInput.includes('first_name') ? 'form-input-error' : '', 'form-input']"
           class="form-input"
           type="text"
@@ -157,14 +157,18 @@ export default {
           }
         }
       });
+
+      if(this.user.password !== this.user.confrimPassword) {
+        this.errorInput.push('password', 'confrimPassword');
+        this.errorMessage.push("Пароли не совпадают");
+      }
     },
     check() {
       this.validation();
-      if (this.errorInput.length > 0) {
-        console.log(this.user);
+      if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
+        this.errorMessage = [];
         setTimeout(() => {
-          this.errorMessage = [];
           this.errorInput = [];
         }, 10000);
       } else {
