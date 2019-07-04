@@ -32,9 +32,7 @@ module.exports = function(sequelize, Sequelize) {
             }).done(function(error) {
               if (error)
                 return next(
-                  JSON.stringify({
-                    login: "Указанный логин уже занят"
-                  })
+                  "Указанный логин уже занят"
                 );
               next();
             });
@@ -45,7 +43,10 @@ module.exports = function(sequelize, Sequelize) {
       email: {
         type: Sequelize.STRING,
         validate: {
-          isEmail: true,
+          isEmail: {
+            args: true,
+            msg: 'Введите корректный e-mail'
+          },
           notEmpty: true,
           isUnique: function(value, next) {
             User.findOne({
@@ -53,9 +54,7 @@ module.exports = function(sequelize, Sequelize) {
             }).done(function(error) {
               if (error)
                 return next(
-                  JSON.stringify({
-                    login: "Указанный адрес электронной почты уже занят"
-                  })
+                  "Указанный адрес электронной почты уже занят"
                 );
               next();
             });

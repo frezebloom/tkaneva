@@ -187,7 +187,7 @@ export default {
             });
           })
           .catch(error => {
-            console.log(error);
+            this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
           });
       } else {
         const user = userService.updateUser(this.user);
