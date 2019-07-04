@@ -125,9 +125,25 @@ export default {
         password: this.state.password || "",
         confrimPassword: this.state.password || ""
       },
+      users: [],
       errorMessage: [],
       errorInput: []
     };
+  },
+  mounted() {
+    const users = userService.getUsers();
+    users
+      .then(users => {
+        this.users = users.data;
+      })
+      .catch(error => {
+        console.error(error);
+        this.showCornerDialog(
+          "Ошибка",
+          "Не удалось связаться с сервером. Обратитесь к администратору",
+          "danger"
+        );
+      });
   },
   methods: {
     inputHandler(event, params) {
@@ -141,6 +157,15 @@ export default {
       function validEmail(email) {
         const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return reg.test(email);
+      }
+
+      function matchCheck(users, email, login) {
+        const matches = []
+        users.forEach((item) => {
+          if(item.email === email) matches.push('email')
+          if(item.login === login) matches.push('login')
+        })
+        return matches
       }
 
       Object.keys(this.user).forEach(item => {
@@ -157,7 +182,21 @@ export default {
           }
         }
       });
-
+      
+      const matches = matchCheck(this.users, this.user.email, this.user.login);
+      if(matches.length > 0) {
+        matches.forEach((item) => {
+          if(item === 'email') {
+            this.errorInput.push(item);
+            this.errorMessage.push("Указанный e-mail уже занят");
+          }
+          if(item === 'login') {
+            this.errorInput.push(item);
+            this.errorMessage.push("Указанный логин уже занят");
+          }
+        })
+      }
+      
       if(this.user.password !== this.user.confrimPassword) {
         this.errorInput.push('password', 'confrimPassword');
         this.errorMessage.push("Пароли не совпадают");
@@ -186,7 +225,7 @@ export default {
               params: { user }
             });
           })
-          .catch(error => {
+          .catch(() => {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
           });
       } else {
