@@ -7,7 +7,6 @@ function checkTokenLifeTime(lifeTime) {
 }
 
 export default () => {
-  // const { user_id, accessToken, refreshToken, accessTokenLife, refreshTokenLife } = store.getters;
   const { user_id, accessToken, refreshToken, accessTokenLife, refreshTokenLife } = store.getters;
   let headers;
   if (checkTokenLifeTime(accessTokenLife)) {
