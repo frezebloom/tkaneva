@@ -8,7 +8,8 @@ function checkTokenLifeTime(lifeTime) {
 
 export default () => {
   // const { user_id, accessToken, refreshToken, accessTokenLife, refreshTokenLife } = store.getters;
-  const { accessTokenLife, refreshTokenLife } = store.getters;
+  const { user_id, accessToken, refreshToken, accessTokenLife, refreshTokenLife } = store.getters;
+  let headers;
   if (checkTokenLifeTime(accessTokenLife)) {
     if (checkTokenLifeTime(refreshTokenLife)) {
       console.log('logout');
@@ -16,12 +17,18 @@ export default () => {
       console.log('refresh token')
     }
   } else {
-    console.log('I`am fine')
+    headers = {
+      user_id,
+      accessToken,
+      refreshToken,
+      accessTokenLife,
+      refreshTokenLife
+    }
   }
-  // console.log(checkTokenLifeTime(accessTokenLife))
-  // console.log(checkTokenLifeTime(refreshTokenLife));
-
   return axios.create({
-    baseURL: "http://localhost:3000"
+    baseURL: "http://localhost:3000",
+    headers: headers
   });
+  
+  
 };
