@@ -11,6 +11,8 @@ const state = {
   userId: localStorage.getItem("userId") || "",
   accessToken: localStorage.getItem("accessToken") || "",
   refreshToken: localStorage.getItem("refreshToken") || "",
+  accessTokenLife: localStorage.getItem("accessTokenLife") || "",
+  refreshTokenLife: localStorage.getItem("refreshTokenLife") || "",
   status: "unknown" //пока не исользуется
 };
 
