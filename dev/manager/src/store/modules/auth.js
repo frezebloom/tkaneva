@@ -16,6 +16,9 @@ const state = {
 
 const getters = {
   isAuthenticated: state => !!state.accessToken,
+  user_id: state => state.userId,
+  accessToken: state => state.accessToken,
+  refreshToken: state => state.refreshToken,
   authStatus: state => state.status //пока не исользуется
 };
 
