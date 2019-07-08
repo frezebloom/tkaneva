@@ -47,7 +47,9 @@ module.exports = {
         const response = {
           userId: tokenData.user_id,
           accessToken: tokenData.access_token,
-          refreshToken: tokenData.refresh_token
+          refreshToken: tokenData.refresh_token,
+          access_token_life: tokenData.access_token_life,
+          refresh_token_life: tokenData.refresh_token_life
         };
 
         Token.findOne({ where: { user_id: user_id } }).then(token => {
@@ -56,7 +58,7 @@ module.exports = {
               .then(() => {
                 res.status(200).json(response);
               })
-              .catch(error => {
+              .catch(() => {
                 res.status(404).send("Invalid request");
               });
           } else {
@@ -64,7 +66,7 @@ module.exports = {
               .then(() => {
                 res.status(200).json(response);
               })
-              .catch(error => {
+              .catch(() => {
                 res.status(404).send("Invalid request");
               });
           }
@@ -72,7 +74,7 @@ module.exports = {
 
         return true;
       })
-      .catch(error => {
+      .catch(() => {
         res.status(401).send("Unauthorized");
       });
   },
@@ -112,13 +114,13 @@ module.exports = {
             .then(() => {
               res.status(200).json(response);
             })
-            .catch(error => {
+            .catch(() => {
               res.status(404).send("Invalid request");
             });
         }
         return true;
       })
-      .catch(error => {
+      .catch(() => {
         res.status(401).send("Unauthorized");
       });
   }
