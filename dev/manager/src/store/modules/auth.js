@@ -19,6 +19,8 @@ const getters = {
   user_id: state => state.userId,
   accessToken: state => state.accessToken,
   refreshToken: state => state.refreshToken,
+  accessTokenLife: state => state.accessTokenLife,
+  refreshTokenLife: state => state.refreshTokenLife,
   authStatus: state => state.status //пока не исользуется
 };
 
@@ -31,10 +33,12 @@ const actions = {
 
       response
         .then(response => {
-          const { userId, accessToken, refreshToken } = response.data;
+          const { userId, accessToken, refreshToken, accessTokenLife, refreshTokenLife } = response.data;
           localStorage.setItem("userId", userId); // пока не используется, уйдёт в отдельный модуль
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
+          localStorage.setItem("accessTokenLife", accessTokenLife);
+          localStorage.setItem("refreshTokenLife", refreshTokenLife);
 
           commit(AUTH_SUCCESS, response.data);
 
@@ -65,6 +69,8 @@ const mutations = {
     state.userId = data.userId; // пока не используется, уйдёт в отдельный модуль
     state.accessToken = data.accessToken;
     state.refreshToken = data.refreshToken;
+    state.accessTokenLife = data.accessTokenLife,
+    state.refreshTokenLife = data.refreshTokenLife
   },
   [AUTH_ERROR]: state => {
     state.status = "error"; // пока не используется
