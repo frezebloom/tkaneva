@@ -48,8 +48,6 @@ module.exports = {
           userId: tokenData.user_id,
           accessToken: tokenData.access_token,
           refreshToken: tokenData.refresh_token,
-          accessTokenLife: tokenData.access_token_life,
-          refreshTokenLife: tokenData.refresh_token_life
         };
 
         Token.findOne({ where: { user_id: user_id } }).then(token => {
