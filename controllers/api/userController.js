@@ -8,6 +8,7 @@ module.exports = {
   salt: bcrypt.genSaltSync(10),
 
   get(req, res) {
+    console.log(req);
     User.findAll({
       include: [
         {
