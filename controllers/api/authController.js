@@ -76,6 +76,22 @@ module.exports = {
         res.status(401).send("Unauthorized");
       });
   },
+
+  tokkenCheck(id, accesstoken, refreshtoken) {
+
+    if (!id, !accesstoken, !refreshtoken) return false
+    
+    const Token = db.token;
+    Token.findOne({
+      where: {
+        user_id: id
+      }
+    })
+    .then(token => {
+      console.log(token.dataValues);
+    })
+  },
+
   refreshToken(req, res) {
     const { user_id, refresh_token } = req.body;
 
