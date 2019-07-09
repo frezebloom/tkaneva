@@ -9,9 +9,8 @@ module.exports = {
   salt: bcrypt.genSaltSync(10),
 
   get(req, res) {
-
     const { user_id, accesstoken, refreshtoken } = req.headers;
-    auth.tokkenCheck(user_id, accesstoken, refreshtoken)
+    auth.tokkenCheck(user_id, accesstoken, refreshtoken);
 
     User.findAll({
       include: [
