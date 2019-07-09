@@ -80,7 +80,12 @@ module.exports = {
   tokkenCheck(id, accesstoken, refreshtoken) {
 
     if (!id, !accesstoken, !refreshtoken) return false
-    
+
+    function checkTokenLifeTime(lifeTime) {
+      const currentTime = new Date().getTime()
+      return lifeTime < currentTime ? true : false
+    }
+
     const Token = db.token;
     Token.findOne({
       where: {
@@ -88,6 +93,7 @@ module.exports = {
       }
     })
     .then(token => {
+      
       console.log(token.dataValues);
     })
   },
