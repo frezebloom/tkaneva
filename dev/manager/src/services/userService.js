@@ -4,7 +4,7 @@ import token from "@/utils/token";
 
 export default {
   getUsers() {
-    console.log(token.checkToken());
+    token.checkToken();
     return api().get("/api/user/get");
   },
   createUser(user) {
