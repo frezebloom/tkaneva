@@ -39,7 +39,7 @@ module.exports = {
         const tokenData = {
           access_token: data.token,
           refresh_token: data.refreshToken,
-          access_token_life: Date.now() + config.TOKEN_LIFE * 10,
+          access_token_life: Date.now() + config.TOKEN_LIFE * 1000,
           refresh_token_life: Date.now() + config.TOKEN_LIFE_REFRESH * 1000,
           user_id: user_id
         };
@@ -102,7 +102,7 @@ module.exports = {
           const tokenData = {
             access_token: token,
             refresh_token: refreshToken,
-            access_token_life: Date.now() + config.TOKEN_LIFE * 10,
+            access_token_life: Date.now() + config.TOKEN_LIFE * 1000,
             refresh_token_life: Date.now() + config.TOKEN_LIFE_REFRESH * 1000,
             user_id: data.user_id
           };
