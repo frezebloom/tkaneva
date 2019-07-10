@@ -4,7 +4,8 @@ import {
   AUTH_REQUEST,
   AUTH_ERROR,
   AUTH_SUCCESS,
-  AUTH_LOGOUT
+  AUTH_LOGOUT,
+  AUTH_REFRESH
 } from "../types/auth";
 
 const state = {
@@ -57,6 +58,27 @@ const actions = {
       localStorage.clear();
       resolve();
     });
+  },
+  [AUTH_REFRESH]({ commit }, user) {
+    return new Promise((resolve, reject) => {
+      const response = signupService.refreshToken(user.userId, user.refreshToken)
+      response
+      .then(response => {
+        const { userId, accessToken, refreshToken, expiresIn } = response.data;
+        localStorage.setItem("userId", userId); // пока не используется, уйдёт в отдельный модуль
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("expiresIn", expiresIn)
+        localStorage.setItem("refreshToken", refreshToken);
+
+        commit(AUTH_SUCCESS, response.data);
+        resolve(response.data);
+      })
+      .catch(error => {
+        commit(AUTH_ERROR, error);
+        localStorage.clear();
+        reject(error);
+      });
+    })
   }
 };
 
@@ -77,7 +99,14 @@ const mutations = {
   [AUTH_LOGOUT]: state => {
     state.accessToken = "";
     state.status = "unknown"; // пока не используется
-  }
+  },
+  [AUTH_REFRESH]: (state, data) => {
+    state.status = "success"; // пока не используется
+    state.userId = data.userId; // пока не используется, уйдёт в отдельный модуль
+    state.accessToken = data.accessToken;
+    state.expiresIn = data.expiresIn;
+    state.refreshToken = data.refreshToken;
+  },
 };
 
 export default {

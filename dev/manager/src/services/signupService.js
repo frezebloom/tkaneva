@@ -6,5 +6,11 @@ export default {
       login,
       password
     });
+  },
+  refreshToken(user_id, refresh_token) {
+    return api().post("/api/auth/refreshToken", {
+      user_id,
+      refresh_token
+    })
   }
 };

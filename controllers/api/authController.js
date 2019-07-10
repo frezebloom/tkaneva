@@ -78,36 +78,6 @@ module.exports = {
       });
   },
 
-  // tokkenCheck(id, accesstoken, refreshToken) {
-  //   if ((!id, !accesstoken, !refreshToken)) return false;
-
-  //   // function checkTokenLifeTime(lifeTime) {
-  //   //   const currentTime = new Date().getTime();
-  //   //   return lifeTime > currentTime ? true : false;
-  //   // }
-
-  //   const Token = db.token;
-  //   Token.findOne({
-  //     where: {
-  //       user_id: id
-  //     }
-  //   }).then(data => {
-  //     const {
-  //       accessToken,
-  //       // access_token_life,
-  //       // refreshToken,
-  //       // refresh_token_life
-  //     } = data.dataValues;
-  //     if (accesstoken !== accessToken) {
-  //       return false;
-  //     } else {
-  //       return true;
-  //     }
-  //     // if (!checkTokenLifeTime(access_token_life)) return false;
-  //     // refreshToken(refreshToken, refresh_token_life);
-  //   });
-  // },
-
   refreshToken(req, res) {
     const { user_id, refresh_token } = req.body;
 
