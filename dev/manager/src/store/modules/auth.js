@@ -10,6 +10,7 @@ import {
 const state = {
   userId: localStorage.getItem("userId") || "",
   accessToken: localStorage.getItem("accessToken") || "",
+  expiresIn: localStorage.getItem("expiresIn") || "",
   refreshToken: localStorage.getItem("refreshToken") || "",
   status: "unknown" //пока не исользуется
 };
@@ -18,6 +19,7 @@ const getters = {
   isAuthenticated: state => !!state.accessToken,
   user_id: state => state.userId,
   accessToken: state => state.accessToken,
+  expiresIn: state => state.expiresIn,
   refreshToken: state => state.refreshToken,
   authStatus: state => state.status //пока не исользуется
 };
@@ -31,9 +33,10 @@ const actions = {
 
       response
         .then(response => {
-          const { userId, accessToken, refreshToken } = response.data;
+          const { userId, accessToken, expiresIn, refreshToken } = response.data;
           localStorage.setItem("userId", userId); // пока не используется, уйдёт в отдельный модуль
           localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("expiresIn", expiresIn)
           localStorage.setItem("refreshToken", refreshToken);
 
 
@@ -65,6 +68,7 @@ const mutations = {
     state.status = "success"; // пока не используется
     state.userId = data.userId; // пока не используется, уйдёт в отдельный модуль
     state.accessToken = data.accessToken;
+    state.expiresIn = data.expiresIn;
     state.refreshToken = data.refreshToken;
   },
   [AUTH_ERROR]: state => {
