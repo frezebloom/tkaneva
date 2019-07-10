@@ -5,8 +5,9 @@ const db = require("../../models/index");
 
 const User = db.user;
 const Token = db.token;
-
+const time = 1;
 module.exports = {
+  
   signup(req, res) {
     const { login, password } = req.body;
 
@@ -39,8 +40,8 @@ module.exports = {
         const tokenData = {
           access_token: data.token,
           refresh_token: data.refreshToken,
-          access_token_life: Date.now() + config.TOKEN_LIFE * 1000,
-          refresh_token_life: Date.now() + config.TOKEN_LIFE_REFRESH * 1000,
+          access_token_life: Date.now() + config.TOKEN_LIFE * time,
+          refresh_token_life: Date.now() + config.TOKEN_LIFE_REFRESH * time,
           user_id: user_id
         };
 
@@ -80,7 +81,7 @@ module.exports = {
 
   refreshToken(req, res) {
     const { user_id, refresh_token } = req.body;
-
+    console.log(req.body);
     Token.findOne({ where: { user_id: user_id }, include: [User] })
       .then(data => {
         if (
@@ -96,11 +97,15 @@ module.exports = {
             expiresIn: config.TOKEN_LIFE
           });
 
+          const refreshToken = jwt.sign(payload, config.SECRET_KEY_REFRESH, {
+            expiresIn: config.TOKEN_LIFE_REFRESH
+          });
+
           const tokenData = {
             access_token: token,
-            refresh_token: data.refresh_token,
-            access_token_life: Date.now() + config.TOKEN_LIFE * 1000,
-            refresh_token_life: data.refresh_token_life,
+            refresh_token: refreshToken,
+            access_token_life: Date.now() + config.TOKEN_LIFE * time,
+            refresh_token_life: Date.now() + config.TOKEN_LIFE_REFRESH * time,
             user_id: data.user_id
           };
 

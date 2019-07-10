@@ -1,7 +1,10 @@
 import api from "@/services/api";
+import token from "@/utils/token";
+
 
 export default {
   getUsers() {
+    console.log(token.checkTimeAccessToken());
     return api().get("/api/user/get");
   },
   createUser(user) {

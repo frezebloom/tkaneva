@@ -7,7 +7,7 @@ router.post("/auth/signup", (req, res) => {
   authController.signup(req, res);
 });
 
-router.post("/auth/refresh-tokens", (req, res) => {
+router.post("/auth/refresh-token", (req, res) => {
   authController.refreshToken(req, res);
 });
 

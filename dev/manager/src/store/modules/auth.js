@@ -59,9 +59,9 @@ const actions = {
       resolve();
     });
   },
-  [AUTH_REFRESH]({ commit }, user) {
+  [AUTH_REFRESH]({ commit }, user_id, refreshToken) {
     return new Promise((resolve, reject) => {
-      const response = signupService.refreshToken(user.userId, user.refreshToken)
+      const response = signupService.refreshToken(user_id, refreshToken)
       response
       .then(response => {
         const { userId, accessToken, refreshToken, expiresIn } = response.data;

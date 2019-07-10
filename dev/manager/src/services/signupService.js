@@ -8,7 +8,7 @@ export default {
     });
   },
   refreshToken(user_id, refresh_token) {
-    return api().post("/api/auth/refreshToken", {
+    return api().post("/api/auth/refresh-token", {
       user_id,
       refresh_token
     })
