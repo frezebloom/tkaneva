@@ -36,7 +36,15 @@ module.exports = {
       });
   },
 
-  create(req, res) {
+  async create(req, res) {
+
+    const { user_id, accesstoken } = req.headers;
+    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    if (!tokenCheck) {
+      res.status(404).send("invalid token");
+      throw new Error("invalid token");
+    }
+
     const {
       first_name,
       last_name,
@@ -64,7 +72,8 @@ module.exports = {
       });
   },
 
-  update(req, res) {
+  async update(req, res) {
+
     const {
       user_id,
       first_name,
@@ -74,6 +83,14 @@ module.exports = {
       group,
       password
     } = req.body.user;
+
+    const { accesstoken } = req.headers;
+    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    if (!tokenCheck) {
+      res.status(404).send("invalid token");
+      throw new Error("invalid token");
+    }
+
     const passwordToSave = bcrypt.hashSync(password, this.salt);
     User.update(
       {
@@ -96,7 +113,15 @@ module.exports = {
       });
   },
 
-  delete(req, res) {
+  async delete(req, res) {
+
+    const { user_id, accesstoken } = req.headers;
+    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    if (!tokenCheck) {
+      res.status(404).send("invalid token");
+      throw new Error("invalid token");
+    }
+
     const { id } = req.body.user;
     User.destroy({
       where: {
@@ -110,4 +135,4 @@ module.exports = {
         res.status(404).send("Invalid request " + error);
       });
   }
-};
+}
