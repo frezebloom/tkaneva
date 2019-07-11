@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const db = require("../../models/index");
-const token = require("../../utils/token")
+const tokenController = require("../tokenController")
 
 const User = db.user;
 const UserGroup = db.userGroup;
@@ -8,10 +8,12 @@ const UserGroup = db.userGroup;
 module.exports = {
   salt: bcrypt.genSaltSync(10),
 
-  get(req, res) {
+  async get(req, res) {
+
     const { user_id, accesstoken } = req.headers;
-    const test = token.compareToken(user_id, accesstoken);
-    console.log(test);
+    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    if (tokenCheck) throw new Error("invalid token");
+    
     User.findAll({
       include: [
         {
@@ -20,6 +22,7 @@ module.exports = {
       ]
     })
       .then(users => {
+        tokenController.checkToken(user_id, accesstoken);
         return users;
       })
       .then(users => {
