@@ -1,6 +1,15 @@
 <template>
   <div class="topbar">
     <h3>{{title}}</h3>
+    <div class="topbar-search">
+      <input type="text" placeholder="Поиск...">
+      <div class="topbar-search-button">
+        <img alt="Вверх" src="../assets/icons/arrow-up.svg">
+        <img alt="Вниз" src="../assets/icons/arrow-down.svg">
+        <img alt="Стереть" src="../assets/icons/cross.svg">
+      </div>
+    </div>
+    
     <div class="topbar-btn-group">
       <div class="btn" @click="$emit('eventClickTopBar', 'new')">
         <img alt="Создать" src="../assets/icons/add.svg">
