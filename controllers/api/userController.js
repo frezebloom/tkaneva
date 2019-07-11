@@ -12,7 +12,7 @@ module.exports = {
 
     const { user_id, accesstoken } = req.headers;
     const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
-    if (tokenCheck) {
+    if (!tokenCheck) {
       res.status(404).send("invalid token");
       throw new Error("invalid token");
     }
