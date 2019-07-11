@@ -7,30 +7,37 @@
       @eventClickCheck="check($event)"
     />
     <Topbar title="Пользователи" @eventClickTopBar="route($event)" />
-    <table>
-      <th v-for="item in title" :key="item.id">{{item}}</th>
-      <tr
-        @click="select(item.user_id)"
-        :class="isActive(item.user_id)"
-        v-for="item in users"
-        :key="item.id"
-      >
-        <td>{{item.user_id}}</td>
-        <td>{{item.first_name}}</td>
-        <td>{{item.last_name}}</td>
-        <td>{{item.login}}</td>
-        <td>{{item.email}}</td>
-        <td>{{item.userGroup.name}}</td>
-        <td>{{item.status}}</td>
-        <td>
-          <input
-            type="checkbox"
-            :checked="checked(item.user_id)"
-            @click.stop="select(item.user_id)"
-          />
-        </td>
-      </tr>
-    </table>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+          <th v-for="item in title" :key="item.id">{{item}}</th>
+          </tr>
+        </thead>
+        <tr
+          @click="select(item.user_id)"
+          :class="isActive(item.user_id)"
+          v-for="item in users"
+          :key="item.id"
+        >
+          <td>{{item.user_id}}</td>
+          <td>{{item.first_name}}</td>
+          <td>{{item.last_name}}</td>
+          <td>{{item.login}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.userGroup.name}}</td>
+          <td>{{item.status}}</td>
+          <td>
+            <input
+              type="checkbox"
+              :checked="checked(item.user_id)"
+              @click.stop="select(item.user_id)"
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+    
     <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
@@ -61,7 +68,7 @@ export default {
   },
   data() {
     return {
-      title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус"],
+      title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус", ""],
       hideCheck: false,
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
