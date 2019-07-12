@@ -140,7 +140,7 @@ export default {
       }
     },
     search(event) {
-      console.log(event);
+      
     },
     check(event) {
       if (!event) {
