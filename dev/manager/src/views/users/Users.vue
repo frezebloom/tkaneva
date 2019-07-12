@@ -6,7 +6,11 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar title="Пользователи" @eventClickTopBar="route($event)" />
+    <Topbar 
+      title="Пользователи" 
+      @eventClickTopBar="route($event)" 
+      @eventSearch="search($event)"
+    />
     <div class="table-wrapper">
       <table>
         <thead>
@@ -134,6 +138,9 @@ export default {
           params: { selectUsers }
         });
       }
+    },
+    search(event) {
+      console.log(event);
     },
     check(event) {
       if (!event) {

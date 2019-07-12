@@ -2,7 +2,7 @@
   <div class="topbar">
     <h3>{{title}}</h3>
     <div class="topbar-search">
-      <input type="text" placeholder="Поиск...">
+      <input type="text" @input="$emit('eventSearch', $event.target.value)" placeholder="Поиск...">
       <div class="topbar-search-button">
         <img alt="Стереть" src="../assets/icons/cross.svg">
       </div>
