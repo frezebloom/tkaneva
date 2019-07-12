@@ -4,8 +4,6 @@
     <div class="topbar-search">
       <input type="text" placeholder="Поиск...">
       <div class="topbar-search-button">
-        <img alt="Вверх" src="../assets/icons/arrow-up.svg">
-        <img alt="Вниз" src="../assets/icons/arrow-down.svg">
         <img alt="Стереть" src="../assets/icons/cross.svg">
       </div>
     </div>
