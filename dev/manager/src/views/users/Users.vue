@@ -6,16 +6,12 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar 
-      title="Пользователи" 
-      @eventClickTopBar="route($event)" 
-      @eventSearch="search($event)"
-    />
+    <Topbar title="Пользователи" @eventClickTopBar="route($event)" @eventSearch="search($event)" />
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
-          <th v-for="item in title" :key="item.id">{{item}}</th>
+            <th v-for="item in title" :key="item.id">{{item}}</th>
           </tr>
         </thead>
         <tr
@@ -41,7 +37,7 @@
         </tr>
       </table>
     </div>
-    
+
     <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
@@ -140,7 +136,17 @@ export default {
       }
     },
     search(event) {
-      
+      const test = this.users.filter(item => {
+        let found = false;
+
+        Object.keys(item).forEach(obj => {
+          const str = String(item[obj]);
+          if (str.includes(event)) found = true;
+        });
+
+        if (found) return item;
+      });
+      this.users = test;
     },
     check(event) {
       if (!event) {
