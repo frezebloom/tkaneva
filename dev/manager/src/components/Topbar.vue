@@ -2,9 +2,9 @@
   <div class="topbar">
     <h3>{{title}}</h3>
     <div class="topbar-search">
-      <input type="text" @input="$emit('eventSearch', $event.target.value)" placeholder="Поиск...">
+      <input type="text" @input="$emit('eventSearch', $event.target.value)" v-model="searchInput" placeholder="Поиск...">
       <div class="topbar-search-button">
-        <img alt="Стереть" src="../assets/icons/cross.svg">
+        <img alt="Стереть" @click="$emit('eventClearSearch'), clearInput()" src="../assets/icons/cross.svg">
       </div>
     </div>
     
@@ -29,8 +29,18 @@ export default {
   name: "Topbar",
   props: {
     title: String
+  },
+  data() {
+    return {
+      searchInput: ''
+    }
+  },
+  methods: {
+    clearInput() {
+      this.searchInput = '';
+    }
   }
-};
+}; 
 </script>
 <style lang="scss" scoped>
 @import "../styles/topbar.scss";

@@ -6,7 +6,12 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar title="Пользователи" @eventClickTopBar="route($event)" @eventSearch="search($event)" />
+    <Topbar 
+      title="Пользователи" 
+      @eventClickTopBar="route($event)"
+      @eventSearch="search($event)"
+      @eventClearSearch="clearSearch()"
+    />
     <div class="table-wrapper">
       <table>
         <thead>
@@ -156,6 +161,9 @@ export default {
 
       this.filterItems = foundItems;
 
+    },
+    clearSearch() {
+      this.search('')
     },
     check(event) {
       if (!event) {
