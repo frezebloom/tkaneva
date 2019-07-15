@@ -17,7 +17,7 @@
         <tr
           @click="select(item.user_id)"
           :class="isActive(item.user_id)"
-          v-for="item in users"
+          v-for="item in filterItems"
           :key="item.id"
         >
           <td>{{item.user_id}}</td>
@@ -70,6 +70,7 @@ export default {
     return {
       title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус", ""],
       hideCheck: false,
+      filterItems: [],
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
@@ -81,6 +82,7 @@ export default {
     users
       .then(users => {
         this.users = users.data;
+        this.filterItems = users.data;
       })
       .catch(error => {
         console.error(error);
@@ -136,17 +138,24 @@ export default {
       }
     },
     search(event) {
-      const test = this.users.filter(item => {
+      const searchString = event.toLowerCase();
+
+      const foundItems = this.users.filter(item => {
+
         let found = false;
 
         Object.keys(item).forEach(obj => {
-          const str = String(item[obj]);
-          if (str.includes(event)) found = true;
+          const string = String(item[obj]);
+          const dataString = string.toLowerCase();
+          if (dataString.includes(searchString)) found = true;
         });
 
         if (found) return item;
+
       });
-      this.users = test;
+
+      this.filterItems = foundItems;
+
     },
     check(event) {
       if (!event) {
