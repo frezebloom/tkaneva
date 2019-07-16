@@ -9,7 +9,7 @@
     <Topbar 
       title="Пользователи" 
       @eventClickTopBar="route($event)"
-      @eventSearch="search($event)"
+      @eventHandlerSearch="eventSearch($event)"
       @eventClearSearch="clearSearch()"
     />
     <div class="table-wrapper">
@@ -22,7 +22,7 @@
         <tr
           @click="select(item.user_id)"
           :class="isActive(item.user_id)"
-          v-for="item in filterItems"
+          v-for="item in filter"
           :key="item.id"
         >
           <td>{{item.user_id}}</td>
@@ -75,10 +75,10 @@ export default {
     return {
       title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус", ""],
       hideCheck: false,
-      filterItems: [],
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
       users: [],
+      search: '',
       selectElements: []
     };
   },
@@ -87,7 +87,6 @@ export default {
     users
       .then(users => {
         this.users = users.data;
-        this.filterItems = users.data;
       })
       .catch(error => {
         console.error(error);
@@ -105,6 +104,26 @@ export default {
     } else {
       this.hideCornerDialog = true;
     }
+  },
+  computed: {
+    filter() {
+      const foundItems = this.users.filter(item => {
+
+        let found = false;
+
+        Object.keys(item).forEach(obj => {
+          const string = String(item[obj]);
+          const dataString = string.toLowerCase();
+          if (dataString.includes(this.search)) found = true;
+        });
+
+        if (found) return item;
+
+      });
+
+      return foundItems;
+
+    },
   },
   methods: {
     route(event) {
@@ -142,28 +161,12 @@ export default {
         });
       }
     },
-    search(event) {
-      const searchString = event.toLowerCase();
-
-      const foundItems = this.users.filter(item => {
-
-        let found = false;
-
-        Object.keys(item).forEach(obj => {
-          const string = String(item[obj]);
-          const dataString = string.toLowerCase();
-          if (dataString.includes(searchString)) found = true;
-        });
-
-        if (found) return item;
-
-      });
-
-      this.filterItems = foundItems;
-
+    eventSearch(event) {
+      this.search = event.toLowerCase();
     },
     clearSearch() {
-      this.search('')
+      this.search = '';
+
     },
     check(event) {
       if (!event) {

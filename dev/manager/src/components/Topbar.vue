@@ -2,7 +2,7 @@
   <div class="topbar">
     <h3>{{title}}</h3>
     <div class="topbar-search">
-      <input type="text" @input="$emit('eventSearch', $event.target.value)" v-model="searchInput" placeholder="Поиск...">
+      <input type="text" @input="$emit('eventHandlerSearch', $event.target.value)" v-model="searchInput" placeholder="Поиск...">
       <div class="topbar-search-button">
         <img alt="Стереть" @click="$emit('eventClearSearch'), clearInput()" src="../assets/icons/cross.svg">
       </div>
