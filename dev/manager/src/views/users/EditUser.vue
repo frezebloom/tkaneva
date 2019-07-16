@@ -1,7 +1,8 @@
 <template>
   <div class="edit-user">
-    <Tabs :tabs="this.users" @eventClickTab="route($event)"/>
-
+    <div v-if="this.users.length > 1">
+      <Tabs :tabs="this.users" @eventClickTab="route($event)"/>
+    </div>
     <UserForm :state="user" :userGroups="userGroups"/>
   </div>
 </template> 
