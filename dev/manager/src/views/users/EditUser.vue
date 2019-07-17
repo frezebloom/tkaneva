@@ -3,7 +3,7 @@
     <div v-if="this.users.length > 1">
       <Tabs :tabs="this.users" @eventClickTab="route($event)"/>
     </div>
-    <UserForm :state="user" :userGroups="userGroups"/>
+    <UserForm title="Редактировать акаунт" :state="user" :userGroups="userGroups"/>
   </div>
 </template> 
 <script>

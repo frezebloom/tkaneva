@@ -1,6 +1,6 @@
 <template>
   <div class="new-user">
-    <UserForm :state="user" :userGroups="userGroups"/>
+    <UserForm title="Создать акаунт" :state="user" :userGroups="userGroups"/>
   </div>
 </template>
 <script>

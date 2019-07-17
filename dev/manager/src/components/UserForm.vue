@@ -1,7 +1,7 @@
 <template>
   <div class="user-form">
     <form v-on:submit.prevent class="form">
-      <div class="form-header">Создать акаунт</div>
+      <div class="form-header">{{title}}</div>
       <div class="form-wrapper">
         <label class="form-label">Имя *</label>
         <input
@@ -104,6 +104,10 @@ export default {
     CornerDialog
   },
   props: {
+    title: {
+      type: String,
+      required: true
+    },
     state: {
       type: Object,
       required: true
