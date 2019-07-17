@@ -50,24 +50,27 @@
           >{{ option.name }}</option>
         </select>
       </div>
-      <div class="form-wrapper">
-        <label class="form-label">Пароль *</label>
-        <input
-          @input="inputHandler($event, 'password')"
-          v-model="state.password"
-          :class="[errorInput.includes('password') ? 'form-input-error' : '', 'form-input']"
-          type="password"
-        />
+      <div v-if="!this.state.user_id">
+        <div class="form-wrapper">
+          <label class="form-label">Пароль *</label>
+          <input
+            @input="inputHandler($event, 'password')"
+            v-model="state.password"
+            :class="[errorInput.includes('password') ? 'form-input-error' : '', 'form-input']"
+            type="password"
+          />
+         </div>
+        <div class="form-wrapper">
+          <label class="form-label">Повторите пароль *</label>
+          <input
+            @input="inputHandler($event, 'confrimPassword')"
+            v-model="state.confrimPassword"
+            :class="[errorInput.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
+            type="password"
+          />
+        </div>
       </div>
-      <div class="form-wrapper">
-        <label class="form-label">Повторите пароль *</label>
-        <input
-          @input="inputHandler($event, 'confrimPassword')"
-          v-model="state.confrimPassword"
-          :class="[errorInput.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
-          type="password"
-        />
-      </div>
+     
       <div class="form-footer">
         <div @click="check" class="form-button">
           <Button value="Сохранить" styles="success" />
