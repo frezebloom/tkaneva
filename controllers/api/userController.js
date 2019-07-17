@@ -10,8 +10,8 @@ module.exports = {
   
   async get(req, res) {
 
-    const { user_id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    const { id, accesstoken } = req.headers;
+    const tokenCheck = await tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send("invalid token");
       throw new Error("invalid token");
@@ -25,7 +25,7 @@ module.exports = {
       ]
     })
       .then(users => {
-        tokenController.checkToken(user_id, accesstoken);
+        tokenController.checkToken(id, accesstoken);
         return users;
       })
       .then(users => {
@@ -38,8 +38,8 @@ module.exports = {
 
   async create(req, res) {
 
-    const { user_id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    const { id, accesstoken } = req.headers;
+    const tokenCheck = await tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send("invalid token");
       throw new Error("invalid token");
@@ -84,9 +84,8 @@ module.exports = {
       password
     } = req.body.user;
 
-    const { accesstoken } = req.headers;
-    console.log(accesstoken, user_id);
-    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    const { id, accesstoken } = req.headers;
+    const tokenCheck = await tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send("invalid token");
       throw new Error("invalid token");
@@ -116,17 +115,17 @@ module.exports = {
 
   async delete(req, res) {
 
-    const { user_id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
+    const { id, accesstoken } = req.headers;
+    const tokenCheck = await tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send("invalid token");
       throw new Error("invalid token");
     }
 
-    const { id } = req.body.user;
+    const { user_id } = req.body.user;
     User.destroy({
       where: {
-        user_id: id
+        user_id: user_id
       }
     })
       .then(() => {

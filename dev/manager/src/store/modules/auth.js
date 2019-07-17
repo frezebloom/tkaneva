@@ -18,7 +18,7 @@ const state = {
 
 const getters = {
   isAuthenticated: state => !!state.accessToken,
-  user_id: state => state.userId,
+  id: state => state.userId,
   accessToken: state => state.accessToken,
   expiresIn: state => state.expiresIn,
   refreshToken: state => state.refreshToken,
@@ -61,7 +61,7 @@ const actions = {
   },
   [AUTH_REFRESH]({ commit }, token) {
     return new Promise((resolve, reject) => {
-      const response = signupService.refreshToken(token.user_id, token.refreshToken)
+      const response = signupService.refreshToken(token.id, token.refreshToken)
       response
       .then(response => {
         const { userId, accessToken, refreshToken, expiresIn } = response.data;
