@@ -91,7 +91,6 @@ module.exports = {
       throw new Error("invalid token");
     }
 
-    const passwordToSave = bcrypt.hashSync(password, this.salt);
     User.update(
       {
         first_name,
@@ -99,7 +98,7 @@ module.exports = {
         login,
         email,
         group,
-        password: passwordToSave
+        password
       },
       {
         where: { user_id }
@@ -109,6 +108,7 @@ module.exports = {
         res.status(201).send("Ok");
       })
       .catch(error => {
+        console.log(error);
         res.status(404).send("Invalid request " + error);
       });
   },
