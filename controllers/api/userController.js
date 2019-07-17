@@ -85,6 +85,7 @@ module.exports = {
     } = req.body.user;
 
     const { accesstoken } = req.headers;
+    console.log(accesstoken, user_id);
     const tokenCheck = await tokenController.checkToken(user_id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send("invalid token");

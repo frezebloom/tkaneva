@@ -166,11 +166,11 @@ export default {
         return reg.test(email);
       }
 
-      function matchCheck(users, email, login) {
+      function matchCheck(users, email, login, stateEmail, stateLogin) {
         const matches = []
-        users.forEach((item) => {
-          if(item.email === email) matches.push('email')
-          if(item.login === login) matches.push('login')
+        users.forEach(function(item) {
+          if(item.email === email && item.email !== stateEmail) matches.push('email')
+          if(item.login === login && item.login !== stateLogin) matches.push('login')
         })
         return matches
       }
@@ -190,7 +190,7 @@ export default {
         }
       });
       
-      const matches = matchCheck(this.users, this.user.email, this.user.login);
+      const matches = matchCheck(this.users, this.user.email, this.user.login, this.state.email, this.state.login);
       if(matches.length > 0) {
         matches.forEach((item) => {
           if(item === 'email') {
