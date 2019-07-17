@@ -25,18 +25,7 @@ module.exports = function(sequelize, Sequelize) {
       login: {
         type: Sequelize.STRING,
         validate: {
-          notEmpty: true,
-          isUnique: function(value, next) {
-            User.findOne({
-              where: { login: value }
-            }).done(function(error) {
-              if (error)
-                return next(
-                  "Указанный логин уже занят"
-                );
-              next();
-            });
-          }
+          notEmpty: true
         }
       },
 
@@ -47,18 +36,7 @@ module.exports = function(sequelize, Sequelize) {
             args: true,
             msg: 'Введите корректный e-mail'
           },
-          notEmpty: true,
-          isUnique: function(value, next) {
-            User.findOne({
-              where: { email: value }
-            }).done(function(error) {
-              if (error)
-                return next(
-                  "Указанный адрес электронной почты уже занят"
-                );
-              next();
-            });
-          }
+          notEmpty: true
         }
       },
 

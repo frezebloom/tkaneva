@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 
 const config = require("../config/config");
 
-settings = {
+const settings = {
   host: "localhost",
   dialect: "mysql",
   operatorsAliases: false,
