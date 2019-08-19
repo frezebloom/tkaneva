@@ -3,9 +3,8 @@ import token from "@/utils/token";
 
 
 export default {
-  getUsers() {
-    token.checkToken();
-    return api().get("/api/user/get");
+  async getUsers() {
+    if (await token.checkToken()) return api().get("/api/user/get")
   },
   createUser(user) {
     token.checkToken();

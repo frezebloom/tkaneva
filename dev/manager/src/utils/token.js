@@ -15,6 +15,7 @@ export default {
       store.dispatch(AUTH_LOGOUT).then(() => {
         router.push("/login");
       });
+      return false;
     })
   }
 }

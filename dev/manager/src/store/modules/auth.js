@@ -72,6 +72,7 @@ const actions = {
 
         commit(AUTH_SUCCESS, response.data);
         resolve(response.data);
+        return response;
       })
       .catch(error => {
         commit(AUTH_ERROR, error);
