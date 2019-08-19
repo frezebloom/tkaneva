@@ -8,8 +8,7 @@ export default {
     if (expiresIn > Date.now()) return true
 
     store.dispatch(AUTH_REFRESH, { id, refreshToken } )
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       return true;
     })
     .catch(() => {

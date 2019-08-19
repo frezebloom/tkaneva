@@ -7,7 +7,6 @@ module.exports = {
     .then(token => {
       if (token.access_token !== accesstoken) return false;
       if (token.access_token_life < Date.now()) return false;
-      console.log(id, token.access_token, accesstoken)
       return true;
     })
     .catch(() => {
