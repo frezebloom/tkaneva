@@ -50,6 +50,7 @@ export default {
       this.users = this.users.filter((item, index) => {
         if(index !== element) return item
       })
+      this.user = this.users[0];
     }
   }
 };

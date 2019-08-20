@@ -39,6 +39,7 @@ export default {
     },
     eventClickCloseTab(index) {
       this.$emit("eventClickCloseTab", index)
+      this.activeTab = 0;
     },
     changeString(string) {
       var str = string.slice(0, 11);
