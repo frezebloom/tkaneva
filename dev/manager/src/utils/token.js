@@ -1,15 +1,15 @@
 import store from "@/store";
 import router from "@/router";
+
 import { AUTH_REFRESH, AUTH_LOGOUT } from "@/store/types/auth";
-const { expiresIn, id, refreshToken } = store.getters;
 
 export default {
-  checkToken() {
-    if (expiresIn > Date.now()) return false
-    const data = this.refreshToken()
-    return data;
+  async checkToken() {
+    const { id, accessToken, expiresIn, refreshToken } = store.getters
+    if (expiresIn > Date.now()) return {id, accessToken}
+    return await this.refreshToken(id, refreshToken)
   },
-  refreshToken() {
+  refreshToken(id, refreshToken) {
     return store.dispatch(AUTH_REFRESH, { id, refreshToken })
     .then((data) => {
       return data;
