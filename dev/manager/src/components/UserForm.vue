@@ -5,7 +5,7 @@
       <div class="form-wrapper">
         <label class="form-label">Имя *</label>
         <input
-          v-model="user.first_name"
+          v-model="state.first_name"
           @input="inputHandler($event, 'first_name')"
           :class="[errorInput.includes('first_name') ? 'form-input-error' : '', 'form-input']"
           class="form-input"
