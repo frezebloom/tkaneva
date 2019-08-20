@@ -1,7 +1,7 @@
 <template>
   <div class="edit-user">
     <div v-if="this.users.length > 1">
-      <Tabs :tabs="this.users" @eventClickTab="route($event)"/>
+      <Tabs :tabs="this.users" @eventClickTab="route($event)" @eventClickCloseTab="closeTab($event)" />
     </div>
     <UserForm title="Редактировать акаунт" :state="user" :userGroups="userGroups"/>
   </div>
@@ -45,6 +45,11 @@ export default {
   methods: {
     route(index) {
       this.user = this.users[index];
+    },
+    closeTab(element) {
+      this.users = this.users.filter((item, index) => {
+        if(index !== element) return item
+      })
     }
   }
 };

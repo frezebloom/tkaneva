@@ -8,7 +8,12 @@
       @click="eventClickTab(index)"
     >
       {{ changeString(tab.fullName) }}
-      <div class="tab-close">X</div>
+      <div 
+        class="tab-close"
+        @click.stop="eventClickCloseTab(index)"
+      >
+        X
+      </div>
     </div>
 
   </div>
@@ -31,6 +36,9 @@ export default {
     eventClickTab(index) {
       this.$emit("eventClickTab", index);
       this.activeTab = index;
+    },
+    eventClickCloseTab(index) {
+      this.$emit("eventClickCloseTab", index)
     },
     changeString(string) {
       var str = string.slice(0, 11);
