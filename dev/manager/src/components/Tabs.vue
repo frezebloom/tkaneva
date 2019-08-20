@@ -6,7 +6,11 @@
       :key="tab.id"
       :class="{ active: activeTab === index }"
       @click="eventClickTab(index)"
-    >{{ changeString(tab.fullName) }}</div>
+    >
+      {{ changeString(tab.fullName) }}
+      <div class="tab-close">X</div>
+    </div>
+
   </div>
 </template>
 <script>
