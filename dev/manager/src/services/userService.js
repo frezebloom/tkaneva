@@ -1,13 +1,21 @@
 import api from "@/services/api";
 import token from "@/utils/token";
-
+import store from "@/store";
 
 export default {
   async getUsers() {
-    if (await token.checkToken()) return api().get("/api/user/get")
+    const { id, accessToken } = store.getters
+    const result = await token.checkToken()
+    if (!result) { 
+      console.log(accessToken)
+      return api(id, accessToken).get("/api/user/get")
+    } else {
+      console.log(result.accessToken)
+      return api(result.userId, result.accessToken).get("/api/user/get");
+    }  
   },
   createUser(user) {
-    token.checkToken();
+    
     return api().post("/api/user/create", {
       user
     });
