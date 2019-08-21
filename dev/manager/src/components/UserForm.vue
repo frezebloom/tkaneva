@@ -121,7 +121,7 @@ export default {
     },
     tabs: {
       type: Array,
-      required: true
+      required: false
     }
   },
   data() {
@@ -215,6 +215,7 @@ export default {
     },
     check() {
       this.validation();
+      console.log(this.errorMessage)
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
@@ -249,7 +250,7 @@ export default {
                 return item.user_id !== this.state.user_id
               })
               
-              console.log(index, this.tabs);
+              console.log(index);
   
             } else {
               this.$router.go(-1);
