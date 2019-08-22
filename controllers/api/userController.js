@@ -80,7 +80,7 @@ module.exports = {
       last_name,
       login,
       email,
-      group
+      group_id
     } = req.body.user;
 
     const { id, accesstoken } = req.headers;
@@ -96,7 +96,7 @@ module.exports = {
         last_name,
         login,
         email,
-        group
+        group_id
       },
       {
         where: { user_id }
