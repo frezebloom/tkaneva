@@ -47,7 +47,6 @@ export default {
       this.user = this.users[index];
     },
     closeTab(element) {
-      console.log(element);
       this.users = this.users.filter((item, index) => {
         if(index !== element) return item
       })

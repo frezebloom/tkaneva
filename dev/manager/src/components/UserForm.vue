@@ -232,11 +232,15 @@ export default {
       if (!this.state.user_id) {
         const user = userService.createUser(this.user);
         user
-          .then(response => {
-            const user = response.data;
+          .then(() => {
             this.$router.push({
               name: "users",
-              params: { user }
+              params: {
+                status: true,
+                title: "Успех",
+                message: "Новый аккаунт успешно создан",
+                button: "success"
+              }
             });
           })
           .catch(() => {
@@ -246,12 +250,21 @@ export default {
         const user = userService.updateUser(this.user);
         user
           .then(() => {
+            const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)
             if(this.tabs.length > 1) {
-              const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)
               this.$emit("eventClickSave", index);
               this.showCornerDialog("Успех", 'Учётная запись изменена', "success");
             } else {
-              this.$router.go(-1);
+              const user = this.tabs[index];
+              this.$router.push({
+                name: "users",
+                params: {
+                  status: true,
+                  title: "Успех",
+                  message: "Учётная запись изменена",
+                  button: "success"
+                }
+              });
             }
           })
           .catch(error => {

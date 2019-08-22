@@ -98,9 +98,9 @@ export default {
       });
   },
   created() {
-    const user = this.$route.params.user;
-    if (user) {
-      this.showCornerDialog("Успех", "Новый аккаунт успешно создан", "success");
+    const { status, title, message, button } = this.$route.params;
+    if (status) {
+      this.showCornerDialog(title, message, button);
     } else {
       this.hideCornerDialog = true;
     }
