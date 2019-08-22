@@ -246,10 +246,10 @@ export default {
         const user = userService.updateUser(this.user);
         user
           .then(() => {
-
             if(this.tabs.length > 1) {
               const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)
-              console.log(index);
+              this.$emit("eventClickSave", index);
+              this.showCornerDialog("Успех", 'Учётная запись изменена', "success");
             } else {
               this.$router.go(-1);
             }
