@@ -172,10 +172,12 @@ export default {
 
       function matchCheck(users, email, login, stateEmail, stateLogin) {
         const matches = []
+        console.log(email, login);
         users.forEach(function(item) {
           if(item.email === email && item.email !== stateEmail) matches.push('email')
           if(item.login === login && item.login !== stateLogin) matches.push('login')
         })
+        console.log(matches)
         return matches
       }
 
@@ -215,7 +217,6 @@ export default {
     },
     check() {
       this.validation();
-      console.log(this.errorMessage)
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
