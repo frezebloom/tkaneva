@@ -248,12 +248,8 @@ export default {
           .then(() => {
 
             if(this.tabs.length > 1) {
-              const index = this.tabs.findIndex((item) => {
-                return item.user_id !== this.state.user_id
-              })
-              
+              const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)
               console.log(index);
-  
             } else {
               this.$router.go(-1);
             }
