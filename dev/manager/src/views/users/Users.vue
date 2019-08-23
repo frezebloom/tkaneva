@@ -61,7 +61,6 @@ import CornerDialog from "@/components/CornerDialog";
 import userService from "@/services/userService";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
-import { setTimeout } from "timers";
 
 export default {
   name: "Users",

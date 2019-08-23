@@ -255,7 +255,6 @@ export default {
               this.$emit("eventClickSave", index);
               this.showCornerDialog("Успех", 'Учётная запись изменена', "success");
             } else {
-              const user = this.tabs[index];
               this.$router.push({
                 name: "users",
                 params: {
@@ -268,6 +267,7 @@ export default {
             }
           })
           .catch(error => {
+            console.log(error);
             this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
           });
       }
