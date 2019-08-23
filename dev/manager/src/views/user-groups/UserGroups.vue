@@ -7,26 +7,31 @@
       @eventClickCheck="check($event)"
     />
     <Topbar title="Группы пользователей" @eventClickTopBar="route($event)"/>
-    <table>
-      <th v-for="item in title" :key="item.id">{{item}}</th>
-
-      <tr
-        @click="select(item.group_id)"
-        :class="isActive(item.group_id)"
-        v-for="item in userGroups"
-        :key="item.group_id"
-      >
-        <td>{{item.group_id}}</td>
-        <td>{{item.name}}</td>
-        <td>
-          <input
-            type="checkbox"
-            :checked="checked(item.group_id)"
-            @click.stop="select(item.group_id)"
-          >
-        </td>
-      </tr>
-    </table>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th v-for="item in title" :key="item.id">{{item}}</th>
+          </tr>
+        </thead>
+        <tr
+          @click="select(item.group_id)"
+          :class="isActive(item.group_id)"
+          v-for="item in userGroups"
+          :key="item.group_id"
+        >
+          <td>{{item.group_id}}</td>
+          <td>{{item.name}}</td>
+          <td>
+            <input
+              type="checkbox"
+              :checked="checked(item.group_id)"
+              @click.stop="select(item.group_id)"
+            >
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 <script>
