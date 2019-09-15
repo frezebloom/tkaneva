@@ -39,6 +39,11 @@ export default new Router({
       beforeEnter: ifNotAuthenticated
     },
     {
+      path: "/superuser/create",
+      name: "admin",
+      component: () => import('./superuser/CreateSuperUser.vue')
+    },
+    {
       path: "/product/new",
       name: "new product",
       component: () => import("./views/NewProduct.vue"),
