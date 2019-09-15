@@ -41,7 +41,7 @@ export default new Router({
     {
       path: "/superuser/create",
       name: "admin",
-      component: () => import('./superuser/CreateSuperUser.vue')
+      component: () => import("./views/superuser/CreateSuperUser.vue")
     },
     {
       path: "/product/new",
