@@ -6,8 +6,7 @@
 <script>
 import Button from "@/components/Button.vue";
 
-import userGroupService from "@/services/userGroupService";
-import userService from "@/services/userService";
+import superUserService from "@/services/superUserService";
 
 export default {
   name: "СreateSuperUser",
@@ -25,17 +24,17 @@ export default {
         login: "superuser",
         email: "juxx@bk.ru",
         group_id: 1,
-        password: "111",
+        password: "111"
       }
-    }
+    };
   },
   methods: {
     create() {
-      this.createUserGroup()
-      this.createSuperuser()
+      this.createUserGroup();
+      this.createSuperuser();
     },
     createUserGroup() {
-      const userGroup = userGroupService.createUserGroup(this.userGroup);
+      const userGroup = superUserService.createSuperUserGroup(this.userGroup);
       userGroup
         .then(response => {
           console.log(response.data);
@@ -45,7 +44,7 @@ export default {
         });
     },
     createSuperuser() {
-      const user = userService.updateUser(this.user);
+      const user = superUserService.createSuperUser(this.user);
       user
         .then(response => {
           console.log(response.data);
