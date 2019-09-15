@@ -49,8 +49,7 @@ module.exports = function(sequelize, Sequelize) {
       },
 
       status: {
-        type: Sequelize.ENUM("Вкл", "Выкл"),
-        defaultValue: "Вкл"
+        type: Sequelize.ENUM("Вкл", "Выкл")
       }
     },
     {
