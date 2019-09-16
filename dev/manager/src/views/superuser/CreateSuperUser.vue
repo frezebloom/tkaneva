@@ -16,7 +16,8 @@ export default {
   data() {
     return {
       userGroup: {
-        name: "admin"
+        name: "admin",
+        status: "Вкл"
       },
       user: {
         first_name: "superuser",
@@ -24,7 +25,8 @@ export default {
         login: "superuser",
         email: "juxx@bk.ru",
         group_id: 1,
-        password: "111"
+        password: "111",
+        status: "Вкл"
       }
     };
   },

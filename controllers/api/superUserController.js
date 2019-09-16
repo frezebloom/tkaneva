@@ -1,9 +1,12 @@
+const bcrypt = require('bcrypt');
 const db = require('../../models/index');
 
 const UserGroup = db.userGroup;
 const User = db.user;
 
 module.exports = {
+  salt: bcrypt.genSaltSync(10),
+
   createSuperUser(req, res) {
     const {
       first_name,
@@ -11,7 +14,8 @@ module.exports = {
       login,
       email,
       group_id,
-      password
+      password,
+      status
     } = req.body.user;
 
     const passwordToSave = bcrypt.hashSync(password, this.salt);
@@ -22,7 +26,8 @@ module.exports = {
       login,
       email,
       group_id,
-      password: passwordToSave
+      password: passwordToSave,
+      status
     })
       .then(user => {
         res.status(201).send(user.dataValues);
@@ -32,10 +37,10 @@ module.exports = {
       });
   },
   createSuperUserGroup(req, res) {
-    const { name } = req.body.userGroup;
-    console.log(req.body.userGroup);
+    const { name, status } = req.body.userGroup;
     UserGroup.create({
-      name
+      name,
+      status
     })
       .then(() => {
         res.status(201).send('Ok');

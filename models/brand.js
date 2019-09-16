@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  const Brand = sequelize.define("brand", {
+  const Brand = sequelize.define('brand', {
     brand_id: {
       autoIncrement: true,
       primaryKey: true,
@@ -9,6 +9,10 @@ module.exports = function(sequelize, Sequelize) {
     name: {
       type: Sequelize.STRING,
       notEmpty: true
+    },
+
+    status: {
+      type: Sequelize.ENUM('Вкл', 'Выкл')
     }
   });
 

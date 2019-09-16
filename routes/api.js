@@ -30,7 +30,6 @@ router.post('/user-group/create', (req, res) => {
 });
 
 router.post('/superuser/user/create', (req, res) => {
-  console.log(req);
   superUserController.createSuperUser(req, res);
 });
 
