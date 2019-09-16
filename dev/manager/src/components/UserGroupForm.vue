@@ -1,18 +1,18 @@
 <template>
   <div class="user-group-from">
     <form v-on:submit.prevent class="form">
-      <div class="form-header">Создать группу пользователей</div>
+      <div class="form-header">{{title}}</div>
       <div class="form-wrapper">
-        <label class="form-label">Название</label>
+        <label class="form-label">Название *</label>
         <input
-          :value="state.name"
+          v-model="state.name"
           @input="inputHandler($event, 'name')"
           class="form-input"
           type="text"
         >
       </div>
       <div class="form-footer">
-        <div @click="saveChange" class="form-button">
+        <div @click="check" class="form-button">
           <Button value="Сохранить" styles="success"/>
         </div>
         <div @click="$router.go(-1)" class="form-button">
@@ -31,6 +31,10 @@ export default {
     Button
   },
   props: {
+    title: {
+      type: String,
+      required: true
+    },
     state: {
       type: Object,
       required: true
@@ -46,6 +50,11 @@ export default {
   methods: {
     inputHandler(event, params) {
       this.userGroup[params] = event.target.value;
+    },
+    validation() {
+      function isEmpty(str) {
+        return typeof str === "undefined" || str === null || str === "";
+      }
     },
     saveChange() {
       if (!this.state.user_id) {

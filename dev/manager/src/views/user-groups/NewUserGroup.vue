@@ -1,6 +1,6 @@
 <template>
   <div class="new-user-group">
-    <UserGroupForm :state="userGroup"/>
+    <UserGroupForm title="Создать группу пользователей" :state="userGroup"/>
   </div>
 </template>
 <script>
