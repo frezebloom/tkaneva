@@ -92,6 +92,7 @@
 </template>
 <script>
 import userService from "@/services/userService";
+import validationUtils from "@/utils/validation"
 
 import Button from "@/components/Button";
 import CornerDialog from "@/components/CornerDialog";
@@ -161,15 +162,6 @@ export default {
       this.user[params] = event.target.value;
     },
     validation() {
-      function isEmpty(str) {
-        return typeof str === "undefined" || str === null || str === "";
-      }
-
-      function validEmail(email) {
-        const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return reg.test(email);
-      }
-
       function matchCheck(users, email, login) {
         const matches = []
 
@@ -181,14 +173,14 @@ export default {
       }
 
       Object.keys(this.user).forEach(item => {
-        if (isEmpty(this.user[item]) && item !== "user_id") {
+        if (validationUtils.isEmpty(this.user[item]) && item !== "user_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
           );
         }
         if (item === "email") {
-          if (!validEmail(this.user[item])) {
+          if (!validationUtils.validEmail(this.user[item])) {
             this.errorInput.push(item);
             this.errorMessage.push("Введите корректный e-mail");
           }
