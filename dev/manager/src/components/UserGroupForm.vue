@@ -6,7 +6,8 @@
         <label class="form-label">Название *</label>
         <input
           v-model="state.name"
-          @input="inputHandler($event, 'name')"
+          @input="inputHandler($event, 'user_gro')"
+          :class="[errorInput.includes('name') ? 'form-input-error' : '', 'form-input']"
           class="form-input"
           type="text"
         >
@@ -20,15 +21,28 @@
         </div>
       </div>
     </form>
+    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+      <CornerDialog
+        @eventClickCornerDialog="dialogFromUser"
+        :status="cornerDialogStatus"
+        :message="cornerDialogMessage"
+        :buttonStyle="cornerDialogBtnStyle"
+      />
+    </div>
   </div>
 </template>
 <script>
-import Button from "@/components/Button";
 import userGroupService from "@/services/userGroupService";
+import valid from "@/utils/validation"
+import Button from "@/components/Button";
+import CornerDialog from "@/components/CornerDialog";
+import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
   name: "UserGroupForm",
+  mixins: [cornerDialog],
   components: {
-    Button
+    Button,
+    CornerDialog
   },
   props: {
     title: {
@@ -44,7 +58,10 @@ export default {
     return {
       userGroup: {
         name: this.state.name || ""
-      }
+      },
+      users: [],
+      errorMessage: [],
+      errorInput: []
     };
   },
   methods: {
@@ -82,5 +99,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../styles/form.scss";
+@import "../styles/cornerDialog.scss";
 </style>
 

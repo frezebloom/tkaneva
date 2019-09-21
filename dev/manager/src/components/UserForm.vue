@@ -91,15 +91,11 @@
   </div>
 </template>
 <script>
-import userService from "@/services/userService";
-import validationUtils from "@/utils/validation"
-
 import Button from "@/components/Button";
 import CornerDialog from "@/components/CornerDialog";
-
+import userService from "@/services/userService";
+import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
-import { setTimeout } from "timers";
-
 export default {
   name: "UserForm",
   mixins: [cornerDialog],
@@ -114,6 +110,10 @@ export default {
     },
     state: {
       type: Object,
+      required: true
+    },
+    users: {
+      type: Array,
       required: true
     },
     userGroups: {
@@ -137,25 +137,9 @@ export default {
         password: this.state.password || "",
         confrimPassword: this.state.password || ""
       },
-      users: [],
       errorMessage: [],
       errorInput: []
     };
-  },
-  mounted() {
-    const users = userService.getUsers();
-    users
-      .then(users => {
-        this.users = users.data;
-      })
-      .catch(error => {
-        console.error(error);
-        this.showCornerDialog(
-          "Ошибка",
-          "Не удалось связаться с сервером. Обратитесь к администратору",
-          "danger"
-        );
-      });
   },
   methods: {
     inputHandler(event, params) {
@@ -173,14 +157,14 @@ export default {
       }
 
       Object.keys(this.user).forEach(item => {
-        if (validationUtils.isEmpty(this.user[item]) && item !== "user_id") {
+        if (valid.isEmpty(this.user[item]) && item !== "user_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
           );
         }
         if (item === "email") {
-          if (!validationUtils.validEmail(this.user[item])) {
+          if (!valid.validEmail(this.user[item])) {
             this.errorInput.push(item);
             this.errorMessage.push("Введите корректный e-mail");
           }
