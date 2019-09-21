@@ -6,7 +6,7 @@
         <label class="form-label">Название *</label>
         <input
           v-model="state.name"
-          @input="inputHandler($event, 'user_gro')"
+          @input="inputHandler($event, 'name')"
           :class="[errorInput.includes('name') ? 'form-input-error' : '', 'form-input']"
           class="form-input"
           type="text"
@@ -32,10 +32,10 @@
   </div>
 </template>
 <script>
-import userGroupService from "@/services/userGroupService";
-import valid from "@/utils/validation"
 import Button from "@/components/Button";
 import CornerDialog from "@/components/CornerDialog";
+import userGroupService from "@/services/userGroupService";
+import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
   name: "UserGroupForm",
