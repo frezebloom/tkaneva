@@ -52,6 +52,10 @@ export default {
     state: {
       type: Object,
       required: true
+    },
+    tabs: {
+      type: Array,
+      required: false
     }
   },
   data() {
@@ -69,28 +73,68 @@ export default {
       this.userGroup[params] = event.target.value;
     },
     validation() {
-      function isEmpty(str) {
-        return typeof str === "undefined" || str === null || str === "";
+       Object.keys(this.userGroup).forEach(item => {
+        if (valid.isEmpty(this.userGroup[item]) && item !== "group_id") {
+          this.errorInput.push(item);
+          this.errorMessage.push(
+            "Поля отмеченные звездочкой обязательны для заполнения"
+          );
+        }
+      });
+    },
+    check() {
+      this.validation();
+      if (this.errorMessage.length > 0) {
+        this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
+        this.errorMessage = [];
+        setTimeout(() => {
+          this.errorInput = [];
+        }, 10000);
+      } else {
+        this.saveChange();
       }
     },
     saveChange() {
-      if (!this.state.user_id) {
+      if (!this.state.group_id) {
         const userGroup = userGroupService.createUserGroup(this.userGroup);
         userGroup
           .then(response => {
-            console.log(response.data);
+            this.$router.push({
+              name: "user groups",
+              params: {
+                status: true,
+                title: "Успех",
+                message: "Новая группа пользователей успешно создана",
+                button: "success"
+              }
+            });
           })
           .catch(error => {
-            console.log(error);
+            this.showCornerDialog("Ошибка", 'Не удалось сохранить группу пользователей', "warning");
           });
       } else {
         const userGroup = userGroupService.updateUser(this.userGroup);
         userGroup
           .then(response => {
-            console.log(response.data);
+            const index = this.tabs.findIndex((item) => item.ugroup_id === this.state.group_id)
+            if(this.tabs.length > 1) {
+              this.$emit("eventClickSave", index);
+              this.showCornerDialog("Успех", 'Группа пользователей изменена', "success");
+            } else {
+              this.$router.push({
+                name: "user groups",
+                params: {
+                  status: true,
+                  title: "Успех",
+                  message: "Группа пользователей изменена",
+                  button: "success"
+                }
+              });
+            }
           })
           .catch(error => {
             console.log(error);
+            this.showCornerDialog("Ошибка", 'Не удалось сохранить группу пользователей', "warning");
           });
       }
     }
@@ -101,4 +145,3 @@ export default {
 @import "../styles/form.scss";
 @import "../styles/cornerDialog.scss";
 </style>
-
