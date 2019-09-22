@@ -27,7 +27,8 @@ export default {
         email: "",
         group_id: "",
         password: "",
-        confrimPassword: ""
+        confrimPassword: "",
+        status: ""
       },
       users: [],
       userGroups: []

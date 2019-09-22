@@ -19,7 +19,8 @@ export default {
   data() {
     return {
       userGroup: {
-        name: ""
+        name: "",
+        status: ""
       },
       userGroups: [] 
     };

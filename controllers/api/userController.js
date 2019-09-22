@@ -49,7 +49,8 @@ module.exports = {
       login,
       email,
       group_id,
-      password
+      password,
+      status
     } = req.body.user;
 
     const passwordToSave = bcrypt.hashSync(password, this.salt);
@@ -60,7 +61,8 @@ module.exports = {
       login,
       email,
       group_id,
-      password: passwordToSave
+      password: passwordToSave,
+      status
     })
       .then(user => {
         res.status(201).send(user.dataValues);
@@ -77,7 +79,8 @@ module.exports = {
       last_name,
       login,
       email,
-      group_id
+      group_id,
+      status
     } = req.body.user;
 
     const { id, accesstoken } = req.headers;
@@ -93,7 +96,8 @@ module.exports = {
         last_name,
         login,
         email,
-        group_id
+        group_id,
+        status
       },
       {
         where: { user_id }

@@ -135,7 +135,8 @@ export default {
         email: this.state.email || "",
         group_id: this.state.group_id || 1,
         password: this.state.password || "",
-        confrimPassword: this.state.password || ""
+        confrimPassword: this.state.password || "",
+        status: this.state.status || "Вкл"
       },
       errorMessage: [],
       errorInput: []

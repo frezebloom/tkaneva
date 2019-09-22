@@ -61,7 +61,8 @@ export default {
   data() {
     return {
       userGroup: {
-        name: this.state.name || ""
+        name: this.state.name || "",
+        status: this.state.status || "Вкл"
       },
       users: [],
       errorMessage: [],
