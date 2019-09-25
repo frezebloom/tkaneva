@@ -1,15 +1,26 @@
 <template>
   <div class="edit-user">
-    <div v-if="this.users.length > 1">
-      <Tabs :tabs="this.users" @eventClickTab="route($event)" @eventClickCloseTab="closeTab($event)" />
+    <div v-if="this.tabs.length > 1">
+      <Tabs 
+        :tabs="this.tabs" 
+        @eventClickTab="route($event)" 
+        @eventClickCloseTab="closeTab($event)" 
+      />
     </div>
-    <UserForm title="Редактировать акаунт" @eventClickSave="closeTab($event)" :state="user" :userGroups="userGroups" :tabs="this.users" />
+    <UserForm 
+      title="Редактировать акаунт"
+      @eventClickSave="closeTab($event)" 
+      :state="user" 
+      :userGroups="userGroups" 
+      :tabs="this.tabs" 
+      :users="this.users"
+    />
   </div>
 </template> 
 <script>
 import Tabs from "@/components/Tabs";
 import UserForm from "@/components/UserForm";
-
+import userService from "@/services/userService";
 import userGroupService from "@/services/userGroupService";
 
 export default {
@@ -20,12 +31,21 @@ export default {
   },
   data() {
     return {
+      tabs: [],
       users: [],
       user: {},
       userGroups: []
     };
   },
   mounted() {
+    const users = userService.getUsers();
+    users
+      .then(users => {
+        this.users = users.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
     const userGroups = userGroupService.getUserGroups();
     userGroups
       .then(userGroups => {
@@ -38,19 +58,19 @@ export default {
   created() {
     const { selectUsers } = this.$route.params;
     if (selectUsers) {
-      this.users = selectUsers;
+      this.tabs = selectUsers;
       this.user = selectUsers[0];
     }
   },
   methods: {
     route(index) {
-      this.user = this.users[index];
+      this.user = this.tabs[index];
     },
     closeTab(element) {
-      this.users = this.users.filter((item, index) => {
+      this.tabs = this.tabs.filter((item, index) => {
         if(index !== element) return item
       })
-      this.user = this.users[0];
+      this.user = this.tabs[0];
     }
   }
 };

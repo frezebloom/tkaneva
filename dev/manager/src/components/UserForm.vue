@@ -224,7 +224,7 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
           });
       } else {
-        const user = userService.updateUser(this.user);
+        const user = userService.updateUser(this.state);
         user
           .then(() => {
             const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)
