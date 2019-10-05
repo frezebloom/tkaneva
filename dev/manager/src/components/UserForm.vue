@@ -150,26 +150,26 @@ export default {
         this.state[params] = event.target.value;
       }
     },
-    validation() {
+    validation(user) {
       function matchCheck(users, email, login) {
         const matches = []
 
         users.forEach(function(item) {
-          if(item.email === email) matches.push('email')
-          if(item.login === login) matches.push('login')
+          if (item.email === email) matches.push('email')
+          if (item.login === login) matches.push('login')
         })
         return matches
       }
 
-      Object.keys(this.user).forEach(item => {
-        if (valid.isEmpty(this.user[item]) && item !== "user_id") {
+      Object.keys(user).forEach(item => {
+        if (valid.isEmpty(user[item]) && item !== "user_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
           );
         }
         if (item === "email") {
-          if (!valid.validEmail(this.user[item])) {
+          if (!valid.validEmail(user[item])) {
             this.errorInput.push(item);
             this.errorMessage.push("Введите корректный e-mail");
           }
@@ -179,26 +179,28 @@ export default {
       const otherUsers = this.users.filter((item) => item.user_id !== this.state.user_id)
 
       const matches = matchCheck(otherUsers, this.state.email, this.state.login);
-      if(matches.length > 0) {
+      if (matches.length > 0) {
         matches.forEach((item) => {
-          if(item === 'email') {
+          if (item === 'email') {
             this.errorInput.push(item);
             this.errorMessage.push("Указанный e-mail уже занят");
           }
-          if(item === 'login') {
+          if (item === 'login') {
             this.errorInput.push(item);
             this.errorMessage.push("Указанный логин уже занят");
           }
         })
       }
-      
-      if(this.user.password !== this.user.confrimPassword) {
+
+      if (!user.confrimPassword) return;
+      if (user.password !== user.confrimPassword) {
         this.errorInput.push('password', 'confrimPassword');
         this.errorMessage.push("Пароли не совпадают");
       }
     },
     check() {
-      this.validation();
+      !this.state.user_id ? this.validation(this.user) : this.validation(this.state)
+
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
@@ -232,7 +234,7 @@ export default {
         user
           .then(() => {
             const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)
-            if(this.tabs.length > 1) {
+            if (this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
               this.showCornerDialog("Успех", 'Учётная запись изменена', "success");
             } else {
