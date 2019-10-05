@@ -1,8 +1,8 @@
 <template>
   <div class="edit-user">
-    <div v-if="this.tabs.length > 1">
+    <div v-if="tabs.length > 1">
       <Tabs 
-        :tabs="this.tabs" 
+        :tabs="tabs" 
         @eventClickTab="route($event)" 
         @eventClickCloseTab="closeTab($event)" 
       />
@@ -12,8 +12,8 @@
       @eventClickSave="closeTab($event)" 
       :state="user" 
       :userGroups="userGroups" 
-      :tabs="this.tabs" 
-      :users="this.users"
+      :tabs="tabs" 
+      :users="users"
     />
   </div>
 </template> 

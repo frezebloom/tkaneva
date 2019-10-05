@@ -144,7 +144,11 @@ export default {
   },
   methods: {
     inputHandler(event, params) {
-      this.user[params] = event.target.value;
+      if (!this.state.user_id) {
+        this.user[params] = event.target.value;
+      } else {
+        this.state[params] = event.target.value;
+      }
     },
     validation() {
       function matchCheck(users, email, login) {

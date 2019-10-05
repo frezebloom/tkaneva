@@ -82,7 +82,7 @@ module.exports = {
       group_id,
       status
     } = req.body.user;
-    console.log(group_id);
+
     const { id, accesstoken } = req.headers;
     const tokenCheck = await tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
