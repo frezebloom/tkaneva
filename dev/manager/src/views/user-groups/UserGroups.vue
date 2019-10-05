@@ -6,7 +6,12 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar title="Группы пользователей" @eventClickTopBar="route($event)"/>
+    <Topbar 
+      title="Группы пользователей" 
+      @eventClickTopBar="route($event)"
+      @eventHandlerSearch="eventSearch($event)"
+      @eventClearSearch="clearSearch()"
+    />
     <div class="table-wrapper">
       <table>
         <thead>
@@ -17,7 +22,7 @@
         <tr
           @click="select(item.group_id)"
           :class="isActive(item.group_id)"
-          v-for="item in userGroups"
+          v-for="item in filter"
           :key="item.group_id"
         >
           <td>{{item.group_id}}</td>
@@ -32,20 +37,33 @@
         </tr>
       </table>
     </div>
+
+    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+      <CornerDialog
+        @eventClickCornerDialog="dialogFromUser"
+        :status="cornerDialogStatus"
+        :message="cornerDialogMessage"
+        :buttonStyle="cornerDialogBtnStyle"
+      />
+    </div>
   </div>
 </template>
 <script>
 import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
+import CornerDialog from "@/components/CornerDialog";
+
 import userGroupService from "@/services/userGroupService";
 import { table } from "@/mixins/table";
+import { cornerDialog } from "@/mixins/cornerDialog";
 
 export default {
   name: "UserGroups",
-  mixins: [table],
+  mixins: [table, cornerDialog],
   components: {
     Topbar,
-    Check
+    Check,
+    CornerDialog
   },
   data() {
     return {
@@ -54,6 +72,7 @@ export default {
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
       userGroups: [],
+      search: '',
       selectElements: []
     };
   },
@@ -65,7 +84,20 @@ export default {
       })
       .catch(error => {
         console.log(error);
+        this.showCornerDialog(
+          "Ошибка",
+          "Не удалось связаться с сервером. Обратитесь к администратору",
+          "danger"
+        );
       });
+  },
+  created() {
+    const { status, title, message, button } = this.$route.params;
+    if (status) {
+      this.showCornerDialog(title, message, button);
+    } else {
+      this.hideCornerDialog = true;
+    }
   },
   methods: {
     route(event) {
