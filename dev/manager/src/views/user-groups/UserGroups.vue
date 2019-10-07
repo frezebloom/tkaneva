@@ -27,6 +27,7 @@
         >
           <td>{{item.group_id}}</td>
           <td>{{item.name}}</td>
+          <td>{{item.status}}</td>
           <td>
             <input
               type="checkbox"
@@ -67,7 +68,7 @@ export default {
   },
   data() {
     return {
-      title: ["№", "Название", "Статус"],
+      title: ["№", "Название", "Статус", ""],
       hideCheck: false,
       checkHeader: "Удаление",
       checkQuestion: "Вы действительно хотите удалить?",
@@ -99,17 +100,60 @@ export default {
       this.hideCornerDialog = true;
     }
   },
+  computed: {
+    filter() {
+      const foundItems = this.userGroups.filter(item => {
+
+        let found = false;
+
+        Object.keys(item).forEach(obj => {
+          const string = String(item[obj]);
+          const dataString = string.toLowerCase();
+          if (dataString.includes(this.search)) found = true;
+        });
+
+        if (found) return item;
+
+      });
+
+      return foundItems;
+
+    },
+  },
   methods: {
     route(event) {
       const { userGroups, selectElements } = this;
-      const selectUsers = this.getSelect(userGroups, selectElements);
-      if (event !== "delete") {
+      const selectUserGroups = this.getSelect(userGroups, selectElements);
+      if (event === "delete") {
+        if (selectUserGroups.length > 0) {
+          this.hideCheck = !this.hideCheck;
+        } else {
+          this.showCornerDialog(
+            "Ошибка",
+            "Выберите хотя бы один элемент для удаления",
+            "warning"
+          );
+        }
+      }
+      if (event === "edit") {
+        if (selectUserGroups.length > 0) {
+          this.$router.push({
+            name: event + " user group",
+            params: { selectUserGroups }
+          });
+        } else {
+          this.showCornerDialog(
+            "Ошибка",
+            "Выберите хотя бы один элемент для редактирования",
+            "warning"
+          );
+        }
+      }
+      if (event === "new") {
         this.$router.push({
           name: event + " user group",
-          params: { selectUsers }
+          params: { selectUserGroups }
         });
-      } else {
-        this.hideCheck = !this.hideCheck;
       }
     },
     check(event) {
@@ -120,24 +164,34 @@ export default {
         const { userGroups, selectElements } = this;
         const selectUserGroups = this.getSelect(userGroups, selectElements);
         selectUserGroups.forEach(item => {
-          const userGroups = userGroupService.deleteUser(item);
-          userGroups
-            .then(response => {
-              console.log(response.data);
+          const userGroup = userService.deleteUser(item); //
+          userGroup
+            .then(() => {
+              const userGroups = this.userGroups.filter(
+                item => !selectUserGroups.includes(item)
+              );
+              this.userGroups = userGroups;
+              this.showCornerDialog(
+                "Успех",
+                "Операция удаления успешна завершена",
+                "success"
+              );
             })
             .catch(error => {
-              console.log(error);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+              console.error(error);
             });
         });
       }
     },
     getSelect(userGroups, selectElements) {
-      const select = userGroups.filter(userGroups => {
-        if (selectElements.includes(userGroups.group_id)) {
-          return userGroups;
-        }
-      });
-      return select;
+      return userGroups.filter(userGroup =>
+        selectElements.includes(userGroup.group_id)
+      );
     }
   }
 };
@@ -145,4 +199,5 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/variables.scss";
 @import "../../styles/table.scss";
+@import "../../styles/cornerDialog.scss";
 </style>

@@ -13,18 +13,24 @@ export const table = {
       const index = this.selectElements.indexOf(id);
 
       if (index !== -1) {
-        return "isActive";
+        return 'isActive';
       } else {
-        return "";
+        return '';
       }
     },
     checked(id) {
       const index = this.selectElements.indexOf(id);
       if (index !== -1) {
-        return "checked";
+        return 'checked';
       } else {
-        return "";
+        return '';
       }
+    },
+    eventSearch(event) {
+      this.search = event.toLowerCase();
+    },
+    clearSearch() {
+      this.search = '';
     }
   }
 };

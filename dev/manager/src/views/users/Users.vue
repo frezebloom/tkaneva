@@ -160,13 +160,6 @@ export default {
         });
       }
     },
-    eventSearch(event) {
-      this.search = event.toLowerCase();
-    },
-    clearSearch() {
-      this.search = '';
-
-    },
     check(event) {
       if (!event) {
         this.hideCheck = !this.hideCheck;
@@ -200,10 +193,9 @@ export default {
       }
     },
     getSelect(users, selectElements) {
-      const select = users.filter(user =>
+      return users.filter(user =>
         selectElements.includes(user.user_id)
       );
-      return select;
     }
   }
 };
