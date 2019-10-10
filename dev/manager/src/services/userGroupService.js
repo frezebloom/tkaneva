@@ -1,12 +1,38 @@
-import api from "@/services/api";
+import api from '@/services/api';
+import token from '@/utils/token';
 
 export default {
-  getUserGroups() {
-    return api().get("/api/user-group/get");
+  async getUserGroups() {
+    const result = await token.checkToken();
+    return api(result.id || result.userId, result.accessToken).get(
+      '/api/user-group/get'
+    );
   },
-  createUserGroup(userGroup) {
-    return api().post("/api/user-group/create", {
-      userGroup
-    });
+  async createUserGroup(userGroup) {
+    const result = await token.checkToken();
+    return api(result.id || result.userId, result.accessToken).post(
+      '/api/user-group/create',
+      {
+        userGroup
+      }
+    );
+  },
+  async updateUserGroup(userGroup) {
+    const result = await token.checkToken();
+    return api(result.id || result.userId, result.accessToken).put(
+      '/api/user-group/update',
+      {
+        userGroup
+      }
+    );
+  },
+  async deleteUserGroup(userGroup) {
+    const result = await token.checkToken();
+    return api(result.id || result.userId, result.accessToken).post(
+      '/api/user-group/delete',
+      {
+        userGroup
+      }
+    );
   }
 };

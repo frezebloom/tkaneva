@@ -164,7 +164,7 @@ export default {
         const { userGroups, selectElements } = this;
         const selectUserGroups = this.getSelect(userGroups, selectElements);
         selectUserGroups.forEach(item => {
-          const userGroup = userService.deleteUser(item); //
+          const userGroup = userGroupService.deleteUserGroup(item);
           userGroup
             .then(() => {
               const userGroups = this.userGroups.filter(
