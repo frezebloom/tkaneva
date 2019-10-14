@@ -53,6 +53,10 @@ export default {
       type: Object,
       required: true
     },
+    userGroups: {
+      type: Array,
+      required: true
+    },
     tabs: {
       type: Array,
       required: false
@@ -61,21 +65,25 @@ export default {
   data() {
     return {
       userGroup: {
+        group_id: this.state.group_id || "",
         name: this.state.name || "",
         status: this.state.status || "Вкл"
       },
-      users: [],
       errorMessage: [],
       errorInput: []
     };
   },
   methods: {
     inputHandler(event, params) {
-      this.userGroup[params] = event.target.value;
+      if (!this.state.group_id) {
+        this.userGroup[params] = event.target.value;
+      } else {
+        this.state[params] = event.target.value;
+      }
     },
-    validation() {
-       Object.keys(this.userGroup).forEach(item => {
-        if (valid.isEmpty(this.userGroup[item]) && item !== "group_id") {
+    validation(userGroup) {
+       Object.keys(userGroup).forEach(item => {
+        if (valid.isEmpty(userGroup[item]) && item !== "group_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
@@ -84,6 +92,7 @@ export default {
       });
     },
     check() {
+      !this.state.group_id ? this.validation(this.userGroup) : this.validation(this.state)
       this.validation();
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
@@ -99,7 +108,7 @@ export default {
       if (!this.state.group_id) {
         const userGroup = userGroupService.createUserGroup(this.userGroup);
         userGroup
-          .then(response => {
+          .then(() => {
             this.$router.push({
               name: "user groups",
               params: {
@@ -110,14 +119,14 @@ export default {
               }
             });
           })
-          .catch(error => {
+          .catch(() => {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить группу пользователей', "warning");
           });
       } else {
         const userGroup = userGroupService.updateUser(this.userGroup);
         userGroup
-          .then(response => {
-            const index = this.tabs.findIndex((item) => item.ugroup_id === this.state.group_id)
+          .then(() => {
+            const index = this.tabs.findIndex((item) => item.group_id === this.state.group_id)
             if(this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
               this.showCornerDialog("Успех", 'Группа пользователей изменена', "success");

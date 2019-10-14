@@ -21,6 +21,14 @@ router.post('/user/delete', (req, res) => {
   userController.delete(req, res);
 });
 
+router.put('/user-group/update', (req, res) => {
+  userGroupController.update(req, res);
+});
+
+router.post('/user-group/delete', (req, res) => {
+  userGroupController.delete(req, res);
+});
+
 router.get('/user-group/get', (req, res) => {
   userGroupController.get(req, res);
 });
