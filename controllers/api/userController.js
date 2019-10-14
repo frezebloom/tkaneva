@@ -31,6 +31,7 @@ module.exports = {
         res.status(200).json(users);
       })
       .catch(error => {
+        console.log(error);
         res.status(404).send('Invalid request ' + error);
       });
   },
@@ -64,10 +65,11 @@ module.exports = {
       password: passwordToSave,
       status
     })
-      .then(user => {
-        res.status(201).send(user.dataValues);
+      .then(() => {
+        res.status(201).send('Ok');
       })
       .catch(error => {
+        console.log(error);
         res.status(404).send('Invalid request ' + error);
       });
   },
@@ -130,6 +132,7 @@ module.exports = {
         res.status(200).send('Ok');
       })
       .catch(error => {
+        console.log(error);
         res.status(404).send('Invalid request ' + error);
       });
   }
