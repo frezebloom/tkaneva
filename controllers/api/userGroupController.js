@@ -41,10 +41,10 @@ module.exports = {
       status
     })
       .then(() => {
-        console.log(error);
         res.status(201).send('Ok');
       })
       .catch(error => {
+        console.log(error);
         res.status(404).send('Invalid request' + error);
       });
   },
@@ -86,7 +86,8 @@ module.exports = {
     }
 
     const { group_id } = req.body.userGroup;
-    User.destroy({
+
+    UserGroup.destroy({
       where: {
         group_id: group_id
       }
@@ -95,6 +96,7 @@ module.exports = {
         res.status(200).send('Ok');
       })
       .catch(error => {
+        console.log(error);
         res.status(404).send('Invalid request ' + error);
       });
   }

@@ -93,7 +93,7 @@ export default {
     },
     check() {
       !this.state.group_id ? this.validation(this.userGroup) : this.validation(this.state)
-      this.validation();
+  
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
