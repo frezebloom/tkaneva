@@ -30,7 +30,7 @@
           <td>{{item.last_name}}</td>
           <td>{{item.login}}</td>
           <td>{{item.email}}</td>
-          <td>{{item.userGroup.name}}</td>
+          <!-- <td>{{item.userGroup.name}}</td> -->
           <td>{{item.status}}</td>
           <td>
             <input

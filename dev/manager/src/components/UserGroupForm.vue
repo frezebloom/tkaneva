@@ -123,7 +123,7 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить группу пользователей', "warning");
           });
       } else {
-        const userGroup = userGroupService.updateUser(this.userGroup);
+        const userGroup = userGroupService.updateUserGroup(this.state);
         userGroup
           .then(() => {
             const index = this.tabs.findIndex((item) => item.group_id === this.state.group_id)
