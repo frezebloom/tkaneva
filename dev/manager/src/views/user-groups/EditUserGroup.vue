@@ -47,6 +47,9 @@ export default {
   created() {
     const { selectUserGroups } = this.$route.params;
     if (selectUserGroups) {
+      selectUserGroups.forEach(element => {
+        element['title'] = element.name;
+      });
       this.tabs = selectUserGroups;
       this.userGroup = selectUserGroups[0];
     }

@@ -58,6 +58,9 @@ export default {
   created() {
     const { selectUsers } = this.$route.params;
     if (selectUsers) {
+      selectUsers.forEach(element => {
+        element['title'] = element.fullName;
+      });
       this.tabs = selectUsers;
       this.user = selectUsers[0];
     }

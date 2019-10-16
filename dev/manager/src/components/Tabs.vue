@@ -7,7 +7,7 @@
       :class="{ active: activeTab === index }"
       @click="eventClickTab(index)"
     >
-      {{ changeString(tab.fullName) }}
+      {{ changeString(tab.title) }}
       <div 
         class="tab-close"
         @click.stop="eventClickCloseTab(index)"
