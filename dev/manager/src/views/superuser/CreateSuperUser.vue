@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       userGroup: {
-        name: "admin",
+        name: "Пусто",
         status: "Вкл"
       },
       user: {
