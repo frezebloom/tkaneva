@@ -4,9 +4,9 @@ const tokenController = require('../tokenController');
 const UserGroup = db.userGroup;
 
 module.exports = {
-  async get(req, res) {
+  get(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');
@@ -26,9 +26,9 @@ module.exports = {
       });
   },
 
-  async create(req, res) {
+  create(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');
@@ -49,11 +49,11 @@ module.exports = {
       });
   },
 
-  async update(req, res) {
+  update(req, res) {
     const { group_id, name, status } = req.body.userGroup;
 
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');
@@ -77,9 +77,9 @@ module.exports = {
       });
   },
 
-  async delete(req, res) {
+  delete(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');

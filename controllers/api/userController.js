@@ -8,9 +8,9 @@ const UserGroup = db.userGroup;
 module.exports = {
   salt: bcrypt.genSaltSync(10),
 
-  async get(req, res) {
+  get(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');
@@ -36,9 +36,9 @@ module.exports = {
       });
   },
 
-  async create(req, res) {
+  create(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');
@@ -74,7 +74,7 @@ module.exports = {
       });
   },
 
-  async update(req, res) {
+  update(req, res) {
     const {
       user_id,
       first_name,
@@ -86,7 +86,7 @@ module.exports = {
     } = req.body.user;
 
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');
@@ -114,9 +114,9 @@ module.exports = {
       });
   },
 
-  async delete(req, res) {
+  delete(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = await tokenController.checkToken(id, accesstoken);
+    const tokenCheck = tokenController.checkToken(id, accesstoken);
     if (!tokenCheck) {
       res.status(404).send('invalid token');
       throw new Error('invalid token');
