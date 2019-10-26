@@ -103,7 +103,7 @@ module.exports = {
       });
 
     function destroy(userGroup) {
-      UserGroup.destroy({
+      return UserGroup.destroy({
         where: {
           group_id: userGroup
         }
