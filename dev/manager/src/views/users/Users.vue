@@ -166,30 +166,27 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { users, selectElements } = this;
-        const selectUsers = this.getSelect(users, selectElements);
-        selectUsers.forEach(item => {
-          const user = userService.deleteUser(item);
-          user
-            .then(() => {
-              const users = this.users.filter(
-                item => !selectUsers.includes(item)
-              );
-              this.users = users;
-              this.showCornerDialog(
-                "Успех",
-                "Операция удаления успешна завершена",
-                "success"
-              );
-            })
-            .catch(error => {
-              this.showCornerDialog(
-                "Ошибка",
-                "Не удалось связаться с сервером. Обратитесь к администратору",
-                "danger"
-              );
-              console.error(error);
-            });
-        });
+        const selectUsers = this.getSelect(users, selectElements).map((item) => item.user_id);
+        const user = userService.deleteUser(selectUsers);
+        user
+          .then(() => {
+            this.users = this.users.filter(
+              item => !selectUsers.includes(item.user_id)
+            );
+            this.showCornerDialog(
+              "Успех",
+              "Операция удаления успешна завершена",
+              "success"
+            );
+          })
+          .catch(error => {
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось связаться с сервером. Обратитесь к администратору",
+              "danger"
+            );
+            console.error(error);
+          });
       }
     },
     getSelect(users, selectElements) {

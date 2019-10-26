@@ -95,7 +95,7 @@ module.exports = {
       }
     )
       .then(() => {
-        destroy(req.body.userGroup);
+        return destroy(req.body.userGroup);
       })
       .catch(error => {
         console.log(error);

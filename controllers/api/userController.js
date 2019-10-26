@@ -122,10 +122,9 @@ module.exports = {
       throw new Error('invalid token');
     }
 
-    const { user_id } = req.body.user;
     User.destroy({
       where: {
-        user_id: user_id
+        user_id: req.body.user
       }
     })
       .then(() => {
