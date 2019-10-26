@@ -162,30 +162,27 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { userGroups, selectElements } = this;
-        const selectUserGroups = this.getSelect(userGroups, selectElements);
-        selectUserGroups.forEach(item => {
-          const userGroup = userGroupService.deleteUserGroup(item);
-          userGroup
-            .then(() => {
-              const userGroups = this.userGroups.filter(
-                item => !selectUserGroups.includes(item)
-              );
-              this.userGroups = userGroups;
-              this.showCornerDialog(
-                "Успех",
-                "Операция удаления успешна завершена",
-                "success"
-              );
-            })
-            .catch(error => {
-              this.showCornerDialog(
-                "Ошибка",
-                "Не удалось связаться с сервером. Обратитесь к администратору",
-                "danger"
-              );
-              console.error(error);
-            });
-        });
+        const selectUserGroups = this.getSelect(userGroups, selectElements).map((item) => item.group_id);
+        const userGroup = userGroupService.deleteUserGroup(selectUserGroups);
+        userGroup
+          .then(() => {
+            this.userGroups = this.userGroups.filter(
+              item => !selectUserGroups.includes(item.group_id)
+            );
+            this.showCornerDialog(
+              "Успех",
+              "Операция удаления успешна завершена",
+              "success"
+            );
+          })
+          .catch(error => {
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось связаться с сервером. Обратитесь к администратору",
+              "danger"
+            );
+            console.error(error);
+          });
       }
     },
     getSelect(userGroups, selectElements) {

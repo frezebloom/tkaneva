@@ -2,6 +2,7 @@ const db = require('../../models/index');
 const tokenController = require('../tokenController');
 
 const UserGroup = db.userGroup;
+const User = db.user;
 
 module.exports = {
   get(req, res) {
@@ -85,19 +86,35 @@ module.exports = {
       throw new Error('invalid token');
     }
 
-    const { group_id } = req.body.userGroup;
-
-    UserGroup.destroy({
-      where: {
-        group_id: group_id
+    User.update(
+      {
+        group_id: 1
+      },
+      {
+        where: { group_id: req.body.userGroup }
       }
-    })
+    )
       .then(() => {
-        res.status(200).send('Ok');
+        destroy(req.body.userGroup);
       })
       .catch(error => {
         console.log(error);
         res.status(404).send('Invalid request ' + error);
       });
+
+    function destroy(userGroup) {
+      UserGroup.destroy({
+        where: {
+          group_id: userGroup
+        }
+      })
+        .then(() => {
+          res.status(200).send('Ok');
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(404).send('Invalid request ' + error);
+        });
+    }
   }
 };
