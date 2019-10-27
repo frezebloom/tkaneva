@@ -11,11 +11,10 @@
           <router-link to="/product-groups">Категории</router-link>
         </li>
         <li>
-          <router-link to="/vendor">Производители</router-link>
-
+          <router-link to="/vendors">Производители</router-link>
         </li>
         <li>
-          <router-link to="/design">Расцветка</router-link>
+          <router-link to="/designs">Расцветка</router-link>
         </li>
       </ul>
       <li class="sidebar-menu-category">Заказы</li>

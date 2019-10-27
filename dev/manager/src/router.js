@@ -44,12 +44,6 @@ export default new Router({
       component: () => import('./views/superuser/CreateSuperUser.vue')
     },
     {
-      path: '/product/new',
-      name: 'new product',
-      component: () => import('./views/NewProduct.vue'),
-      beforeEnter: ifAuthenticated
-    },
-    {
       path: '/users',
       name: 'users',
       component: () => import('./views/users/Users.vue'),
