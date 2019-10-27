@@ -31,7 +31,7 @@
         <li>
           <router-link to="/user-groups">
             <div class="sidebar-menu-wrapper">
-              <img alt="users" src="../assets/icons/user.svg">
+              <img alt="users" src="../assets/icons/user-groups.svg">
               <div class="sidebar-menu-title">Группы</div>
             </div>
           </router-link>
