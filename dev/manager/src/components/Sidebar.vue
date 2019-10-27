@@ -2,19 +2,20 @@
   <div class="sidebar">
     <ul class="sidebar-menu">
       <li class="sidebar-menu-header">Навигация</li>
-      <li class="sidebar-menu-category" @click="open('product')">Продукты</li>
+      <li class="sidebar-menu-category" @click="open('product')">Продукт</li>
       <ul v-bind:class="{ active: isActive.product }" class="sidebar-menu-subcategory">
         <li>
-          <router-link to="/product/new">Товары</router-link>
+          <router-link to="/products">Товары</router-link>
         </li>
         <li>
-          <router-link to="/product/category">Категории</router-link>
+          <router-link to="/product-groups">Категории</router-link>
         </li>
         <li>
-          <a href="#">Производитель</a>
+          <router-link to="/vendor">Производители</router-link>
+
         </li>
         <li>
-          <a href="#">Цвет</a>
+          <router-link to="/design">Расцветка</router-link>
         </li>
       </ul>
       <li class="sidebar-menu-category">Заказы</li>
