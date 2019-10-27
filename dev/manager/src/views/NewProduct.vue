@@ -1,7 +1,7 @@
 <template>
   <div class="newproduct">
     <h3>Добавить новый товар</h3>
-    <ProductForm
+    <!-- <ProductForm
       :input="[
         { name: 'Категория', type: 'select' },
         { name: 'Название', type: 'text' }, 
@@ -14,11 +14,10 @@
         { name: 'Изображения', type: 'file' },
         { name: 'В наличии', type: 'checkbox' },
       ]"
-    />
+    /> -->
   </div>
 </template>
 <script>
-import ProductForm from "@/components/ProductForm.vue";
 
 export default {
   name: "App",

@@ -50,12 +50,6 @@ export default new Router({
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/product/category',
-      name: 'product category',
-      component: () => import('./views/ProductCategory.vue'),
-      beforeEnter: ifAuthenticated
-    },
-    {
       path: '/users',
       name: 'users',
       component: () => import('./views/users/Users.vue'),
