@@ -17,7 +17,7 @@ const paths = {
         dest: "public/stylesheets"
     },
     scripts: {
-      src: "dev/js/index.js",
+      src: "dev/js/**/*.js",
       dest: "public/javascripts"
     }
 };
@@ -36,7 +36,7 @@ function style() {
 
 function scripts() {
     return browserify({
-    entries: paths.scripts.src,
+    entries: "./dev/js/index.js",
     extensions: [".js"],
     debug: true
   })
@@ -68,14 +68,15 @@ function reload() {
 function watch() {
     browserSync.init({
         server: {
-            baseDir: "./dev"
-        }
+            baseDir: "./",
+        },
+        open: false
     });
     gulp.watch(paths.styles.src, style);
     gulp.watch(paths.scripts.src, scripts);
     gulp.watch("src/*.html").on('change', browserSync.reload);
 }
- 
+
 
 exports.watch = watch;
 exports.style = style;
