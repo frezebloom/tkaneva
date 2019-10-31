@@ -1,32 +1,42 @@
-const gulp = require("gulp");
-const sass = require("gulp-sass");
-const autoprefixer = require("gulp-autoprefixer");
-const cssnano = require("gulp-cssnano");
-const plumber = require("gulp-plumber");
-const minify = require("gulp-babel-minify");
-const browserify = require("browserify");
-var source = require("vinyl-source-stream");
-var sourcemaps = require("gulp-sourcemaps");
-var buffer = require("vinyl-buffer");
-var babelify = require("babelify");
+const gulp = require("gulp"),
+      sass = require("gulp-sass"),
+      postcss = require("gulp-postcss"),
+      autoprefixer = require("autoprefixer"),
+      cssnano = require("cssnano"),
+      sourcemaps = require("gulp-sourcemaps"),
+      browserSync = require("browser-sync").create(),
+      minify = require("gulp-babel-minify"),
+      browserify = require("browserify"),
+      source = require("vinyl-source-stream"),
+      buffer = require("vinyl-buffer"),
+      babelify = require("babelify");
 
-gulp.task("scss", () => {
-  return gulp
-    .src("dev/scss/**/*.scss")
-    .pipe(plumber())
-    .pipe(sass())
-    .pipe(
-      autoprefixer(["last 15 versions", "> 1%", "ie 8", "ie 7"], {
-        cascade: true
-      })
-    )
-    .pipe(cssnano())
-    .pipe(gulp.dest("public/stylesheets"));
-});
+const paths = {
+    styles: {
+        src: "dev/scss/**/*.scss",
+        dest: "public/stylesheets"
+    },
+    scripts: {
+      src: "dev/js/index.js",
+      dest: "public/javascripts"
+    }
+};
 
-gulp.task("scripts", function() {
-  return browserify({
-    entries: "./dev/js/index.js",
+function style() {
+    return gulp
+        .src(paths.styles.src)
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .on("error", sass.logError)
+        .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(paths.styles.dest))
+        .pipe(browserSync.stream());
+}
+
+function scripts() {
+    return browserify({
+    entries: paths.scripts.src,
     extensions: [".js"],
     debug: true
   })
@@ -47,10 +57,30 @@ gulp.task("scripts", function() {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(gulp.dest("public/javascripts"));
-});
+    .pipe(gulp.dest(paths.scripts.dest));
+}
 
-gulp.task("default", ["scss", "scripts"], () => {
-  gulp.watch("dev/scss/**/*.scss", ["scss"]);
-  gulp.watch("dev/js/**/*.js", ["scripts"]);
-});
+
+function reload() {
+    browserSync.reload();
+}
+
+function watch() {
+    browserSync.init({
+        server: {
+            baseDir: "./dev"
+        }
+    });
+    gulp.watch(paths.styles.src, style);
+    gulp.watch(paths.scripts.src, scripts);
+    gulp.watch("src/*.html").on('change', browserSync.reload);
+}
+ 
+
+exports.watch = watch;
+exports.style = style;
+exports.scripts = scripts;
+
+var build = gulp.parallel(style, scripts, watch);
+
+gulp.task('default', build);
