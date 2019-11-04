@@ -80,6 +80,79 @@ export default new Router({
       beforeEnter: ifAuthenticated
     },
     {
+      path: '/designs',
+      name: 'designs',
+      component: () => import('./views/designs/Designs.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/designs/new',
+      name: 'new design',
+      component: () => import('./views/designs/NewDesign.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/designs/edit',
+      name: 'edit design',
+      component: () => import('./views/designs/EditDesign.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/product-groups',
+      name: 'product groups',
+      component: () => import('./views/product-groups/ProductGroups.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/product-groups/new',
+      name: 'new product group',
+      component: () => import('./views/product-groups/NewProductGroup.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/product-groups/edit',
+      name: 'edit user group',
+      component: () => import('./views/product-groups/EditProductGroup.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: () => import('./views/products/Products.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/products/new',
+      name: 'new product',
+      component: () => import('./views/products/NewProduct.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/products/edit',
+      name: 'edit product',
+      component: () => import('./views/products/EditProduct.vue'),
+      beforeEnter: ifAuthenticated
+    },
+
+    {
+      path: '/vendors',
+      name: 'vendors',
+      component: () => import('./views/vendors/Vendors.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/vendors/new',
+      name: 'new vendor',
+      component: () => import('./views/vendors/NewVendor.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/vendors/edit',
+      name: 'edit vendor',
+      component: () => import('./views/vendors/EditVendor.vue'),
+      beforeEnter: ifAuthenticated
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
