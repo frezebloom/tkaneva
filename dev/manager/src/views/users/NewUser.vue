@@ -10,8 +10,7 @@
 </template>
 <script>
 import UserForm from "@/components/UserForm";
-import userService from "@/services/userService";
-import userGroupService from "@/services/userGroupService";
+import services from "@/services/services";
 
 export default {
   name: "NewUser",
@@ -35,7 +34,7 @@ export default {
     };
   },
   mounted() {
-    const users = userService.getUsers();
+    const users = services.get('/api/user/get');
     users
       .then(users => {
         this.users = users.data;
@@ -43,7 +42,7 @@ export default {
       .catch(error => {
         console.error(error);
       });
-    const userGroups = userGroupService.getUserGroups();
+    const userGroups = services.get('/api/user-group/get');
     userGroups
       .then(userGroups => {
         this.userGroups = userGroups.data;

@@ -93,7 +93,7 @@
 <script>
 import Button from "@/components/Button";
 import CornerDialog from "@/components/CornerDialog";
-import userService from "@/services/userService";
+import services from "@/services/services";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
@@ -213,7 +213,7 @@ export default {
     },
     saveChange() {
       if (!this.state.user_id) {
-        const user = userService.createUser(this.user);
+        const user = services.create('/api/user/create', this.user);
         user
           .then(() => {
             this.$router.push({
@@ -230,7 +230,7 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
           });
       } else {
-        const user = userService.updateUser(this.state);
+        const user = services.update('/api/user/update', this.user);
         user
           .then(() => {
             const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)

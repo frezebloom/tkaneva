@@ -54,7 +54,7 @@ import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
-import userGroupService from "@/services/userGroupService";
+import services from "@/services/services";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -78,7 +78,7 @@ export default {
     };
   },
   mounted() {
-    const userGroups = userGroupService.getUserGroups();
+    const userGroups = services.get('/api/user-group/get');
     userGroups
       .then(userGroups => {
         this.userGroups = userGroups.data;
@@ -163,7 +163,7 @@ export default {
         this.hideCheck = !this.hideCheck;
         const { userGroups, selectElements } = this;
         const selectUserGroups = this.getSelect(userGroups, selectElements).map((item) => item.group_id);
-        const userGroup = userGroupService.deleteUserGroup(selectUserGroups);
+        const userGroup = services.delete('/api/user-group/update', selectUserGroups);
         userGroup
           .then(() => {
             this.userGroups = this.userGroups.filter(

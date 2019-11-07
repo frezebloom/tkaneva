@@ -34,7 +34,7 @@
 <script>
 import Button from "@/components/Button";
 import CornerDialog from "@/components/CornerDialog";
-import userGroupService from "@/services/userGroupService";
+import services from "@/services/services";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
@@ -106,7 +106,7 @@ export default {
     },
     saveChange() {
       if (!this.state.group_id) {
-        const userGroup = userGroupService.createUserGroup(this.userGroup);
+        const userGroup = services.create('/api/user-group/create', this.userGroup);
         userGroup
           .then(() => {
             this.$router.push({
@@ -123,7 +123,7 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить группу пользователей', "warning");
           });
       } else {
-        const userGroup = userGroupService.updateUserGroup(this.state);
+        const userGroup = services.update('/api/user-group/update', this.state);
         userGroup
           .then(() => {
             const index = this.tabs.findIndex((item) => item.group_id === this.state.group_id)

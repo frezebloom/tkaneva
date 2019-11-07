@@ -35,7 +35,7 @@ module.exports = {
       throw new Error('invalid token');
     }
 
-    const { name, status } = req.body.userGroup;
+    const { name, status } = req.body.payload;
 
     UserGroup.create({
       name,
@@ -51,7 +51,7 @@ module.exports = {
   },
 
   update(req, res) {
-    const { group_id, name, status } = req.body.userGroup;
+    const { group_id, name, status } = req.body.payload;
 
     const { id, accesstoken } = req.headers;
     const tokenCheck = tokenController.checkToken(id, accesstoken);
@@ -91,21 +91,21 @@ module.exports = {
         group_id: 1
       },
       {
-        where: { group_id: req.body.userGroup }
+        where: { group_id: req.body.payload }
       }
     )
       .then(() => {
-        return destroy(req.body.userGroup);
+        return destroy(req.body.payload);
       })
       .catch(error => {
         console.log(error);
         res.status(404).send('Invalid request ' + error);
       });
 
-    function destroy(userGroup) {
+    function destroy(id) {
       return UserGroup.destroy({
         where: {
-          group_id: userGroup
+          group_id: id
         }
       })
         .then(() => {

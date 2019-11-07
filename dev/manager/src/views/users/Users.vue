@@ -58,7 +58,7 @@ import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
-import userService from "@/services/userService";
+import services from "@/services/services";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -82,7 +82,7 @@ export default {
     };
   },
   mounted() {
-    const users = userService.getUsers();
+    const users = services.get('/api/user/get');
     users
       .then(users => {
         this.users = users.data;
@@ -167,7 +167,7 @@ export default {
         this.hideCheck = !this.hideCheck;
         const { users, selectElements } = this;
         const selectUsers = this.getSelect(users, selectElements).map((item) => item.user_id);
-        const user = userService.deleteUser(selectUsers);
+        const user = services.delete('/api/user/delete', selectUsers);
         user
           .then(() => {
             this.users = this.users.filter(

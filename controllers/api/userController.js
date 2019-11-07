@@ -52,7 +52,7 @@ module.exports = {
       group_id,
       password,
       status
-    } = req.body.user;
+    } = req.body.payload;
 
     const passwordToSave = bcrypt.hashSync(password, this.salt);
 
@@ -83,7 +83,7 @@ module.exports = {
       email,
       group_id,
       status
-    } = req.body.user;
+    } = req.body.payload;
 
     const { id, accesstoken } = req.headers;
     const tokenCheck = tokenController.checkToken(id, accesstoken);
@@ -124,7 +124,7 @@ module.exports = {
 
     User.destroy({
       where: {
-        user_id: req.body.user
+        user_id: req.body.payload
       }
     })
       .then(() => {

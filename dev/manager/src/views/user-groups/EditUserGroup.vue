@@ -19,7 +19,7 @@
 <script>
 import Tabs from "@/components/Tabs";
 import UserGroupForm from "@/components/UserGroupForm";
-import userGroupService from "@/services/userGroupService";
+import services from "@/services/services";
 
 export default {
   name: "EditUserGroup",
@@ -35,7 +35,7 @@ export default {
     };
   },
   mounted() {
-    const userGroups = userGroupService.getUserGroups();
+   const userGroups = services.get('/api/user-group/get');
     userGroups
       .then(userGroups => {
         this.userGroups = userGroups.data;
