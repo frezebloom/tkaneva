@@ -23,5 +23,17 @@ export default {
     return api(data.id, data.accessToken).post(path, {
       payload
     });
+  },
+  fetchToken(path, login, password) {
+    return api().post(path, {
+      login,
+      password
+    });
+  },
+  refreshToken(path, user_id, refresh_token) {
+    return api().post(path, {
+      user_id,
+      refresh_token
+    });
   }
-}
+};

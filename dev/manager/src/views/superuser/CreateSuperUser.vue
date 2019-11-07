@@ -5,8 +5,7 @@
 </template>
 <script>
 import Button from "@/components/Button.vue";
-
-import superUserService from "@/services/superUserService";
+import services from '@/services/services';
 
 export default {
   name: "СreateSuperUser",
@@ -16,7 +15,7 @@ export default {
   data() {
     return {
       userGroup: {
-        name: "Пусто",
+        name: "пусто",
         status: "Вкл"
       },
       user: {

@@ -54,7 +54,7 @@ import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
-import designService from "@/services/designService";
+import services from '@/services/services';
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 

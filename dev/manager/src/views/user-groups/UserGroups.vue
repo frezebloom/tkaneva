@@ -163,7 +163,7 @@ export default {
         this.hideCheck = !this.hideCheck;
         const { userGroups, selectElements } = this;
         const selectUserGroups = this.getSelect(userGroups, selectElements).map((item) => item.group_id);
-        const userGroup = services.delete('/api/user-group/update', selectUserGroups);
+        const userGroup = services.delete('/api/user-group/delete', selectUserGroups);
         userGroup
           .then(() => {
             this.userGroups = this.userGroups.filter(

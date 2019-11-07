@@ -46,7 +46,7 @@
             v-for="(option, index) in userGroups"
             :key="index"
             :value="option.group_id"
-            :selected="index === (state.group_id - 1) ? 'selected' : ''"
+            :selected="option.group_id === state.group_id ? 'selected' : ''"
           >{{ option.name }}</option>
         </select>
       </div>
@@ -230,7 +230,7 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
           });
       } else {
-        const user = services.update('/api/user/update', this.user);
+        const user = services.update('/api/user/update', this.state);
         user
           .then(() => {
             const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)

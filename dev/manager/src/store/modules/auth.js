@@ -1,5 +1,4 @@
-import signupService from '@/services/signupService';
-
+import services from '@/services/services';
 import {
   AUTH_REQUEST,
   AUTH_ERROR,
@@ -28,7 +27,11 @@ const getters = {
 const actions = {
   [AUTH_REQUEST]({ commit }, user) {
     return new Promise((resolve, reject) => {
-      const response = signupService.fetchToken(user.login, user.password);
+      const response = services.fetchToken(
+        '/api/auth/signup',
+        user.login,
+        user.password
+      );
 
       commit(AUTH_REQUEST);
 
@@ -60,7 +63,11 @@ const actions = {
   },
   [AUTH_REFRESH]({ commit }, token) {
     return new Promise((resolve, reject) => {
-      const response = signupService.refreshToken(token.id, token.refreshToken);
+      const response = services.refreshToken(
+        '/api/auth/refresh-token',
+        token.id,
+        token.refreshToken
+      );
       response
         .then(response => {
           const { id, accessToken, refreshToken, expiresIn } = response.data;
