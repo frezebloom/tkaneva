@@ -5,7 +5,7 @@
 </template>
 <script>
 import Button from "@/components/Button.vue";
-import services from '@/services/services';
+import superUserService from "@/services/superUserService";
 
 export default {
   name: "СreateSuperUser",

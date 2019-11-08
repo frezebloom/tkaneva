@@ -105,7 +105,7 @@ export default {
 
       return foundItems;
 
-    },
+    }
   },
   methods: {
     route(event) {
@@ -150,7 +150,7 @@ export default {
         this.hideCheck = !this.hideCheck;
         const { designs, selectElements } = this;
         const selectDesigns = this.getSelect(designs, selectElements).map((item) => item.design_id);
-        const designs = services.delete('/api/design/delete', selectDesigns);
+        const design = services.delete('/api/design/delete', selectDesigns);
         design
           .then(() => {
             this.designs = this.designs.filter(

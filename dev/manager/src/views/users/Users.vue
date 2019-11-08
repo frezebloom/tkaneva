@@ -90,7 +90,7 @@ export default {
           "danger"
         );
       });
-  }
+  },
   computed: {
     filter() {
       const foundItems = this.users.filter(item => {
