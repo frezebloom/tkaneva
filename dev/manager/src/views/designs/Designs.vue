@@ -69,16 +69,11 @@ export default {
   data() {
     return {
       title: ["№", "Название", "Статус", ""],
-      hideCheck: false, //mixins
-      checkHeader: "Удаление", //mixins
-      checkQuestion: "Вы действительно хотите удалить?", //mixins
-      designs: [], 
-      search: '', //mixins
-      selectElements: [] //mixins
+      designs: []
     };
   },
   mounted() {
-    const designs = designService.getDesign(); 
+    const designs = services.get('/api/design/get');
     designs
       .then(design => {
         this.design = design.data;
@@ -91,15 +86,6 @@ export default {
           "danger"
         );
       });
-  },
-  //Можно убрать в mixsin
-  created() {
-    const { status, title, message, button } = this.$route.params;
-    if (status) {
-      this.showCornerDialog(title, message, button);
-    } else {
-      this.hideCornerDialog = true;
-    }
   },
   computed: {
     filter() {
@@ -164,7 +150,7 @@ export default {
         this.hideCheck = !this.hideCheck;
         const { designs, selectElements } = this;
         const selectDesigns = this.getSelect(designs, selectElements).map((item) => item.design_id);
-        const design = designService.deleteDesign(selectDesigns);
+        const designs = services.delete('/api/design/delete', selectDesigns);
         design
           .then(() => {
             this.designs = this.designs.filter(

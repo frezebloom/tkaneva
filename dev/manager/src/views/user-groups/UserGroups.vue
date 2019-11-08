@@ -69,12 +69,7 @@ export default {
   data() {
     return {
       title: ["№", "Название", "Статус", ""],
-      hideCheck: false,
-      checkHeader: "Удаление",
-      checkQuestion: "Вы действительно хотите удалить?",
-      userGroups: [],
-      search: '',
-      selectElements: []
+      userGroups: []
     };
   },
   mounted() {
@@ -91,14 +86,6 @@ export default {
           "danger"
         );
       });
-  },
-  created() {
-    const { status, title, message, button } = this.$route.params;
-    if (status) {
-      this.showCornerDialog(title, message, button);
-    } else {
-      this.hideCornerDialog = true;
-    }
   },
   computed: {
     filter() {

@@ -73,12 +73,7 @@ export default {
   data() {
     return {
       title: ["№", "Имя", "Фамилия", "Логин", "Почта", "Группа", "Статус", ""],
-      hideCheck: false,
-      checkHeader: "Удаление",
-      checkQuestion: "Вы действительно хотите удалить?",
-      users: [],
-      search: '',
-      selectElements: []
+      users: []
     };
   },
   mounted() {
@@ -95,15 +90,7 @@ export default {
           "danger"
         );
       });
-  },
-  created() {
-    const { status, title, message, button } = this.$route.params;
-    if (status) {
-      this.showCornerDialog(title, message, button);
-    } else {
-      this.hideCornerDialog = true;
-    }
-  },
+  }
   computed: {
     filter() {
       const foundItems = this.users.filter(item => {
