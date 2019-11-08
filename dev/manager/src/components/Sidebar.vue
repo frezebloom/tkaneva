@@ -14,7 +14,7 @@
           <router-link to="/vendors">Производители</router-link>
         </li>
         <li>
-          <router-link to="/designs">Расцветка</router-link>
+          <router-link to="/designs">Расцветки</router-link>
         </li>
       </ul>
       <li class="sidebar-menu-category">Заказы</li>
