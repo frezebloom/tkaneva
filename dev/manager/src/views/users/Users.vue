@@ -16,14 +16,14 @@
       <table>
         <thead>
           <tr>
-            <th v-for="item in title" :key="item.id">{{item}}</th>
+            <th v-for="item in title" :key="item.user_id">{{item}}</th>
           </tr>
         </thead>
         <tr
           @click="select(item.user_id)"
           :class="isActive(item.user_id)"
           v-for="item in filter"
-          :key="item.id"
+          :key="item.user_id"
         >
           <td>{{item.user_id}}</td>
           <td>{{item.first_name}}</td>

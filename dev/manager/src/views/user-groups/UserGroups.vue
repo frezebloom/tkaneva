@@ -16,7 +16,7 @@
       <table>
         <thead>
           <tr>
-            <th v-for="item in title" :key="item.id">{{item}}</th>
+            <th v-for="item in title" :key="item.group_id">{{item}}</th>
           </tr>
         </thead>
         <tr
