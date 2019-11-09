@@ -69,14 +69,14 @@ export default {
   data() {
     return {
       title: ["№", "Название", "Статус", ""],
-      productGroups: []
+      products: []
     };
   },
   mounted() {
-    const productGroups = services.get('/api/product-group/get');
-    productGroups
-      .then(productGroups => {
-        this.productGroups = productGroups.data;
+    const products = services.get('/api/product/get');
+    products
+      .then(products => {
+        this.products = products.data;
       })
       .catch(error => {
         console.log(error);
@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     filter() {
-      const foundItems = this.productGroups.filter(item => {
+      const foundItems = this.products.filter(item => {
 
         let found = false;
 
@@ -109,10 +109,10 @@ export default {
   },
   methods: {
     route(event) {
-      const { productGroups, selectElements } = this;
-      const selectProductGroups = this.getSelect(productGroups, selectElements);
+      const { products, selectElements } = this;
+      const selectProducts = this.getSelect(products, selectElements);
       if (event === "delete") {
-        if (selectProductGroups.length > 0) {
+        if (selectProducts.length > 0) {
           this.hideCheck = !this.hideCheck;
         } else {
           this.showCornerDialog(
@@ -123,10 +123,10 @@ export default {
         }
       }
       if (event === "edit") {
-        if (selectProductGroups.length > 0) {
+        if (selectProducts.length > 0) {
           this.$router.push({
             name: event + " product group",
-            params: { selectProductGroups }
+            params: { selectProducts }
           });
         } else {
           this.showCornerDialog(
@@ -139,7 +139,7 @@ export default {
       if (event === "new") {
         this.$router.push({
           name: event + " product group",
-          params: { selectProductGroups }
+          params: { selectProducts }
         });
       }
     },
@@ -148,13 +148,13 @@ export default {
         this.hideCheck = !this.hideCheck;
       } else {
         this.hideCheck = !this.hideCheck;
-        const { productGroups, selectElements } = this;
-        const selectProductGroups = this.getSelect(productGroups, selectElements).map((item) => item.product_id);
-        const productGroup = services.delete('/api/product-group/delete', selectProductGroups);
-        productGroup
+        const { products, selectElements } = this;
+        const selectProducts = this.getSelect(products, selectElements).map((item) => item.product_id);
+        const product = services.delete('/api/product/delete', selectProducts);
+        product
           .then(() => {
-            this.productGroups = this.productGroups.filter(
-              item => !selectProductGroups.includes(item.product_id)
+            this.producs = this.producs.filter(
+              item => !selectProducts.includes(item.product_id)
             );
             this.showCornerDialog(
               "Успех",
@@ -172,9 +172,9 @@ export default {
           });
       }
     },
-    getSelect(productGroups, selectElements) {
-      return productGroups.filter(productGroup =>
-        selectElements.includes(productGroup.product_id)
+    getSelect(products, selectElements) {
+      return products.filter(product =>
+        selectElements.includes(product.product_id)
       );
     }
   }
