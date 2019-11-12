@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="header-logo">System Manager</div>
+    <div class="header-logo">Yami.system</div>
     <div class="header-logout">
       <img alt="Выйти" @click="logout" src="../assets/icons/logout.svg">
     </div>
@@ -32,6 +32,7 @@ header {
 .header-logo {
   color: $colorWhite;
   background-color: #367fa9;
+  font-family: monospace;
   font-size: 18px;
   line-height: 50px;
   font-weight: 600;
