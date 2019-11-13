@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       design: {
-        group_id: this.state.design_id || "",
+        design_id: this.state.design_id || "",
         name: this.state.name || "",
         status: this.state.status || "Вкл"
       },
@@ -105,38 +105,38 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.group_id) {
-        const userGroup = services.create('/api/user-group/create', this.userGroup);
-        userGroup
+      if (!this.state.design_id) {
+        const design = services.create('/api/design/create', this.design);
+        design
           .then(() => {
             this.$router.push({
-              name: "user groups",
+              name: "designs",
               params: {
                 status: true,
                 title: "Успех",
-                message: "Новая группа пользователей успешно создана",
+                message: "Новая расцветка успешно создана",
                 button: "success"
               }
             });
           })
           .catch(() => {
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить группу пользователей', "warning");
+            this.showCornerDialog("Ошибка", 'Не удалось сохранить расцветку', "warning");
           });
       } else {
-        const userGroup = services.update('/api/user-group/update', this.state);
-        userGroup
+        const design = services.update('/api/design/update', this.state);
+        design
           .then(() => {
-            const index = this.tabs.findIndex((item) => item.group_id === this.state.group_id)
+            const index = this.tabs.findIndex((item) => item.design_id === this.state.design_id)
             if(this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
-              this.showCornerDialog("Успех", 'Группа пользователей изменена', "success");
+              this.showCornerDialog("Успех", 'Расцветка изменена', "success");
             } else {
               this.$router.push({
-                name: "user groups",
+                name: "designs",
                 params: {
                   status: true,
                   title: "Успех",
-                  message: "Группа пользователей изменена",
+                  message: "Расцветка изменена",
                   button: "success"
                 }
               });
@@ -144,7 +144,7 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить группу пользователей', "warning");
+            this.showCornerDialog("Ошибка", 'Не удалось сохранить расцветку', "warning");
           });
       }
     }
