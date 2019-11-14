@@ -1,8 +1,8 @@
 <template>
   <header class="header">
-    <div class="header-logo">Yami.system</div>
+    <div class="header-logo">yami.system</div>
     <div class="header-logout">
-      <img alt="Выйти" @click="logout" src="../assets/icons/logout.svg">
+      <img alt="Выйти" @click="logout" src="../assets/icons/logout.svg" />
     </div>
   </header>
 </template>
@@ -49,4 +49,3 @@ header {
   opacity: 0.8;
 }
 </style>
-
