@@ -18,57 +18,57 @@
 </template> 
 <script>
 import Tabs from "@/components/Tabs";
-import ProductGroupForm from "@/components/UserGroupForm";
+import ProductGroupForm from "@/components/ProductGroupForm";
 import services from "@/services/services";
 
 export default {
-  name: "EditUserGroup",
+  name: "EditProductGroup",
   components: {
     Tabs,
-    UserGroupForm
+    ProductGroupForm
   },
   data() {
     return {
       tabs: [],
-      userGroups: [],
-      userGroup: {},
+      productGroups: [],
+      productGroup: {},
     };
   },
   mounted() {
-   const userGroups = services.get('/api/user-group/get');
-    userGroups
-      .then(userGroups => {
-        this.userGroups = userGroups.data;
+   const productGroups = services.get('/api/product-group/get');
+    productGroups
+      .then(productGroups => {
+        this.productGroups = productGroups.data;
       })
       .catch(error => {
         console.error(error);
       });
   },
   created() {
-    const { selectUserGroups } = this.$route.params;
-    if (selectUserGroups) {
-      selectUserGroups.forEach(element => {
+    const { selectProductGroups } = this.$route.params;
+    if (selectProductGroups) {
+      selectProductGroups.forEach(element => {
         element['title'] = element.name;
       });
-      this.tabs = selectUserGroups;
-      this.userGroup = selectUserGroups[0];
+      this.tabs = selectProductGroups;
+      this.userGroup = selectProductGroups[0];
     }
   },
   methods: {
     route(index) {
-      this.userGroup = this.tabs[index];
+      this.productGroup = this.tabs[index];
     },
     closeTab(element) {
       this.tabs = this.tabs.filter((item, index) => {
         if(index !== element) return item
       })
-      this.userGroup = this.tabs[0];
+      this.productGroup = this.tabs[0];
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-.edit-user-group {
+.edit-product-group {
   width: 100%;
 }
 </style>
