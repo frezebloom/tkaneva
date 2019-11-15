@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  const Color = sequelize.define('color', {
+  const Color = sequelize.define("color", {
     color_id: {
       autoIncrement: true,
       primaryKey: true,
@@ -12,7 +12,7 @@ module.exports = function(sequelize, Sequelize) {
     },
 
     status: {
-      type: Sequelize.ENUM('Вкл', 'Выкл')
+      type: Sequelize.ENUM("Вкл", "Выкл")
     }
   });
 
