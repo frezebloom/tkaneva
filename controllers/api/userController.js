@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
-const db = require('../../models/index');
-const tokenController = require('../tokenController');
+const bcrypt = require("bcrypt");
+const db = require("../../models/index");
+const token = require("../../utils/token");
 
 const User = db.user;
 const UserGroup = db.userGroup;
@@ -10,10 +10,10 @@ module.exports = {
 
   get(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = tokenController.checkToken(id, accesstoken);
+    const tokenCheck = token.checkToken(id, accesstoken);
     if (!tokenCheck) {
-      res.status(404).send('invalid token');
-      throw new Error('invalid token');
+      res.status(404).send("invalid token");
+      throw new Error("invalid token");
     }
 
     User.findAll({
@@ -24,7 +24,6 @@ module.exports = {
       ]
     })
       .then(users => {
-        tokenController.checkToken(id, accesstoken);
         return users;
       })
       .then(users => {
@@ -32,16 +31,16 @@ module.exports = {
       })
       .catch(error => {
         console.log(error);
-        res.status(404).send('Invalid request ' + error);
+        res.status(404).send("Invalid request " + error);
       });
   },
 
   create(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = tokenController.checkToken(id, accesstoken);
+    const tokenCheck = token.checkToken(id, accesstoken);
     if (!tokenCheck) {
-      res.status(404).send('invalid token');
-      throw new Error('invalid token');
+      res.status(404).send("invalid token");
+      throw new Error("invalid token");
     }
 
     const {
@@ -66,11 +65,11 @@ module.exports = {
       status
     })
       .then(() => {
-        res.status(201).send('Ok');
+        res.status(201).send("Ok");
       })
       .catch(error => {
         console.log(error);
-        res.status(404).send('Invalid request ' + error);
+        res.status(404).send("Invalid request " + error);
       });
   },
 
@@ -86,10 +85,10 @@ module.exports = {
     } = req.body.payload;
 
     const { id, accesstoken } = req.headers;
-    const tokenCheck = tokenController.checkToken(id, accesstoken);
+    const tokenCheck = token.checkToken(id, accesstoken);
     if (!tokenCheck) {
-      res.status(404).send('invalid token');
-      throw new Error('invalid token');
+      res.status(404).send("invalid token");
+      throw new Error("invalid token");
     }
 
     User.update(
@@ -106,20 +105,20 @@ module.exports = {
       }
     )
       .then(() => {
-        res.status(201).send('Ok');
+        res.status(201).send("Ok");
       })
       .catch(error => {
         console.log(error);
-        res.status(404).send('Invalid request ' + error);
+        res.status(404).send("Invalid request " + error);
       });
   },
 
   delete(req, res) {
     const { id, accesstoken } = req.headers;
-    const tokenCheck = tokenController.checkToken(id, accesstoken);
+    const tokenCheck = token.checkToken(id, accesstoken);
     if (!tokenCheck) {
-      res.status(404).send('invalid token');
-      throw new Error('invalid token');
+      res.status(404).send("invalid token");
+      throw new Error("invalid token");
     }
 
     User.destroy({
@@ -128,11 +127,11 @@ module.exports = {
       }
     })
       .then(() => {
-        res.status(200).send('Ok');
+        res.status(200).send("Ok");
       })
       .catch(error => {
         console.log(error);
-        res.status(404).send('Invalid request ' + error);
+        res.status(404).send("Invalid request " + error);
       });
   }
 };

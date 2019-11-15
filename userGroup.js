@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const userGroupController = require("../../controllers/api/userGroupController");
+const userGroupController = require("../../controllers/api/userGroupController.js");
 
 router.get("/user-group/get", (req, res) => {
   userGroupController.get(req, res);

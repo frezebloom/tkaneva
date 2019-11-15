@@ -3,27 +3,35 @@
     <ul class="sidebar-menu">
       <li class="sidebar-menu-header">Навигация</li>
       <li class="sidebar-menu-category" @click="open('product')">Продукт</li>
-      <ul v-bind:class="{ active: isActive.product }" class="sidebar-menu-subcategory">
+      <ul
+        v-bind:class="{ active: isActive.product }"
+        class="sidebar-menu-subcategory"
+      >
         <li>
           <router-link to="/products">Товары</router-link>
         </li>
         <li>
-          <router-link to="/product-groups">Категории</router-link>
+          <router-link to="/categories">Категории</router-link>
         </li>
         <li>
-          <router-link to="/vendors">Производители</router-link>
+          <router-link to="/brands">Производители</router-link>
         </li>
         <li>
-          <router-link to="/designs">Расцветки</router-link>
+          <router-link to="/colors">Расцветки</router-link>
         </li>
       </ul>
       <li class="sidebar-menu-category">Заказы</li>
-      <li class="sidebar-menu-category" @click="open('user')">Учетные записи</li>
-      <ul v-bind:class="{ active: isActive.user }" class="sidebar-menu-subcategory">
+      <li class="sidebar-menu-category" @click="open('user')">
+        Учетные записи
+      </li>
+      <ul
+        v-bind:class="{ active: isActive.user }"
+        class="sidebar-menu-subcategory"
+      >
         <li>
           <router-link to="/users">
             <div class="sidebar-menu-wrapper">
-              <img alt="users" src="../assets/icons/user.svg">
+              <img alt="users" src="../assets/icons/user.svg" />
               <div class="sidebar-menu-title">Пользователи</div>
             </div>
           </router-link>
@@ -31,7 +39,7 @@
         <li>
           <router-link to="/user-groups">
             <div class="sidebar-menu-wrapper">
-              <img alt="users" src="../assets/icons/user-groups.svg">
+              <img alt="users" src="../assets/icons/user-groups.svg" />
               <div class="sidebar-menu-title">Группы</div>
             </div>
           </router-link>
@@ -67,4 +75,3 @@ export default {
 @import "../styles/variables.scss";
 @import "../styles/sidebar.scss";
 </style>
-

@@ -1,9 +1,13 @@
-const api = require("./api");
+const auth = require("./api/auth");
+const user = require("./api/user");
+const userGroup = require("./api/userGroup");
+const superuser = require("./api/superuser");
 const products = require("./products");
-const auth = require("./auth");
 
 module.exports = {
-  api,
-  products,
-  auth
+  auth,
+  user,
+  userGroup,
+  superuser,
+  products
 };

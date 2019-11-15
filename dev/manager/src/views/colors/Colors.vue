@@ -6,8 +6,8 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar 
-      title="Расцветки" 
+    <Topbar
+      title="Расцветки"
       @eventClickTopBar="route($event)"
       @eventHandlerSearch="eventSearch($event)"
       @eventClearSearch="clearSearch()"
@@ -16,7 +16,7 @@
       <table>
         <thead>
           <tr>
-            <th v-for="item in title" :key="color_id">{{item}}</th>
+            <th v-for="item in title" :key="item.color_id">{{ item }}</th>
           </tr>
         </thead>
         <tr
@@ -25,21 +25,25 @@
           v-for="item in filter"
           :key="item.color_id"
         >
-          <td>{{item.color_id}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.status}}</td>
+          <td>{{ item.color_id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.status }}</td>
           <td>
             <input
               type="checkbox"
               :checked="checked(item.color_id)"
               @click.stop="select(item.color_id)"
-            >
+            />
           </td>
         </tr>
       </table>
     </div>
 
-    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+    <div
+      v-bind:class="[
+        hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog'
+      ]"
+    >
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
@@ -54,7 +58,7 @@ import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
-import services from '@/services/services';
+import services from "@/services/services";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -73,7 +77,7 @@ export default {
     };
   },
   mounted() {
-    const colors = services.get('/api/color/get');
+    const colors = services.get("/api/color/get");
     colors
       .then(color => {
         this.color = color.data;
@@ -90,7 +94,6 @@ export default {
   computed: {
     filter() {
       const foundItems = this.colors.filter(item => {
-
         let found = false;
 
         Object.keys(item).forEach(obj => {
@@ -100,11 +103,9 @@ export default {
         });
 
         if (found) return item;
-
       });
 
       return foundItems;
-
     }
   },
   methods: {
@@ -149,8 +150,10 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { colors, selectElements } = this;
-        const selectColors = this.getSelect(colors, selectElements).map((item) => item.color_id);
-        const color = services.delete('/api/color/delete', selectColors);
+        const selectColors = this.getSelect(colors, selectElements).map(
+          item => item.color_id
+        );
+        const color = services.delete("/api/color/delete", selectColors);
         color
           .then(() => {
             this.colors = this.colors.filter(
@@ -173,9 +176,7 @@ export default {
       }
     },
     getSelect(colors, selectElements) {
-      return colors.filter(color =>
-        selectElements.includes(color.color_id)
-      );
+      return colors.filter(color => selectElements.includes(color.color_id));
     }
   }
 };
