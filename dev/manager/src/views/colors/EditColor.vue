@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-vendor">
+  <div class="edit-color">
     <div v-if="tabs.length > 1">
       <Tabs 
         :tabs="tabs" 
@@ -7,68 +7,68 @@
         @eventClickCloseTab="closeTab($event)" 
       />
     </div>
-    <VendorForm 
-      title="Редактировать производителя" 
+    <ColorForm 
+      title="Редактировать расцветку" 
       @eventClickSave="closeTab($event)" 
-      :state="vendor"
+      :state="color"
       :tabs="tabs" 
-      :vendors="vendors"
+      :colors="colors"
     />
   </div>
 </template> 
 <script>
 import Tabs from "@/components/Tabs";
-import DesignForm from "@/components/VendorForm";
+import ColorForm from "@/components/ColorForm";
 import services from "@/services/services";
 
 export default {
-  name: "EditVendor",
+  name: "EditColor",
   components: {
     Tabs,
-    VendorForm
+    ColorForm
   },
   data() {
     return {
       tabs: [],
-      vendors: [],
-      vendor: {},
+      colors: [],
+      color: {},
     };
   },
   mounted() {
-   const vendors = services.get('/api/vendor/get');
-    vendors
-      .then(vendors => {
-        this.vendors = vendors.data;
+   const colors = services.get('/api/color/get');
+    colors
+      .then(colors => {
+        this.colors = colors.data;
       })
       .catch(error => {
         console.error(error);
       });
   },
   created() {
-    const { selectVendors } = this.$route.params;
-    if (selectVendors) {
-      selectVendors.forEach(element => {
+    const { selectColors } = this.$route.params;
+    if (selectColors) {
+      selectColors.forEach(element => {
         element['title'] = element.name;
       });
-      this.tabs = selectVendors;
-      this.vendor = selectVendors[0];
+      this.tabs = selectColors;
+      this.colors = selectColors[0];
     }
   },
   methods: {
     route(index) {
-      this.vendor = this.tabs[index];
+      this.color = this.tabs[index];
     },
     closeTab(element) {
       this.tabs = this.tabs.filter((item, index) => {
         if(index !== element) return item
       })
-      this.vendor = this.tabs[0];
+      this.color = this.tabs[0];
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-.edit-vendor {
+.edit-color {
   width: 100%;
 }
 </style>

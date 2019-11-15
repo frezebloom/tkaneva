@@ -1,5 +1,5 @@
 <template>
-  <div class="designs">
+  <div class="colors">
     <Check
       :hideCheck="hideCheck"
       :header="checkHeader"
@@ -16,23 +16,23 @@
       <table>
         <thead>
           <tr>
-            <th v-for="item in title" :key="design_id">{{item}}</th>
+            <th v-for="item in title" :key="color_id">{{item}}</th>
           </tr>
         </thead>
         <tr
-          @click="select(item.design_id)"
-          :class="isActive(item.design_id)"
+          @click="select(item.color_id)"
+          :class="isActive(item.color_id)"
           v-for="item in filter"
-          :key="item.design_id"
+          :key="item.color_id"
         >
-          <td>{{item.design_id}}</td>
+          <td>{{item.color_id}}</td>
           <td>{{item.name}}</td>
           <td>{{item.status}}</td>
           <td>
             <input
               type="checkbox"
-              :checked="checked(item.design_id)"
-              @click.stop="select(item.design_id)"
+              :checked="checked(item.color_id)"
+              @click.stop="select(item.color_id)"
             >
           </td>
         </tr>
@@ -59,7 +59,7 @@ import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
 export default {
-  name: "Designs",
+  name: "Colors",
   mixins: [table, cornerDialog],
   components: {
     Topbar,
@@ -69,14 +69,14 @@ export default {
   data() {
     return {
       title: ["№", "Название", "Статус", ""],
-      designs: []
+      colors: []
     };
   },
   mounted() {
-    const designs = services.get('/api/design/get');
-    designs
-      .then(design => {
-        this.design = design.data;
+    const colors = services.get('/api/color/get');
+    colors
+      .then(color => {
+        this.color = color.data;
       })
       .catch(error => {
         console.log(error);
@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     filter() {
-      const foundItems = this.designs.filter(item => {
+      const foundItems = this.colors.filter(item => {
 
         let found = false;
 
@@ -109,10 +109,10 @@ export default {
   },
   methods: {
     route(event) {
-      const { designs, selectElements } = this;
-      const selectDesigns = this.getSelect(designs, selectElements);
+      const { colors, selectElements } = this;
+      const selectColors = this.getSelect(colors, selectElements);
       if (event === "delete") {
-        if (selectDesigns.length > 0) {
+        if (selectColors.length > 0) {
           this.hideCheck = !this.hideCheck;
         } else {
           this.showCornerDialog(
@@ -123,10 +123,10 @@ export default {
         }
       }
       if (event === "edit") {
-        if (selectDesigns.length > 0) {
+        if (selectColors.length > 0) {
           this.$router.push({
-            name: event + " design",
-            params: { selectDesigns }
+            name: event + " color",
+            params: { selectColors }
           });
         } else {
           this.showCornerDialog(
@@ -138,8 +138,8 @@ export default {
       }
       if (event === "new") {
         this.$router.push({
-          name: event + " design",
-          params: { selectDesigns }
+          name: event + " color",
+          params: { selectColors }
         });
       }
     },
@@ -148,13 +148,13 @@ export default {
         this.hideCheck = !this.hideCheck;
       } else {
         this.hideCheck = !this.hideCheck;
-        const { designs, selectElements } = this;
-        const selectDesigns = this.getSelect(designs, selectElements).map((item) => item.design_id);
-        const design = services.delete('/api/design/delete', selectDesigns);
-        design
+        const { colors, selectElements } = this;
+        const selectColors = this.getSelect(colors, selectElements).map((item) => item.color_id);
+        const color = services.delete('/api/color/delete', selectColors);
+        color
           .then(() => {
-            this.designs = this.designs.filter(
-              item => !selectDesigns.includes(item.design_id)
+            this.colors = this.colors.filter(
+              item => !selectColors.includes(item.color_id)
             );
             this.showCornerDialog(
               "Успех",
@@ -172,9 +172,9 @@ export default {
           });
       }
     },
-    getSelect(designs, selectElements) {
-      return designs.filter(design =>
-        selectElements.includes(design.design_id)
+    getSelect(colors, selectElements) {
+      return colors.filter(color =>
+        selectElements.includes(color.color_id)
       );
     }
   }

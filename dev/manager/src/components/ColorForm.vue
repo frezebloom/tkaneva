@@ -1,5 +1,5 @@
 <template>
-  <div class="design-from">
+  <div class="color-from">
     <form v-on:submit.prevent class="form">
       <div class="form-header">{{title}}</div>
       <div class="form-wrapper">
@@ -38,7 +38,7 @@ import services from "@/services/services";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
-  name: "DesignForm",
+  name: "ColorForm",
   mixins: [cornerDialog],
   components: {
     Button,
@@ -53,7 +53,7 @@ export default {
       type: Object,
       required: true
     },
-    designs: {
+    colors: {
       type: Array,
       required: true
     },
@@ -64,8 +64,8 @@ export default {
   },
   data() {
     return {
-      design: {
-        design_id: this.state.design_id || "",
+      color: {
+        color_id: this.state.color_id || "",
         name: this.state.name || "",
         status: this.state.status || "Вкл"
       },
@@ -75,15 +75,15 @@ export default {
   },
   methods: {
     inputHandler(event, params) {
-      if (!this.state.design_id) {
-        this.design[params] = event.target.value;
+      if (!this.state.color_id) {
+        this.color[params] = event.target.value;
       } else {
         this.state[params] = event.target.value;
       }
     },
-    validation(design) {
-       Object.keys(design).forEach(item => {
-        if (valid.isEmpty(design[item]) && item !== "design_id") {
+    validation(color) {
+       Object.keys(color).forEach(item => {
+        if (valid.isEmpty(color[item]) && item !== "color_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
@@ -92,7 +92,7 @@ export default {
       });
     },
     check() {
-      !this.state.design_id ? this.validation(this.design) : this.validation(this.state)
+      !this.state.color_id ? this.validation(this.color) : this.validation(this.state)
   
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
@@ -105,12 +105,12 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.design_id) {
-        const design = services.create('/api/design/create', this.design);
-        design
+      if (!this.state.color_id) {
+        const color = services.create('/api/color/create', this.color);
+        color
           .then(() => {
             this.$router.push({
-              name: "designs",
+              name: "colors",
               params: {
                 status: true,
                 title: "Успех",
@@ -123,16 +123,16 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить расцветку', "warning");
           });
       } else {
-        const design = services.update('/api/design/update', this.state);
-        design
+        const color = services.update('/api/color/update', this.state);
+        color
           .then(() => {
-            const index = this.tabs.findIndex((item) => item.design_id === this.state.design_id)
+            const index = this.tabs.findIndex((item) => item.color_id === this.state.color_id)
             if(this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
               this.showCornerDialog("Успех", 'Расцветка изменена', "success");
             } else {
               this.$router.push({
-                name: "designs",
+                name: "colors",
                 params: {
                   status: true,
                   title: "Успех",

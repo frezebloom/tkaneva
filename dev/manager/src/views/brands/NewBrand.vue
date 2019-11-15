@@ -1,35 +1,35 @@
 <template>
-  <div class="new-vendor">
-    <VendorForm 
+  <div class="new-brand">
+    <BrandForm 
       title="Создать производителя" 
-      :state="vendor"
-      :designs="vendors"
+      :state="brand"
+      :brands="brands"
     />
   </div>
 </template>
 <script>
-import VendorForm from "@/components/VendorForm";
+import BrandForm from "@/components/BrandForm";
 import services from "@/services/services";
 
 export default {
-  name: "NewVendor",
+  name: "NewBrand",
   components: {
-    VendorForm
+    BrandForm
   },
   data() {
     return {
-      vendor: {
+      brand: {
         name: "",
         status: ""
       },
-      vendors: [] 
+      brands: [] 
     };
   },
   mounted() {
-    const vendors = services.get('/api/vendor/get');
-    vendors
-      .then(vendors => {
-        this.vendors = vendors.data;
+    const brands = services.get('/api/brand/get');
+    brands
+      .then(brands => {
+        this.brands = brands.data;
       })
       .catch(error => {
         console.error(error);

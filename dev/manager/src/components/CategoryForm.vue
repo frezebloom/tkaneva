@@ -1,5 +1,5 @@
 <template>
-  <div class="product-group-from">
+  <div class="category-from">
     <form v-on:submit.prevent class="form">
       <div class="form-header">{{title}}</div>
       <div class="form-wrapper">
@@ -38,7 +38,7 @@ import services from "@/services/services";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
-  name: "ProductGroupForm",
+  name: "CategoryForm",
   mixins: [cornerDialog],
   components: {
     Button,
@@ -53,7 +53,7 @@ export default {
       type: Object,
       required: true
     },
-    productGroups: {
+    categories: {
       type: Array,
       required: true
     },
@@ -64,8 +64,8 @@ export default {
   },
   data() {
     return {
-      productGroup: {
-        group_id: this.state.group_id || "",
+      category: {
+        category_id: this.state.category_id || "",
         name: this.state.name || "",
         status: this.state.status || "Вкл"
       },
@@ -75,15 +75,15 @@ export default {
   },
   methods: {
     inputHandler(event, params) {
-      if (!this.state.group_id) {
-        this.productGroup[params] = event.target.value;
+      if (!this.state.category_id) {
+        this.category[params] = event.target.value;
       } else {
         this.state[params] = event.target.value;
       }
     },
-    validation(productGroup) {
-       Object.keys(productGroup).forEach(item => {
-        if (valid.isEmpty(productGroup[item]) && item !== "group_id") {
+    validation(category) {
+       Object.keys(category).forEach(item => {
+        if (valid.isEmpty(category[item]) && item !== "category_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"

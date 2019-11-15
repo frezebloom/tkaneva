@@ -1,5 +1,5 @@
 <template>
-  <div class="vendor-from">
+  <div class="brand-from">
     <form v-on:submit.prevent class="form">
       <div class="form-header">{{title}}</div>
       <div class="form-wrapper">
@@ -38,7 +38,7 @@ import services from "@/services/services";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
-  name: "VendorForm",
+  name: "BrandForm",
   mixins: [cornerDialog],
   components: {
     Button,
@@ -53,7 +53,7 @@ export default {
       type: Object,
       required: true
     },
-    vendors: {
+    brands: {
       type: Array,
       required: true
     },
@@ -64,8 +64,8 @@ export default {
   },
   data() {
     return {
-      vendor: {
-        vendor_id: this.state.vendor_id || "",
+      brand: {
+        brand_id: this.state.brand_id || "",
         name: this.state.name || "",
         status: this.state.status || "Вкл"
       },
@@ -75,15 +75,15 @@ export default {
   },
   methods: {
     inputHandler(event, params) {
-      if (!this.state.vendor_id) {
-        this.vendor[params] = event.target.value;
+      if (!this.state.brand_id) {
+        this.brand[params] = event.target.value;
       } else {
         this.state[params] = event.target.value;
       }
     },
-    validation(vendor) {
-       Object.keys(vendor).forEach(item => {
-        if (valid.isEmpty(vendor[item]) && item !== "vendor_id") {
+    validation(brand) {
+       Object.keys(brand).forEach(item => {
+        if (valid.isEmpty(brand[item]) && item !== "brand_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
@@ -92,7 +92,7 @@ export default {
       });
     },
     check() {
-      !this.state.vendor_id ? this.validation(this.vendor) : this.validation(this.state)
+      !this.state.brand_id ? this.validation(this.brand) : this.validation(this.state)
   
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
@@ -105,12 +105,12 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.vendor_id) {
-        const vendor = services.create('/api/vendor/create', this.vendor);
-        vendor
+      if (!this.state.brand_id) {
+        const brand = services.create('/api/brand/create', this.brand);
+        brand
           .then(() => {
             this.$router.push({
-              name: "vendors",
+              name: "brands",
               params: {
                 status: true,
                 title: "Успех",
@@ -123,16 +123,16 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить производителя', "warning");
           });
       } else {
-        const vendor = services.update('/api/vendor/update', this.state);
-        vendor
+        const brand = services.update('/api/brand/update', this.state);
+        brand
           .then(() => {
-            const index = this.tabs.findIndex((item) => item.vendor_id === this.state.vendor_id)
+            const index = this.tabs.findIndex((item) => item.brand_id === this.state.brand_id)
             if(this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
               this.showCornerDialog("Успех", 'Производитель изменен', "success");
             } else {
               this.$router.push({
-                name: "vendors",
+                name: "brands",
                 params: {
                   status: true,
                   title: "Успех",
