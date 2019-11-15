@@ -1,5 +1,5 @@
 <template>
-  <div class="product-groups">
+  <div class="categories">
     <Check
       :hideCheck="hideCheck"
       :header="checkHeader"
@@ -16,23 +16,23 @@
       <table>
         <thead>
           <tr>
-            <th v-for="item in title" :key="item.group_id">{{item}}</th>
+            <th v-for="item in title" :key="item.category_id">{{item}}</th>
           </tr>
         </thead>
         <tr
-          @click="select(item.group_id)"
-          :class="isActive(item.group_id)"
+          @click="select(item.category_id)"
+          :class="isActive(item.category_id)"
           v-for="item in filter"
-          :key="item.group_id"
+          :key="item.category_id"
         >
-          <td>{{item.group_id}}</td>
+          <td>{{item.category_id}}</td>
           <td>{{item.name}}</td>
           <td>{{item.status}}</td>
           <td>
             <input
               type="checkbox"
-              :checked="checked(item.group_id)"
-              @click.stop="select(item.group_id)"
+              :checked="checked(item.category_id)"
+              @click.stop="select(item.category_id)"
             >
           </td>
         </tr>
@@ -59,7 +59,7 @@ import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
 export default {
-  name: "ProductGroups",
+  name: "Categories",
   mixins: [table, cornerDialog],
   components: {
     Topbar,
@@ -69,14 +69,14 @@ export default {
   data() {
     return {
       title: ["№", "Название", "Статус", ""],
-      productGroups: []
+      categories: []
     };
   },
   mounted() {
-    const productGroups = services.get('/api/product-group/get');
-    productGroups
-      .then(productGroups => {
-        this.productGroups = productGroups.data;
+    const categories = services.get('/api/category/get');
+    categories
+      .then(categories => {
+        this.categories = categories.data;
       })
       .catch(error => {
         console.log(error);
@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     filter() {
-      const foundItems = this.productGroups.filter(item => {
+      const foundItems = this.categories.filter(item => {
 
         let found = false;
 
@@ -109,10 +109,10 @@ export default {
   },
   methods: {
     route(event) {
-      const { productGroups, selectElements } = this;
-      const selectProductGroups = this.getSelect(productGroups, selectElements);
+      const { categories, selectElements } = this;
+      const selectCategories = this.getSelect(categories, selectElements);
       if (event === "delete") {
-        if (selectProductGroups.length > 0) {
+        if (selectCategories.length > 0) {
           this.hideCheck = !this.hideCheck;
         } else {
           this.showCornerDialog(
@@ -123,10 +123,10 @@ export default {
         }
       }
       if (event === "edit") {
-        if (selectProductGroups.length > 0) {
+        if (selectCategories.length > 0) {
           this.$router.push({
-            name: event + " product group",
-            params: { selectProductGroups }
+            name: event + " category",
+            params: { selectCategories }
           });
         } else {
           this.showCornerDialog(
@@ -138,8 +138,8 @@ export default {
       }
       if (event === "new") {
         this.$router.push({
-          name: event + " product group",
-          params: { selectProductGroups }
+          name: event + " category",
+          params: { selectCategories }
         });
       }
     },
@@ -148,13 +148,13 @@ export default {
         this.hideCheck = !this.hideCheck;
       } else {
         this.hideCheck = !this.hideCheck;
-        const { productGroups, selectElements } = this;
-        const selectProductGroups = this.getSelect(productGroups, selectElements).map((item) => item.group_id);
-        const productGroup = services.delete('/api/product-group/delete', selectProductGroups);
-        productGroup
+        const { categories, selectElements } = this;
+        const selectCategories = this.getSelect(categories, selectElements).map((item) => item.category_id);
+        const category = services.delete('/api/category/delete', selectCategories);
+        category
           .then(() => {
-            this.productGroups = this.productGroups.filter(
-              item => !selectProductGroups.includes(item.group_id)
+            this.categories = this.categories.filter(
+              item => !selectCategories.includes(item.category_id)
             );
             this.showCornerDialog(
               "Успех",
@@ -172,9 +172,9 @@ export default {
           });
       }
     },
-    getSelect(productGroups, selectElements) {
-      return productGroups.filter(productGroup =>
-        selectElements.includes(productGroup.group_id)
+    getSelect(categories, selectElements) {
+      return categories.filter(category =>
+        selectElements.includes(category.category_id)
       );
     }
   }

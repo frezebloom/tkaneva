@@ -80,39 +80,39 @@ export default new Router({
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/designs',
-      name: 'designs',
-      component: () => import('./views/designs/Designs.vue'),
+      path: '/colors',
+      name: 'colors',
+      component: () => import('./views/colors/Colors.vue'),
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/designs/new',
-      name: 'new design',
-      component: () => import('./views/designs/NewDesign.vue'),
+      path: '/colors/new',
+      name: 'new color',
+      component: () => import('./views/colors/NewColor.vue'),
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/designs/edit',
-      name: 'edit design',
-      component: () => import('./views/designs/EditDesign.vue'),
+      path: '/colors/edit',
+      name: 'edit color',
+      component: () => import('./views/colors/EditColor.vue'),
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/product-groups',
-      name: 'product groups',
-      component: () => import('./views/product-groups/ProductGroups.vue'),
+      path: '/categories',
+      name: 'categories',
+      component: () => import('./views/categories/Categories.vue'),
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/product-groups/new',
-      name: 'new product group',
-      component: () => import('./views/product-groups/NewProductGroup.vue'),
+      path: '/categories/new',
+      name: 'new category',
+      component: () => import('./views/categories/NewCategory.vue'),
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/product-groups/edit',
-      name: 'edit user group',
-      component: () => import('./views/product-groups/EditProductGroup.vue'),
+      path: '/categories/edit',
+      name: 'edit category',
+      component: () => import('./views/categories/EditCategory.vue'),
       beforeEnter: ifAuthenticated
     },
     {
@@ -135,21 +135,21 @@ export default new Router({
     },
 
     {
-      path: '/vendors',
-      name: 'vendors',
-      component: () => import('./views/vendors/Vendors.vue'),
+      path: '/brands',
+      name: 'brands',
+      component: () => import('./views/brands/Brands.vue'),
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/vendors/new',
-      name: 'new vendor',
-      component: () => import('./views/vendors/NewVendor.vue'),
+      path: '/brands/new',
+      name: 'new brand',
+      component: () => import('./views/brands/NewBrand.vue'),
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/vendors/edit',
-      name: 'edit vendor',
-      component: () => import('./views/vendors/EditVendor.vue'),
+      path: '/brands/edit',
+      name: 'edit brand',
+      component: () => import('./views/brands/EditBrand.vue'),
       beforeEnter: ifAuthenticated
     },
     {

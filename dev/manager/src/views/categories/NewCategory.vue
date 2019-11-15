@@ -1,35 +1,35 @@
 <template>
-  <div class="new-product-group">
-    <ProductGroupForm 
+  <div class="new-category">
+    <CategoryForm 
       title="Создать категорию товаров" 
-      :state="productGroup"
-      :productGroups="productGroups"
+      :state="category"
+      :categories="categories"
     />
   </div>
 </template>
 <script>
-import ProductGroupForm from "@/components/ProductGroupForm";
+import CategoryForm from "@/components/CategoryForm";
 import services from "@/services/services";
 
 export default {
-  name: "NewProductGroup",
+  name: "NewCategory",
   components: {
-    ProductGroupForm
+    CategoryForm
   },
   data() {
     return {
-      productGroup: {
+      category: {
         name: "",
         status: ""
       },
-      productGroups: [] 
+      categories: [] 
     };
   },
   mounted() {
-    const productGroups = services.get('/api/product-group/get');
-    productGroups
-      .then(productGroups => {
-        this.productGroups = productGroups.data;
+    const categories = services.get('/api/category/get');
+    categories
+      .then(categories => {
+        this.categories = categories.data;
       })
       .catch(error => {
         console.error(error);

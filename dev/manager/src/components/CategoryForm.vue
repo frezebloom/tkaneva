@@ -92,7 +92,7 @@ export default {
       });
     },
     check() {
-      !this.state.group_id ? this.validation(this.productGroup) : this.validation(this.state)
+      !this.state.category_id ? this.validation(this.category) : this.validation(this.state)
   
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
@@ -105,12 +105,12 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.group_id) {
-        const productGroup = services.create('/api/product-group/create', this.productGroup);
-        productGroup
+      if (!this.state.category_id) {
+        const category = services.create('/api/category/create', this.category);
+        category
           .then(() => {
             this.$router.push({
-              name: "product groups",
+              name: "categories",
               params: {
                 status: true,
                 title: "Успех",
@@ -123,16 +123,16 @@ export default {
             this.showCornerDialog("Ошибка", 'Не удалось сохранить категорию товаров', "warning");
           });
       } else {
-        const productGroup = services.update('/api/product-group/update', this.state);
-        productGroup
+        const category = services.update('/api/category/update', this.state);
+        category
           .then(() => {
-            const index = this.tabs.findIndex((item) => item.group_id === this.state.group_id)
+            const index = this.tabs.findIndex((item) => item.category_id === this.state.category_id)
             if(this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
               this.showCornerDialog("Успех", 'Категория товаров изменена', "success");
             } else {
               this.$router.push({
-                name: "product groups",
+                name: "categories",
                 params: {
                   status: true,
                   title: "Успех",
