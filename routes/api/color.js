@@ -4,6 +4,7 @@ const router = express.Router();
 const colorController = require("../../controllers/api/colorController");
 
 router.get("/color/get", (req, res) => {
+  console.log("s");
   colorController.get(req, res);
 });
 
