@@ -6,8 +6,8 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar 
-      title="Производители" 
+    <Topbar
+      title="Производители"
       @eventClickTopBar="route($event)"
       @eventHandlerSearch="eventSearch($event)"
       @eventClearSearch="clearSearch()"
@@ -16,7 +16,7 @@
       <table>
         <thead>
           <tr>
-            <th v-for="item in title" :key="item.brand_id">{{item}}</th>
+            <th v-for="item in title" :key="item.brand_id">{{ item }}</th>
           </tr>
         </thead>
         <tr
@@ -25,21 +25,25 @@
           v-for="item in filter"
           :key="item.brand_id"
         >
-          <td>{{item.brand_id}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.status}}</td>
+          <td>{{ item.brand_id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.status }}</td>
           <td>
             <input
               type="checkbox"
               :checked="checked(item.brand_id)"
               @click.stop="select(item.brand_id)"
-            >
+            />
           </td>
         </tr>
       </table>
     </div>
 
-    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+    <div
+      v-bind:class="[
+        hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog'
+      ]"
+    >
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
@@ -54,7 +58,7 @@ import Topbar from "@/components/Topbar.vue";
 import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
-import services from '@/services/services';
+import services from "@/services/services";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -73,7 +77,7 @@ export default {
     };
   },
   mounted() {
-    const brands = services.get('/api/brand/get');
+    const brands = services.get("/api/brand/get");
     brands
       .then(brand => {
         this.brands = brand.data;
@@ -90,7 +94,6 @@ export default {
   computed: {
     filter() {
       const foundItems = this.brands.filter(item => {
-
         let found = false;
 
         Object.keys(item).forEach(obj => {
@@ -100,11 +103,9 @@ export default {
         });
 
         if (found) return item;
-
       });
 
       return foundItems;
-
     }
   },
   methods: {
@@ -149,8 +150,10 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { brands, selectElements } = this;
-        const selectBrands = this.getSelect(brands, selectElements).map((item) => item.brand_id);
-        const brand = services.delete('/api/brand/delete', selectBrands);
+        const selectBrands = this.getSelect(brands, selectElements).map(
+          item => item.brand_id
+        );
+        const brand = services.delete("/api/brand/delete", selectBrands);
         brand
           .then(() => {
             this.brands = this.brands.filter(
@@ -173,9 +176,7 @@ export default {
       }
     },
     getSelect(brands, selectElements) {
-      return brands.filter(brand =>
-        selectElements.includes(brand.brand_id)
-      );
+      return brands.filter(brand => selectElements.includes(brand.brand_id));
     }
   }
 };

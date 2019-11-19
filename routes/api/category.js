@@ -8,7 +8,6 @@ router.get("/category/get", (req, res) => {
 });
 
 router.post("/category/create", (req, res) => {
-  console.log(req);
   categoryController.create(req, res);
 });
 
