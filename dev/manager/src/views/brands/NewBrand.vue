@@ -1,10 +1,6 @@
 <template>
   <div class="new-brand">
-    <BrandForm 
-      title="Создать производителя" 
-      :state="brand"
-      :brands="brands"
-    />
+    <BrandForm title="Создать производителя" :state="brand" :brands="brands" />
   </div>
 </template>
 <script>
@@ -22,11 +18,11 @@ export default {
         name: "",
         status: ""
       },
-      brands: [] 
+      brands: []
     };
   },
   mounted() {
-    const brands = services.get('/api/brand/get');
+    const brands = services.get("/api/brand/get");
     brands
       .then(brands => {
         this.brands = brands.data;

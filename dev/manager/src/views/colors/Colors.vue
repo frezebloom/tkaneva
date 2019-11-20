@@ -80,7 +80,7 @@ export default {
     const colors = services.get("/api/color/get");
     colors
       .then(color => {
-        this.color = color.data;
+        this.colors = color.data;
       })
       .catch(error => {
         console.log(error);

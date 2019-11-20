@@ -1,21 +1,21 @@
 <template>
   <div class="edit-color">
     <div v-if="tabs.length > 1">
-      <Tabs 
-        :tabs="tabs" 
-        @eventClickTab="route($event)" 
-        @eventClickCloseTab="closeTab($event)" 
+      <Tabs
+        :tabs="tabs"
+        @eventClickTab="route($event)"
+        @eventClickCloseTab="closeTab($event)"
       />
     </div>
-    <ColorForm 
-      title="Редактировать расцветку" 
-      @eventClickSave="closeTab($event)" 
+    <ColorForm
+      title="Редактировать расцветку"
+      @eventClickSave="closeTab($event)"
       :state="color"
-      :tabs="tabs" 
+      :tabs="tabs"
       :colors="colors"
     />
   </div>
-</template> 
+</template>
 <script>
 import Tabs from "@/components/Tabs";
 import ColorForm from "@/components/ColorForm";
@@ -31,11 +31,11 @@ export default {
     return {
       tabs: [],
       colors: [],
-      color: {},
+      color: {}
     };
   },
   mounted() {
-   const colors = services.get('/api/color/get');
+    const colors = services.get("/api/color/get");
     colors
       .then(colors => {
         this.colors = colors.data;
@@ -48,10 +48,10 @@ export default {
     const { selectColors } = this.$route.params;
     if (selectColors) {
       selectColors.forEach(element => {
-        element['title'] = element.name;
+        element["title"] = element.name;
       });
       this.tabs = selectColors;
-      this.colors = selectColors[0];
+      this.color = selectColors[0];
     }
   },
   methods: {
@@ -60,8 +60,8 @@ export default {
     },
     closeTab(element) {
       this.tabs = this.tabs.filter((item, index) => {
-        if(index !== element) return item
-      })
+        if (index !== element) return item;
+      });
       this.color = this.tabs[0];
     }
   }
