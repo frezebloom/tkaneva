@@ -6,8 +6,8 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar 
-      title="Товары" 
+    <Topbar
+      title="Товары"
       @eventClickTopBar="route($event)"
       @eventHandlerSearch="eventSearch($event)"
       @eventClearSearch="clearSearch()"
@@ -16,7 +16,7 @@
       <table>
         <thead>
           <tr>
-            <th v-for="item in title" :key="item.product_id">{{item}}</th>
+            <th v-for="item in title" :key="item.product_id">{{ item }}</th>
           </tr>
         </thead>
         <tr
@@ -25,21 +25,25 @@
           v-for="item in filter"
           :key="item.product_id"
         >
-          <td>{{item.product_id}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.status}}</td>
+          <td>{{ item.product_id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.status }}</td>
           <td>
             <input
               type="checkbox"
               :checked="checked(item.product_id)"
               @click.stop="select(item.product_id)"
-            >
+            />
           </td>
         </tr>
       </table>
     </div>
 
-    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+    <div
+      v-bind:class="[
+        hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog'
+      ]"
+    >
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
@@ -68,12 +72,22 @@ export default {
   },
   data() {
     return {
-      title: ["№", "Название", "Статус", ""],
+      title: [
+        "№",
+        "Код товара",
+        "Название",
+        "Категория",
+        "Производитель",
+        "Остаток",
+        "Цена",
+        "Статус",
+        ""
+      ],
       products: []
     };
   },
   mounted() {
-    const products = services.get('/api/product/get');
+    const products = services.get("/api/product/get");
     products
       .then(products => {
         this.products = products.data;
@@ -90,7 +104,6 @@ export default {
   computed: {
     filter() {
       const foundItems = this.products.filter(item => {
-
         let found = false;
 
         Object.keys(item).forEach(obj => {
@@ -100,12 +113,10 @@ export default {
         });
 
         if (found) return item;
-
       });
 
       return foundItems;
-
-    },
+    }
   },
   methods: {
     route(event) {
@@ -149,8 +160,10 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { products, selectElements } = this;
-        const selectProducts = this.getSelect(products, selectElements).map((item) => item.product_id);
-        const product = services.delete('/api/product/delete', selectProducts);
+        const selectProducts = this.getSelect(products, selectElements).map(
+          item => item.product_id
+        );
+        const product = services.delete("/api/product/delete", selectProducts);
         product
           .then(() => {
             this.producs = this.producs.filter(
