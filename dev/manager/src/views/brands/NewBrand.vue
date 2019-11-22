@@ -1,11 +1,10 @@
 <template>
   <div class="new-brand">
-    <BrandForm title="Создать производителя" :state="brand" :brands="brands" />
+    <BrandForm title="Создать производителя" :state="brand" />
   </div>
 </template>
 <script>
 import BrandForm from "@/components/BrandForm";
-import services from "@/services/services";
 
 export default {
   name: "NewBrand",
@@ -17,19 +16,8 @@ export default {
       brand: {
         name: "",
         status: ""
-      },
-      brands: []
+      }
     };
-  },
-  mounted() {
-    const brands = services.get("/api/brand/get");
-    brands
-      .then(brands => {
-        this.brands = brands.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
   }
 };
 </script>

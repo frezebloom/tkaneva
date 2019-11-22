@@ -12,14 +12,12 @@
       @eventClickSave="closeTab($event)"
       :state="color"
       :tabs="tabs"
-      :colors="colors"
     />
   </div>
 </template>
 <script>
 import Tabs from "@/components/Tabs";
 import ColorForm from "@/components/ColorForm";
-import services from "@/services/services";
 
 export default {
   name: "EditColor",
@@ -30,19 +28,8 @@ export default {
   data() {
     return {
       tabs: [],
-      colors: [],
       color: {}
     };
-  },
-  mounted() {
-    const colors = services.get("/api/color/get");
-    colors
-      .then(colors => {
-        this.colors = colors.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
   },
   created() {
     const { selectColors } = this.$route.params;

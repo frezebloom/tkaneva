@@ -12,14 +12,12 @@
       @eventClickSave="closeTab($event)" 
       :state="brand"
       :tabs="tabs" 
-      :brands="brands"
     />
   </div>
 </template> 
 <script>
 import Tabs from "@/components/Tabs";
 import BrandForm from "@/components/BrandForm";
-import services from "@/services/services";
 
 export default {
   name: "EditBrand",
@@ -30,19 +28,8 @@ export default {
   data() {
     return {
       tabs: [],
-      brands: [],
       brand: {},
     };
-  },
-  mounted() {
-   const brands = services.get('/api/brand/get');
-    brands
-      .then(brands => {
-        this.brands = brands.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
   },
   created() {
     const { selectBrands } = this.$route.params;

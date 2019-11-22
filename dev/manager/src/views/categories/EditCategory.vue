@@ -11,15 +11,13 @@
       title="Редактировать категорию товаров" 
       @eventClickSave="closeTab($event)" 
       :state="category"
-      :tabs="tabs" 
-      :categories="categories"
+      :tabs="tabs"
     />
   </div>
 </template> 
 <script>
 import Tabs from "@/components/Tabs";
 import CategoryForm from "@/components/CategoryForm";
-import services from "@/services/services";
 
 export default {
   name: "EditCategory",
@@ -30,19 +28,8 @@ export default {
   data() {
     return {
       tabs: [],
-      categories: [],
       category: {},
     };
-  },
-  mounted() {
-   const categories = services.get('/api/category/get');
-    categories
-      .then(categories => {
-        this.categories = categories.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
   },
   created() {
     const { selectCategories } = this.$route.params;

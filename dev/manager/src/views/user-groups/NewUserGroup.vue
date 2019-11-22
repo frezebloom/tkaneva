@@ -3,13 +3,11 @@
     <UserGroupForm 
       title="Создать группу пользователей" 
       :state="userGroup"
-      :userGroups="userGroups"
     />
   </div>
 </template>
 <script>
 import UserGroupForm from "@/components/UserGroupForm";
-import services from "@/services/services";
 
 export default {
   name: "NewUserGroup",
@@ -21,19 +19,8 @@ export default {
       userGroup: {
         name: "",
         status: ""
-      },
-      userGroups: [] 
+      }
     };
-  },
-  mounted() {
-    const userGroups = services.get('/api/user-group/get');
-    userGroups
-      .then(userGroups => {
-        this.userGroups = userGroups.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
   }
 };
 </script>

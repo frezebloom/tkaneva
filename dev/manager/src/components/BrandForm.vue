@@ -53,10 +53,6 @@ export default {
       type: Object,
       required: true
     },
-    brands: {
-      type: Array,
-      required: true
-    },
     tabs: {
       type: Array,
       required: false

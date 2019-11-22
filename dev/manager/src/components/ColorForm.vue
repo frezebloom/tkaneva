@@ -53,10 +53,6 @@ export default {
       type: Object,
       required: true
     },
-    colors: {
-      type: Array,
-      required: true
-    },
     tabs: {
       type: Array,
       required: false

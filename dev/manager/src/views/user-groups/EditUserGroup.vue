@@ -12,14 +12,12 @@
       @eventClickSave="closeTab($event)" 
       :state="userGroup"
       :tabs="tabs" 
-      :userGroups="userGroups"
     />
   </div>
 </template> 
 <script>
 import Tabs from "@/components/Tabs";
 import UserGroupForm from "@/components/UserGroupForm";
-import services from "@/services/services";
 
 export default {
   name: "EditUserGroup",
@@ -30,19 +28,8 @@ export default {
   data() {
     return {
       tabs: [],
-      userGroups: [],
       userGroup: {},
     };
-  },
-  mounted() {
-   const userGroups = services.get('/api/user-group/get');
-    userGroups
-      .then(userGroups => {
-        this.userGroups = userGroups.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
   },
   created() {
     const { selectUserGroups } = this.$route.params;
