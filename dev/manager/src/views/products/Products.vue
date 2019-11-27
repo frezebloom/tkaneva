@@ -63,7 +63,7 @@ import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
 export default {
-  name: "ProductGroups",
+  name: "Products",
   mixins: [table, cornerDialog],
   components: {
     Topbar,
@@ -136,7 +136,7 @@ export default {
       if (event === "edit") {
         if (selectProducts.length > 0) {
           this.$router.push({
-            name: event + " product group",
+            name: event + " product",
             params: { selectProducts }
           });
         } else {
@@ -149,7 +149,7 @@ export default {
       }
       if (event === "new") {
         this.$router.push({
-          name: event + " product group",
+          name: event + " product",
           params: { selectProducts }
         });
       }

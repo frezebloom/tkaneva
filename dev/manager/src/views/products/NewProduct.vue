@@ -1,6 +1,6 @@
 <template>
   <div class="new-product">
-    <ProductForm title="Создать продукт" :state="user" />
+    <ProductForm title="Создать товар" :state="product" />
   </div>
 </template>
 <script>
@@ -18,16 +18,15 @@ export default {
         article: "",
         name: "",
         category: "",
-        properties: {
-          structure: "",
-          brand: "",
-          color: "",
-          width: "",
-          length: ""
-        },
+        description: "",
+        structure: "",
+        brand: "",
+        color: "",
+        width: "",
+        length: "",
+        density: "",
         price: "",
         discount: "",
-        description: "",
         status: ""
       }
     };

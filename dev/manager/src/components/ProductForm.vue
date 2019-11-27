@@ -15,6 +15,138 @@
           type="text"
         />
       </div>
+      <div class="form-wrapper">
+        <label class="form-label">Категория *</label>
+        <select
+          class="form-select"
+          @input="inputHandler($event, 'category_id')"
+        >
+          <option
+            v-for="(option, index) in categories"
+            :key="index"
+            :value="option.category_id"
+            :selected="
+              option.category_id === state.category_id ? 'selected' : ''
+            "
+            >{{ option.name }}</option
+          >
+        </select>
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Описание *</label>
+        <input
+          v-model="state.description"
+          @input="inputHandler($event, 'description')"
+          :class="[
+            errorInput.includes('description') ? 'form-input-error' : '',
+            'form-input'
+          ]"
+          class="form-input"
+          type="text"
+        />
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Состав *</label>
+        <input
+          v-model="state.structure"
+          @input="inputHandler($event, 'structure')"
+          :class="[
+            errorInput.includes('structure') ? 'form-input-error' : '',
+            'form-input'
+          ]"
+          class="form-input"
+          type="text"
+        />
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Производитель *</label>
+        <select class="form-select" @input="inputHandler($event, 'brand_id')">
+          <option
+            v-for="(option, index) in brands"
+            :key="index"
+            :value="option.brand_id"
+            :selected="option.brand_id === state.brand_id ? 'selected' : ''"
+            >{{ option.name }}</option
+          >
+        </select>
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Расцветка *</label>
+        <select class="form-select" @input="inputHandler($event, 'color_id')">
+          <option
+            v-for="(option, index) in colors"
+            :key="index"
+            :value="option.color_id"
+            :selected="option.color_id === state.color_id ? 'selected' : ''"
+            >{{ option.name }}</option
+          >
+        </select>
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Ширина *</label>
+        <input
+          v-model="state.width"
+          @input="inputHandler($event, 'width')"
+          :class="[
+            errorInput.includes('width') ? 'form-input-error' : '',
+            'form-input'
+          ]"
+          class="form-input"
+          type="text"
+        />
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Длина *</label>
+        <input
+          v-model="state.length"
+          @input="inputHandler($event, 'length')"
+          :class="[
+            errorInput.includes('length') ? 'form-input-error' : '',
+            'form-input'
+          ]"
+          class="form-input"
+          type="text"
+        />
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Плотность *</label>
+        <input
+          v-model="state.density"
+          @input="inputHandler($event, 'density')"
+          :class="[
+            errorInput.includes('density') ? 'form-input-error' : '',
+            'form-input'
+          ]"
+          class="form-input"
+          type="text"
+        />
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Цена *</label>
+        <input
+          v-model="state.price"
+          @input="inputHandler($event, 'price')"
+          :class="[
+            errorInput.includes('price') ? 'form-input-error' : '',
+            'form-input'
+          ]"
+          class="form-input"
+          type="text"
+        />
+      </div>
+      <div class="form-wrapper">
+        <label class="form-label">Скидка *</label>
+        <input
+          v-model="state.discount"
+          @input="inputHandler($event, 'discount')"
+          :class="[
+            errorInput.includes('discount') ? 'form-input-error' : '',
+            'form-input'
+          ]"
+          class="form-input"
+          type="text"
+        />
+      </div>
       <div class="form-footer">
         <div @click="check" class="form-button">
           <Button value="Сохранить" styles="success" />
@@ -45,7 +177,7 @@ import services from "@/services/services";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
 export default {
-  name: "BrandForm",
+  name: "ProductForm",
   mixins: [cornerDialog],
   components: {
     Button,
@@ -67,7 +199,7 @@ export default {
   },
   data() {
     return {
-      brand: {
+      product: {
         brand_id: this.state.brand_id || "",
         name: this.state.name || "",
         status: this.state.status || "Вкл"
@@ -110,16 +242,16 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.brand_id) {
-        const brand = services.create("/api/brand/create", this.brand);
-        brand
+      if (!this.state.product_id) {
+        const product = services.create("/api/product/create", this.product);
+        product
           .then(() => {
             this.$router.push({
-              name: "brands",
+              name: "products",
               params: {
                 status: true,
                 title: "Успех",
-                message: "Новый производитель успешно создан",
+                message: "Новый товар успешно создан",
                 button: "success"
               }
             });
@@ -127,31 +259,27 @@ export default {
           .catch(() => {
             this.showCornerDialog(
               "Ошибка",
-              "Не удалось сохранить производителя",
+              "Не удалось сохранить товар",
               "warning"
             );
           });
       } else {
-        const brand = services.update("/api/brand/update", this.state);
-        brand
+        const product = services.update("/api/product/update", this.state);
+        product
           .then(() => {
             const index = this.tabs.findIndex(
-              item => item.brand_id === this.state.brand_id
+              item => item.product_id === this.state.product_id
             );
             if (this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
-              this.showCornerDialog(
-                "Успех",
-                "Производитель изменен",
-                "success"
-              );
+              this.showCornerDialog("Успех", "Товар изменен", "success");
             } else {
               this.$router.push({
-                name: "brands",
+                name: "products",
                 params: {
                   status: true,
                   title: "Успех",
-                  message: "Производитель изменен",
+                  message: "Товар изменен",
                   button: "success"
                 }
               });
@@ -161,7 +289,7 @@ export default {
             console.log(error);
             this.showCornerDialog(
               "Ошибка",
-              "Не удалось сохранить производителя",
+              "Не удалось сохранить товар",
               "warning"
             );
           });
