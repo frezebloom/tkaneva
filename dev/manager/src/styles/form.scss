@@ -66,6 +66,10 @@
   border-radius: 3px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+.form-area {
+  height: 135px;
+  resize: none;
+}
 .form-input-error {
   border-color: rgba(250, 126, 132, 0.623);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),

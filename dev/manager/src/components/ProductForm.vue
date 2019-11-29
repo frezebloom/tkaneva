@@ -34,16 +34,16 @@
       </div>
       <div class="form-wrapper">
         <label class="form-label">Описание *</label>
-        <input
+        <textarea
           v-model="state.description"
           @input="inputHandler($event, 'description')"
           :class="[
             errorInput.includes('description') ? 'form-input-error' : '',
             'form-input'
           ]"
-          class="form-input"
-          type="text"
-        />
+          class="form-input form-area"
+        >
+        </textarea>
       </div>
       <div class="form-wrapper">
         <label class="form-label">Состав *</label>
