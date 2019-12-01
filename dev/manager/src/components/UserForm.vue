@@ -1,76 +1,98 @@
 <template>
   <div class="user-form">
     <form v-on:submit.prevent class="form">
-      <div class="form-header">{{title}}</div>
-      <div class="form-wrapper">
-        <label class="form-label">Имя *</label>
-        <input
-          v-model="state.first_name"
-          @input="inputHandler($event, 'first_name')"
-          :class="[errorInput.includes('first_name') ? 'form-input-error' : '', 'form-input']"
-          class="form-input"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Фамилия *</label>
-        <input
-          v-model="state.last_name"
-          @input="inputHandler($event, 'last_name')"
-          :class="[errorInput.includes('last_name') ? 'form-input-error' : '', 'form-input']"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Логин *</label>
-        <input
-          v-model="state.login"
-          @input="inputHandler($event, 'login')"
-          :class="[errorInput.includes('login') ? 'form-input-error' : '', 'form-input']"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Почта *</label>
-        <input
-          v-model="state.email"
-          @input="inputHandler($event, 'email')"
-          :class="[errorInput.includes('email') ? 'form-input-error' : '', 'form-input']"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Группа *</label>
-        <select class="form-select" @input="inputHandler($event, 'group_id')">
-          <option
-            v-for="(option, index) in userGroups"
-            :key="index"
-            :value="option.group_id"
-            :selected="option.group_id === state.group_id ? 'selected' : ''"
-          >{{ option.name }}</option>
-        </select>
-      </div>
-      <div v-if="!this.state.user_id">
+      <div class="form-header">{{ title }}</div>
+      <div class="form-body">
         <div class="form-wrapper">
-          <label class="form-label">Пароль *</label>
+          <label class="form-label">Имя *</label>
           <input
-            @input="inputHandler($event, 'password')"
-            v-model="state.password"
-            :class="[errorInput.includes('password') ? 'form-input-error' : '', 'form-input']"
-            type="password"
-          />
-         </div>
-        <div class="form-wrapper">
-          <label class="form-label">Повторите пароль *</label>
-          <input
-            @input="inputHandler($event, 'confrimPassword')"
-            v-model="state.confrimPassword"
-            :class="[errorInput.includes('confrimPassword') ? 'form-input-error' : '', 'form-input']"
-            type="password"
+            v-model="state.first_name"
+            @input="inputHandler($event, 'first_name')"
+            :class="[
+              errorInput.includes('first_name') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
           />
         </div>
+        <div class="form-wrapper">
+          <label class="form-label">Фамилия *</label>
+          <input
+            v-model="state.last_name"
+            @input="inputHandler($event, 'last_name')"
+            :class="[
+              errorInput.includes('last_name') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Логин *</label>
+          <input
+            v-model="state.login"
+            @input="inputHandler($event, 'login')"
+            :class="[
+              errorInput.includes('login') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Почта *</label>
+          <input
+            v-model="state.email"
+            @input="inputHandler($event, 'email')"
+            :class="[
+              errorInput.includes('email') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Группа *</label>
+          <select class="form-select" @input="inputHandler($event, 'group_id')">
+            <option
+              v-for="(option, index) in userGroups"
+              :key="index"
+              :value="option.group_id"
+              :selected="option.group_id === state.group_id ? 'selected' : ''"
+              >{{ option.name }}</option
+            >
+          </select>
+        </div>
+        <div v-if="!this.state.user_id">
+          <div class="form-wrapper">
+            <label class="form-label">Пароль *</label>
+            <input
+              @input="inputHandler($event, 'password')"
+              v-model="state.password"
+              :class="[
+                errorInput.includes('password') ? 'form-input-error' : '',
+                'form-input'
+              ]"
+              type="password"
+            />
+          </div>
+          <div class="form-wrapper">
+            <label class="form-label">Повторите пароль *</label>
+            <input
+              @input="inputHandler($event, 'confrimPassword')"
+              v-model="state.confrimPassword"
+              :class="[
+                errorInput.includes('confrimPassword')
+                  ? 'form-input-error'
+                  : '',
+                'form-input'
+              ]"
+              type="password"
+            />
+          </div>
+        </div>
       </div>
-     
       <div class="form-footer">
         <div @click="check" class="form-button">
           <Button value="Сохранить" styles="success" />
@@ -80,7 +102,11 @@
         </div>
       </div>
     </form>
-    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+    <div
+      v-bind:class="[
+        hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog'
+      ]"
+    >
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
@@ -152,13 +178,13 @@ export default {
     },
     validation(user) {
       function matchCheck(users, email, login) {
-        const matches = []
+        const matches = [];
 
         users.forEach(function(item) {
-          if (item.email === email) matches.push('email')
-          if (item.login === login) matches.push('login')
-        })
-        return matches
+          if (item.email === email) matches.push("email");
+          if (item.login === login) matches.push("login");
+        });
+        return matches;
       }
 
       Object.keys(user).forEach(item => {
@@ -175,31 +201,39 @@ export default {
           }
         }
       });
-      
-      const otherUsers = this.users.filter((item) => item.user_id !== this.state.user_id)
 
-      const matches = matchCheck(otherUsers, this.state.email, this.state.login);
+      const otherUsers = this.users.filter(
+        item => item.user_id !== this.state.user_id
+      );
+
+      const matches = matchCheck(
+        otherUsers,
+        this.state.email,
+        this.state.login
+      );
       if (matches.length > 0) {
-        matches.forEach((item) => {
-          if (item === 'email') {
+        matches.forEach(item => {
+          if (item === "email") {
             this.errorInput.push(item);
             this.errorMessage.push("Указанный e-mail уже занят");
           }
-          if (item === 'login') {
+          if (item === "login") {
             this.errorInput.push(item);
             this.errorMessage.push("Указанный логин уже занят");
           }
-        })
+        });
       }
 
       if (!user.confrimPassword) return;
       if (user.password !== user.confrimPassword) {
-        this.errorInput.push('password', 'confrimPassword');
+        this.errorInput.push("password", "confrimPassword");
         this.errorMessage.push("Пароли не совпадают");
       }
     },
     check() {
-      !this.state.user_id ? this.validation(this.user) : this.validation(this.state)
+      !this.state.user_id
+        ? this.validation(this.user)
+        : this.validation(this.state);
 
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
@@ -213,7 +247,7 @@ export default {
     },
     saveChange() {
       if (!this.state.user_id) {
-        const user = services.create('/api/user/create', this.user);
+        const user = services.create("/api/user/create", this.user);
         user
           .then(() => {
             this.$router.push({
@@ -227,16 +261,26 @@ export default {
             });
           })
           .catch(() => {
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось сохранить аккаунт",
+              "warning"
+            );
           });
       } else {
-        const user = services.update('/api/user/update', this.state);
+        const user = services.update("/api/user/update", this.state);
         user
           .then(() => {
-            const index = this.tabs.findIndex((item) => item.user_id === this.state.user_id)
+            const index = this.tabs.findIndex(
+              item => item.user_id === this.state.user_id
+            );
             if (this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
-              this.showCornerDialog("Успех", 'Учётная запись изменена', "success");
+              this.showCornerDialog(
+                "Успех",
+                "Учётная запись изменена",
+                "success"
+              );
             } else {
               this.$router.push({
                 name: "users",
@@ -251,7 +295,11 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить аккаунт', "warning");
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось сохранить аккаунт",
+              "warning"
+            );
           });
       }
     }

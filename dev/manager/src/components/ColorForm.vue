@@ -1,27 +1,36 @@
 <template>
   <div class="color-from">
     <form v-on:submit.prevent class="form">
-      <div class="form-header">{{title}}</div>
-      <div class="form-wrapper">
-        <label class="form-label">Название *</label>
-        <input
-          v-model="state.name"
-          @input="inputHandler($event, 'name')"
-          :class="[errorInput.includes('name') ? 'form-input-error' : '', 'form-input']"
-          class="form-input"
-          type="text"
-        >
+      <div class="form-header">{{ title }}</div>
+      <div class="form-body">
+        <div class="form-wrapper">
+          <label class="form-label">Название *</label>
+          <input
+            v-model="state.name"
+            @input="inputHandler($event, 'name')"
+            :class="[
+              errorInput.includes('name') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
       </div>
       <div class="form-footer">
         <div @click="check" class="form-button">
-          <Button value="Сохранить" styles="success"/>
+          <Button value="Сохранить" styles="success" />
         </div>
         <div @click="$router.go(-1)" class="form-button">
-          <Button value="Отмена" styles="default"/>
+          <Button value="Отмена" styles="default" />
         </div>
       </div>
     </form>
-    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+    <div
+      v-bind:class="[
+        hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog'
+      ]"
+    >
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
@@ -78,7 +87,7 @@ export default {
       }
     },
     validation(color) {
-       Object.keys(color).forEach(item => {
+      Object.keys(color).forEach(item => {
         if (valid.isEmpty(color[item]) && item !== "color_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
@@ -88,8 +97,10 @@ export default {
       });
     },
     check() {
-      !this.state.color_id ? this.validation(this.color) : this.validation(this.state)
-  
+      !this.state.color_id
+        ? this.validation(this.color)
+        : this.validation(this.state);
+
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
@@ -102,7 +113,7 @@ export default {
     },
     saveChange() {
       if (!this.state.color_id) {
-        const color = services.create('/api/color/create', this.color);
+        const color = services.create("/api/color/create", this.color);
         color
           .then(() => {
             this.$router.push({
@@ -116,16 +127,22 @@ export default {
             });
           })
           .catch(() => {
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить расцветку', "warning");
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось сохранить расцветку",
+              "warning"
+            );
           });
       } else {
-        const color = services.update('/api/color/update', this.state);
+        const color = services.update("/api/color/update", this.state);
         color
           .then(() => {
-            const index = this.tabs.findIndex((item) => item.color_id === this.state.color_id)
-            if(this.tabs.length > 1) {
+            const index = this.tabs.findIndex(
+              item => item.color_id === this.state.color_id
+            );
+            if (this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
-              this.showCornerDialog("Успех", 'Расцветка изменена', "success");
+              this.showCornerDialog("Успех", "Расцветка изменена", "success");
             } else {
               this.$router.push({
                 name: "colors",
@@ -140,7 +157,11 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить расцветку', "warning");
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось сохранить расцветку",
+              "warning"
+            );
           });
       }
     }

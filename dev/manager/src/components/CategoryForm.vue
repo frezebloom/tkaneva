@@ -1,27 +1,36 @@
 <template>
   <div class="category-from">
     <form v-on:submit.prevent class="form">
-      <div class="form-header">{{title}}</div>
-      <div class="form-wrapper">
-        <label class="form-label">Название *</label>
-        <input
-          v-model="state.name"
-          @input="inputHandler($event, 'name')"
-          :class="[errorInput.includes('name') ? 'form-input-error' : '', 'form-input']"
-          class="form-input"
-          type="text"
-        >
+      <div class="form-header">{{ title }}</div>
+      <div class="form-body">
+        <div class="form-wrapper">
+          <label class="form-label">Название *</label>
+          <input
+            v-model="state.name"
+            @input="inputHandler($event, 'name')"
+            :class="[
+              errorInput.includes('name') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
       </div>
       <div class="form-footer">
         <div @click="check" class="form-button">
-          <Button value="Сохранить" styles="success"/>
+          <Button value="Сохранить" styles="success" />
         </div>
         <div @click="$router.go(-1)" class="form-button">
-          <Button value="Отмена" styles="default"/>
+          <Button value="Отмена" styles="default" />
         </div>
       </div>
     </form>
-    <div v-bind:class="[hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog']">
+    <div
+      v-bind:class="[
+        hideCornerDialog ? 'notActive-corner-dialog' : 'isActive-corner-dialog'
+      ]"
+    >
       <CornerDialog
         @eventClickCornerDialog="dialogFromUser"
         :status="cornerDialogStatus"
@@ -78,7 +87,7 @@ export default {
       }
     },
     validation(category) {
-       Object.keys(category).forEach(item => {
+      Object.keys(category).forEach(item => {
         if (valid.isEmpty(category[item]) && item !== "category_id") {
           this.errorInput.push(item);
           this.errorMessage.push(
@@ -88,8 +97,10 @@ export default {
       });
     },
     check() {
-      !this.state.category_id ? this.validation(this.category) : this.validation(this.state)
-  
+      !this.state.category_id
+        ? this.validation(this.category)
+        : this.validation(this.state);
+
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
@@ -102,7 +113,7 @@ export default {
     },
     saveChange() {
       if (!this.state.category_id) {
-        const category = services.create('/api/category/create', this.category);
+        const category = services.create("/api/category/create", this.category);
         category
           .then(() => {
             this.$router.push({
@@ -116,16 +127,26 @@ export default {
             });
           })
           .catch(() => {
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить категорию товаров', "warning");
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось сохранить категорию товаров",
+              "warning"
+            );
           });
       } else {
-        const category = services.update('/api/category/update', this.state);
+        const category = services.update("/api/category/update", this.state);
         category
           .then(() => {
-            const index = this.tabs.findIndex((item) => item.category_id === this.state.category_id)
-            if(this.tabs.length > 1) {
+            const index = this.tabs.findIndex(
+              item => item.category_id === this.state.category_id
+            );
+            if (this.tabs.length > 1) {
               this.$emit("eventClickSave", index);
-              this.showCornerDialog("Успех", 'Категория товаров изменена', "success");
+              this.showCornerDialog(
+                "Успех",
+                "Категория товаров изменена",
+                "success"
+              );
             } else {
               this.$router.push({
                 name: "categories",
@@ -140,7 +161,11 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.showCornerDialog("Ошибка", 'Не удалось сохранить категорию товаров', "warning");
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось сохранить категорию товаров",
+              "warning"
+            );
           });
       }
     }

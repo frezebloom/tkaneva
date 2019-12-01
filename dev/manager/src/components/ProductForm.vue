@@ -2,150 +2,158 @@
   <div class="product-from">
     <form v-on:submit.prevent class="form">
       <div class="form-header">{{ title }}</div>
-      <div class="form-wrapper">
-        <label class="form-label">Название *</label>
-        <input
-          v-model="state.name"
-          @input="inputHandler($event, 'name')"
-          :class="[
-            errorInput.includes('name') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Категория *</label>
-        <select
-          class="form-select"
-          @input="inputHandler($event, 'category_id')"
-        >
-          <option
-            v-for="(option, index) in categories"
-            :key="index"
-            :value="option.category_id"
-            :selected="
-              option.category_id === state.category_id ? 'selected' : ''
-            "
-            >{{ option.name }}</option
+      <div class="form-body">
+        <div class="form-wrapper">
+          <div class="form-body"></div>
+          <label class="form-label">Название *</label>
+          <input
+            v-model="state.name"
+            @input="inputHandler($event, 'name')"
+            :class="[
+              errorInput.includes('name') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Категория *</label>
+          <select
+            class="form-select"
+            @input="inputHandler($event, 'category_id')"
           >
-        </select>
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Описание *</label>
-        <textarea
-          v-model="state.description"
-          @input="inputHandler($event, 'description')"
-          :class="[
-            errorInput.includes('description') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input form-area"
-        >
-        </textarea>
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Состав *</label>
-        <input
-          v-model="state.structure"
-          @input="inputHandler($event, 'structure')"
-          :class="[
-            errorInput.includes('structure') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Производитель *</label>
-        <select class="form-select" @input="inputHandler($event, 'brand_id')">
-          <option
-            v-for="(option, index) in brands"
-            :key="index"
-            :value="option.brand_id"
-            :selected="option.brand_id === state.brand_id ? 'selected' : ''"
-            >{{ option.name }}</option
+            <option
+              v-for="(option, index) in categories"
+              :key="index"
+              :value="option.category_id"
+              :selected="
+                option.category_id === state.category_id ? 'selected' : ''
+              "
+              >{{ option.name }}</option
+            >
+          </select>
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Описание *</label>
+          <textarea
+            v-model="state.description"
+            @input="inputHandler($event, 'description')"
+            :class="[
+              errorInput.includes('description') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input form-area"
           >
-        </select>
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Расцветка *</label>
-        <select class="form-select" @input="inputHandler($event, 'color_id')">
-          <option
-            v-for="(option, index) in colors"
-            :key="index"
-            :value="option.color_id"
-            :selected="option.color_id === state.color_id ? 'selected' : ''"
-            >{{ option.name }}</option
-          >
-        </select>
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Ширина *</label>
-        <input
-          v-model="state.width"
-          @input="inputHandler($event, 'width')"
-          :class="[
-            errorInput.includes('width') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Длина *</label>
-        <input
-          v-model="state.length"
-          @input="inputHandler($event, 'length')"
-          :class="[
-            errorInput.includes('length') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Плотность *</label>
-        <input
-          v-model="state.density"
-          @input="inputHandler($event, 'density')"
-          :class="[
-            errorInput.includes('density') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Цена *</label>
-        <input
-          v-model="state.price"
-          @input="inputHandler($event, 'price')"
-          :class="[
-            errorInput.includes('price') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input"
-          type="text"
-        />
-      </div>
-      <div class="form-wrapper">
-        <label class="form-label">Скидка *</label>
-        <input
-          v-model="state.discount"
-          @input="inputHandler($event, 'discount')"
-          :class="[
-            errorInput.includes('discount') ? 'form-input-error' : '',
-            'form-input'
-          ]"
-          class="form-input"
-          type="text"
-        />
+          </textarea>
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Состав *</label>
+          <input
+            v-model="state.structure"
+            @input="inputHandler($event, 'structure')"
+            :class="[
+              errorInput.includes('structure') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Производитель *</label>
+          <select class="form-select" @input="inputHandler($event, 'brand_id')">
+            <option
+              v-for="(option, index) in brands"
+              :key="index"
+              :value="option.brand_id"
+              :selected="option.brand_id === state.brand_id ? 'selected' : ''"
+              >{{ option.name }}</option
+            >
+          </select>
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Расцветка *</label>
+          <select class="form-select" @input="inputHandler($event, 'color_id')">
+            <option
+              v-for="(option, index) in colors"
+              :key="index"
+              :value="option.color_id"
+              :selected="option.color_id === state.color_id ? 'selected' : ''"
+              >{{ option.name }}</option
+            >
+          </select>
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Ширина *</label>
+          <input
+            v-model="state.width"
+            @input="inputHandler($event, 'width')"
+            :class="[
+              errorInput.includes('width') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Длина *</label>
+          <input
+            v-model="state.length"
+            @input="inputHandler($event, 'length')"
+            :class="[
+              errorInput.includes('length') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Плотность *</label>
+          <input
+            v-model="state.density"
+            @input="inputHandler($event, 'density')"
+            :class="[
+              errorInput.includes('density') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Цена *</label>
+          <input
+            v-model="state.price"
+            @input="inputHandler($event, 'price')"
+            :class="[
+              errorInput.includes('price') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
+          <label class="form-label">Скидка *</label>
+          <input
+            v-model="state.discount"
+            @input="inputHandler($event, 'discount')"
+            :class="[
+              errorInput.includes('discount') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <vue-dropzone
+          ref="myVueDropzone"
+          id="dropzone"
+          :options="dropzoneOptions"
+        ></vue-dropzone>
       </div>
       <div class="form-footer">
         <div @click="check" class="form-button">
@@ -176,12 +184,15 @@ import CornerDialog from "@/components/CornerDialog";
 import services from "@/services/services";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
 export default {
   name: "ProductForm",
   mixins: [cornerDialog],
   components: {
     Button,
-    CornerDialog
+    CornerDialog,
+    vueDropzone: vue2Dropzone
   },
   props: {
     title: {
@@ -205,7 +216,13 @@ export default {
         status: this.state.status || "Вкл"
       },
       errorMessage: [],
-      errorInput: []
+      errorInput: [],
+      dropzoneOptions: {
+        url: "https://httpbin.org/post",
+        thumbnailWidth: 150,
+        maxFilesize: 0.5,
+        headers: { "My-Awesome-Header": "header value" }
+      }
     };
   },
   methods: {
