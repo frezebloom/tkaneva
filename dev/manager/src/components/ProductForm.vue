@@ -200,7 +200,7 @@ export default {
   data() {
     return {
       product: {
-        brand_id: this.state.brand_id || "",
+        product_id: this.state.product_id || "",
         name: this.state.name || "",
         status: this.state.status || "Вкл"
       },
