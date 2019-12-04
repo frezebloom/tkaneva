@@ -149,11 +149,13 @@
             type="text"
           />
         </div>
-        <vue-dropzone
-          ref="myVueDropzone"
-          id="dropzone"
-          :options="dropzoneOptions"
-        ></vue-dropzone>
+        <div class="form-wrapper">
+          <vue-dropzone
+            ref="myVueDropzone"
+            id="dropzone"
+            :options="dropzoneOptions"
+          ></vue-dropzone>
+        </div>
       </div>
       <div class="form-footer">
         <div @click="check" class="form-button">
