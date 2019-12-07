@@ -5,6 +5,9 @@ const color = require("./api/color");
 const brand = require("./api/brand");
 const category = require("./api/category");
 const superuser = require("./api/superuser");
+const product = require("./api/product");
+const upload = require("./api/upload");
+
 const products = require("./products");
 
 module.exports = {
@@ -15,5 +18,7 @@ module.exports = {
   brand,
   category,
   superuser,
+  product,
+  upload,
   products
 };
