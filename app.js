@@ -38,7 +38,7 @@ app.use("/api", routes.brand);
 app.use("/api", routes.category);
 app.use("/api", routes.superuser);
 // app.use("/api", routes.product);
-// app.use("/api", routes.upload);
+app.use("/api", routes.upload);
 app.use("/", routes.products);
 
 //Startin server

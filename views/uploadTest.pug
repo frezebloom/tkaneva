@@ -1,0 +1,10 @@
+include includes/header.pug
+include includes/minicart.pug
+div.main
+  div.container
+    div.content
+      form(method="post" name="signup" action="/upload/image" enctype="multipart/form-data")
+        input(type="file" name="image")
+        button(type="submit" name="upload") Загрузить
+
+  include includes/footer.pug
