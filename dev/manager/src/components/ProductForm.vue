@@ -220,9 +220,9 @@ export default {
       errorMessage: [],
       errorInput: [],
       dropzoneOptions: {
-        url: "https://httpbin.org/post",
+        url: `http://${window.location.hostname}:3000/api/upload/image`,
         thumbnailWidth: 150,
-        maxFilesize: 0.5,
+        maxFilesize: 5,
         headers: { "My-Awesome-Header": "header value" }
       }
     };

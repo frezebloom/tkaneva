@@ -4,7 +4,7 @@ div.main
   div.container
     div.content
       form(method="post" name="signup" action="/api/upload/image" enctype="multipart/form-data")
-        input(type="file" name="image")
+        input(type="file" name="image[]" multiple="true")
         button(type="submit" name="upload") Загрузить
 
   include includes/footer.pug
