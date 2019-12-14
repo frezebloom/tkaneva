@@ -1,5 +1,5 @@
 const path = require("path");
-const Resize = require("../../utils/resize");
+const multer = require("multer");
 
 module.exports = {
   render: function(req, res) {
@@ -8,11 +8,50 @@ module.exports = {
 
   upload: async function(req, res) {
     const imagePath = path.join(__dirname, "/../../public/images/products");
-    const fileUpload = new Resize(imagePath);
-    if (!req.file) {
-      res.status(401).json({ error: "Please provide an image" });
-    }
-    const filename = await fileUpload.save(req.file.buffer);
-    return res.status(200).json({ name: filename });
+
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, imagePath);
+      },
+      filename: (req, file, cb) => {
+        cb(
+          null,
+          file.originalname.replace(/\.[^/.]+$/, "") +
+            "-" +
+            Date.now() +
+            path.extname(file.originalname)
+        );
+      }
+    });
+
+    const upload = multer({
+      storage,
+      limits: {
+        fileSize: 1000000, // max size of files to upload / bytes
+        files: 10
+      },
+      fileFilter: function(req, file, cb) {
+        const fileTypes = /jpeg|jpg|png|pdf/;
+        const extname = fileTypes.test(
+          path.extname(file.originalname).toLowerCase()
+        );
+        const mimeType = fileTypes.test(file.mimetype);
+
+        if (extname && mimeType) {
+          return cb(null, true);
+        } else {
+          return cb("File type not allowed ");
+        }
+      }
+    }).any();
+
+    upload(req, res, err => {
+      if (err instanceof multer.MulterError) {
+        console.log(err);
+      } else if (err) {
+        console.log(err);
+      }
+      res.status(200).send("files uploaded");
+    });
   }
 };
