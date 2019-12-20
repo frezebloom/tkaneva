@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  const UserGroup = sequelize.define('userGroup', {
+  const UserGroup = sequelize.define("userGroup", {
     group_id: {
       autoIncrement: true,
       primaryKey: true,
@@ -12,14 +12,14 @@ module.exports = function(sequelize, Sequelize) {
     },
 
     status: {
-      type: Sequelize.ENUM('Вкл', 'Выкл')
+      type: Sequelize.ENUM("Вкл", "Выкл")
     }
   });
 
   UserGroup.associate = models => {
     UserGroup.hasMany(models.user, {
-      foreignKey: 'group_id',
-      targetKey: 'group_id'
+      foreignKey: "group_id",
+      targetKey: "group_id"
     });
   };
 

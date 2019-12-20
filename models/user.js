@@ -34,7 +34,7 @@ module.exports = function(sequelize, Sequelize) {
         validate: {
           isEmail: {
             args: true,
-            msg: 'Введите корректный e-mail'
+            msg: "Введите корректный e-mail"
           },
           notEmpty: true
         }
