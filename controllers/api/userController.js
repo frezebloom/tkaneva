@@ -9,13 +9,6 @@ module.exports = {
   salt: bcrypt.genSaltSync(10),
 
   get(req, res) {
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     User.findAll({
       include: [
         {
@@ -36,13 +29,6 @@ module.exports = {
   },
 
   create(req, res) {
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     const {
       first_name,
       last_name,
@@ -83,14 +69,6 @@ module.exports = {
       group_id,
       status
     } = req.body.payload;
-
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     User.update(
       {
         first_name,
@@ -114,13 +92,6 @@ module.exports = {
   },
 
   delete(req, res) {
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     User.destroy({
       where: {
         user_id: req.body.payload
