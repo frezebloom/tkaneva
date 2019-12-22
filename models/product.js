@@ -16,27 +16,12 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     },
 
-    category: {
-      type: Sequelize.STRING,
-      notEmpty: true
-    },
-
     description: {
       type: Sequelize.STRING,
       notEmpty: true
     },
 
     structure: {
-      type: Sequelize.STRING,
-      notEmpty: true
-    },
-
-    brand: {
-      type: Sequelize.STRING,
-      notEmpty: true
-    },
-
-    color: {
       type: Sequelize.STRING,
       notEmpty: true
     },
@@ -70,6 +55,21 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.ENUM("Вкл", "Выкл")
     }
   });
+
+  Product.associate = models => {
+    Product.belongsTo(models.brand, {
+      foreignKey: "brand_id",
+      targetKey: "brand_id"
+    });
+    Product.belongsTo(models.category, {
+      foreignKey: "category_id",
+      targetKey: "category_id"
+    });
+    Product.belongsTo(models.color, {
+      foreignKey: "color_id",
+      targetKey: "color_id"
+    });
+  };
 
   return Product;
 };

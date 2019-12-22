@@ -16,5 +16,12 @@ module.exports = function(sequelize, Sequelize) {
     }
   });
 
+  Color.associate = models => {
+    Color.hasMany(models.product, {
+      foreignKey: "color_id",
+      targetKey: "color_id"
+    });
+  };
+
   return Color;
 };

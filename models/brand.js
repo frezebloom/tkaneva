@@ -1,5 +1,5 @@
 module.exports = function(sequelize, Sequelize) {
-  const Brand = sequelize.define('brand', {
+  const Brand = sequelize.define("brand", {
     brand_id: {
       autoIncrement: true,
       primaryKey: true,
@@ -12,9 +12,16 @@ module.exports = function(sequelize, Sequelize) {
     },
 
     status: {
-      type: Sequelize.ENUM('Вкл', 'Выкл')
+      type: Sequelize.ENUM("Вкл", "Выкл")
     }
   });
+
+  Brand.associate = models => {
+    Brand.hasMany(models.product, {
+      foreignKey: "brand_id",
+      targetKey: "brand_id"
+    });
+  };
 
   return Brand;
 };
