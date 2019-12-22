@@ -6,13 +6,6 @@ const User = db.user;
 
 module.exports = {
   get(req, res) {
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     UserGroup.findAll()
       .then(userGruops => {
         return userGruops;
@@ -27,15 +20,7 @@ module.exports = {
   },
 
   create(req, res) {
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     const { name, status } = req.body.payload;
-
     UserGroup.create({
       name,
       status
@@ -51,14 +36,6 @@ module.exports = {
 
   update(req, res) {
     const { group_id, name, status } = req.body.payload;
-
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     UserGroup.update(
       {
         name,
@@ -78,13 +55,6 @@ module.exports = {
   },
 
   delete(req, res) {
-    const { id, accesstoken } = req.headers;
-    const tokenCheck = token.checkToken(id, accesstoken);
-    if (!tokenCheck) {
-      res.status(404).send("invalid token");
-      throw new Error("invalid token");
-    }
-
     User.update(
       {
         group_id: 1
