@@ -4,7 +4,6 @@
       <div class="form-header">{{ title }}</div>
       <div class="form-body">
         <div class="form-wrapper">
-          <div class="form-body"></div>
           <label class="form-label">Название *</label>
           <input
             v-model="state.name"
