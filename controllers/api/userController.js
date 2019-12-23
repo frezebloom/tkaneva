@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const db = require("../../models/index");
-const token = require("../../utils/token");
 
 const User = db.user;
 const UserGroup = db.userGroup;

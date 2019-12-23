@@ -1,5 +1,4 @@
 const db = require("../../models/index");
-const token = require("../../utils/token");
 
 const UserGroup = db.userGroup;
 const User = db.user;

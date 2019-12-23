@@ -1,12 +1,9 @@
 const path = require("path");
 const multer = require("multer");
+const sharp = require("sharp");
 
 module.exports = {
-  render: function(req, res) {
-    res.render("uploadTest", { title: "Hey", message: "Hello there!" });
-  },
-
-  upload: async function(req, res) {
+  upload: (req, res, next) => {
     const imagePath = path.join(__dirname, "/../../public/images/products");
 
     const storage = multer.diskStorage({
@@ -14,13 +11,7 @@ module.exports = {
         cb(null, imagePath);
       },
       filename: (req, file, cb) => {
-        cb(
-          null,
-          file.originalname.replace(/\.[^/.]+$/, "") +
-            "-" +
-            Date.now() +
-            path.extname(file.originalname)
-        );
+        cb(null, file.originalname);
       }
     });
 
@@ -51,7 +42,18 @@ module.exports = {
       } else if (err) {
         console.log(err);
       }
-      res.status(200).send("files uploaded");
+      next();
+    });
+  },
+  resize: (req, res) => {
+    req.files.forEach(file => {
+      console.log(file);
+      sharp(file.path)
+        .resize(300, 240)
+        .toFile(`${file.destination}/1${file.filename}`, (err, info) => {
+          if (err) console.log(err);
+          console.log(info);
+        });
     });
   }
 };

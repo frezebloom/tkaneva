@@ -1,5 +1,4 @@
 const db = require("../../models/index");
-const token = require("../../utils/token");
 
 const Color = db.color;
 const Product = db.product;
