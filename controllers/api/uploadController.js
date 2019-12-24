@@ -1,6 +1,7 @@
 const path = require("path");
 const multer = require("multer");
 const sharp = require("sharp");
+const uuid = require("uuid/v1");
 
 module.exports = {
   upload: (req, res, next) => {
@@ -18,9 +19,10 @@ module.exports = {
     const upload = multer({
       storage,
       limits: {
-        fileSize: 1000000, // max size of files to upload / bytes
+        fileSize: 1000000,
         files: 10
       },
+
       fileFilter: function(req, file, cb) {
         const fileTypes = /jpeg|jpg|png|pdf/;
         const extname = fileTypes.test(
@@ -31,29 +33,49 @@ module.exports = {
         if (extname && mimeType) {
           return cb(null, true);
         } else {
-          return cb("File type not allowed ");
+          res.status(404);
+          return cb("File type not allowed");
         }
       }
     }).any();
 
-    upload(req, res, err => {
-      if (err instanceof multer.MulterError) {
-        console.log(err);
-      } else if (err) {
-        console.log(err);
+    upload(req, res, error => {
+      if (error instanceof multer.MulterError) {
+        console.log(error);
+        res.status(404).send("Invalid request " + error);
+      } else if (error) {
+        console.log(error);
+        res.status(404).send("Invalid request " + error);
       }
       next();
     });
   },
+
   resize: (req, res) => {
-    req.files.forEach(file => {
-      console.log(file);
-      sharp(file.path)
-        .resize(300, 240)
-        .toFile(`${file.destination}/1${file.filename}`, (err, info) => {
-          if (err) console.log(err);
-          console.log(info);
-        });
+    const sizes = {
+      sm: {
+        height: 128,
+        width: 128
+      }
+      // md: {
+      //   height: 256,
+      //   width: 256
+      // },
+      // lg: {
+      //   height: 512,
+      //   width: 512
+      // }
+    };
+
+    Object.keys(sizes).forEach(key => {
+      req.files.forEach(file => {
+        sharp(file.path)
+          .resize(sizes[key].height, sizes[key].width)
+          .toFile(`${file.destination}/${key}-${uuid()}`, (error, info) => {
+            if (error) res.status(404).send("Invalid request " + error);
+            console.log(info);
+          });
+      });
     });
   }
 };
