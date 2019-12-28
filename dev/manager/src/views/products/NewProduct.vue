@@ -5,7 +5,6 @@
 </template>
 <script>
 import ProductForm from "@/components/ProductForm";
-import services from "@/services/services";
 
 export default {
   name: "NewProduct",
@@ -17,16 +16,17 @@ export default {
       product: {
         article: "",
         name: "",
-        category: "",
         description: "",
+        balance: "",
         structure: "",
-        brand: "",
-        color: "",
         width: "",
         length: "",
         density: "",
         price: "",
         discount: "",
+        brand_id: "",
+        category_id: "",
+        color_id: "",
         status: ""
       }
     };
