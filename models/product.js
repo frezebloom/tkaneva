@@ -21,6 +21,11 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     },
 
+    balance: {
+      type: Sequelize.STRING,
+      notEmpty: true
+    },
+
     structure: {
       type: Sequelize.STRING,
       notEmpty: true
