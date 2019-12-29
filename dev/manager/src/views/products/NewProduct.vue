@@ -16,17 +16,17 @@ export default {
       product: {
         article: "",
         name: "",
+        category_id: "",
         description: "",
         balance: "",
         structure: "",
+        brand_id: "",
+        color_id: "",
         width: "",
         length: "",
         density: "",
         price: "",
         discount: "",
-        brand_id: "",
-        category_id: "",
-        color_id: "",
         status: ""
       }
     };

@@ -47,6 +47,19 @@
           </textarea>
         </div>
         <div class="form-wrapper">
+          <label class="form-label">Количество *</label>
+          <input
+            v-model="state.balance"
+            @input="inputHandler($event, 'balance')"
+            :class="[
+              errorInput.includes('balance') ? 'form-input-error' : '',
+              'form-input'
+            ]"
+            class="form-input"
+            type="text"
+          />
+        </div>
+        <div class="form-wrapper">
           <label class="form-label">Состав *</label>
           <input
             v-model="state.structure"
