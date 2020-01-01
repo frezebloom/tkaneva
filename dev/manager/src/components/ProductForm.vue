@@ -149,7 +149,7 @@
           />
         </div>
         <div class="form-wrapper">
-          <label class="form-label">Скидка *</label>
+          <label class="form-label">Скидка</label>
           <input
             v-model="state.discount"
             @input="inputHandler($event, 'discount')"
@@ -217,6 +217,18 @@ export default {
       type: Object,
       required: true
     },
+    categories: {
+      type: Array,
+      required: true
+    },
+    brands: {
+      type: Array,
+      required: true
+    },
+    colors: {
+      type: Array,
+      required: true
+    },
     tabs: {
       type: Array,
       required: false
@@ -227,6 +239,17 @@ export default {
       product: {
         product_id: this.state.product_id || "",
         name: this.state.name || "",
+        category_id: this.state.category_id || "",
+        description: this.state.description || "",
+        balance: this.state.balance || "",
+        structure: this.state.structure || "",
+        brand_id: this.state.brand_id || "",
+        color_id: this.state.color_id || "",
+        width: this.state.width || "",
+        length: this.state.length || "",
+        density: this.state.density || "",
+        price: this.state.price || "",
+        discount: this.state.discount || "",
         status: this.state.status || "Вкл"
       },
       errorMessage: [],
@@ -241,8 +264,8 @@ export default {
   },
   methods: {
     inputHandler(event, params) {
-      if (!this.state.brand_id) {
-        this.brand[params] = event.target.value;
+      if (!this.state.product_id) {
+        this.product[params] = event.target.value;
       } else {
         this.state[params] = event.target.value;
       }
