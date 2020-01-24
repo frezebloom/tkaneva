@@ -47,7 +47,7 @@
           </textarea>
         </div>
         <div class="form-wrapper">
-          <label class="form-label">Количество *</label>
+          <label class="form-label">Количество</label>
           <input
             v-model="state.balance"
             @input="inputHandler($event, 'balance')"
@@ -60,7 +60,7 @@
           />
         </div>
         <div class="form-wrapper">
-          <label class="form-label">Состав *</label>
+          <label class="form-label">Состав</label>
           <input
             v-model="state.structure"
             @input="inputHandler($event, 'structure')"
@@ -97,7 +97,7 @@
           </select>
         </div>
         <div class="form-wrapper">
-          <label class="form-label">Ширина *</label>
+          <label class="form-label">Ширина</label>
           <input
             v-model="state.width"
             @input="inputHandler($event, 'width')"
@@ -110,7 +110,7 @@
           />
         </div>
         <div class="form-wrapper">
-          <label class="form-label">Длина *</label>
+          <label class="form-label">Длина</label>
           <input
             v-model="state.length"
             @input="inputHandler($event, 'length')"
@@ -123,7 +123,7 @@
           />
         </div>
         <div class="form-wrapper">
-          <label class="form-label">Плотность *</label>
+          <label class="form-label">Плотность</label>
           <input
             v-model="state.density"
             @input="inputHandler($event, 'density')"
@@ -241,7 +241,7 @@ export default {
         name: this.state.name || "",
         category_id: this.state.category_id || "",
         description: this.state.description || "",
-        balance: this.state.balance || "",
+        balance: this.state.balance || "1",
         structure: this.state.structure || "",
         brand_id: this.state.brand_id || "",
         color_id: this.state.color_id || "",
@@ -252,6 +252,15 @@ export default {
         discount: this.state.discount || "",
         status: this.state.status || "Вкл"
       },
+      fieldsIsRequired: [
+        "product_id",
+        "name",
+        "category_id",
+        "description",
+        "brand_id",
+        "color_id",
+        "price"
+      ],
       errorMessage: [],
       errorInput: [],
       dropzoneOptions: {
@@ -270,9 +279,9 @@ export default {
         this.state[params] = event.target.value;
       }
     },
-    validation(brand) {
-      Object.keys(brand).forEach(item => {
-        if (valid.isEmpty(brand[item]) && item !== "brand_id") {
+    validation(product) {
+      Object.keys(product).forEach(item => {
+        if (valid.isEmpty(product[item]) && this.fieldsIsRequired.some(item)) {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
@@ -281,8 +290,9 @@ export default {
       });
     },
     check() {
-      !this.state.brand_id
-        ? this.validation(this.brand)
+      console.log("da");
+      !this.state.product_id
+        ? this.validation(this.product)
         : this.validation(this.state);
 
       if (this.errorMessage.length > 0) {
