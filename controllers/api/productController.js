@@ -1,9 +1,9 @@
 const db = require("../../models/index");
 
-const Product = db.Product;
-const Category = db.Category;
-const Brand = db.Brand;
-const Color = db.Color;
+const Product = db.product;
+const Category = db.category;
+const Brand = db.brand;
+const Color = db.color;
 
 module.exports = {
   get(req, res) {

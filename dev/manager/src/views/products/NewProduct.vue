@@ -37,6 +37,7 @@ export default {
         discount: "",
         status: ""
       },
+      products: [],
       categories: [],
       brands: [],
       colors: []
@@ -46,7 +47,6 @@ export default {
     const products = services.get("/api/product/get");
     products
       .then(products => {
-        console.log(products);
         this.products = products.data;
       })
       .catch(error => {
@@ -55,7 +55,6 @@ export default {
     const categories = services.get("/api/category/get");
     categories
       .then(categories => {
-        console.log(categories);
         this.categories = categories.data;
       })
       .catch(error => {

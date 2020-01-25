@@ -218,7 +218,7 @@ export default {
       required: true
     },
     products: {
-      type: Object,
+      type: Array,
       required: true
     },
     tabs: {
@@ -243,12 +243,12 @@ export default {
       product: {
         product_id: this.state.product_id || "",
         name: this.state.name || "",
-        category_id: this.state.category_id || "",
+        category_id: this.state.category_id || 1,
         description: this.state.description || "",
         balance: this.state.balance || "1",
         structure: this.state.structure || "",
-        brand_id: this.state.brand_id || "",
-        color_id: this.state.color_id || "",
+        brand_id: this.state.brand_id || 1,
+        color_id: this.state.color_id || 1,
         width: this.state.width || "",
         length: this.state.length || "",
         density: this.state.density || "",
@@ -257,7 +257,6 @@ export default {
         status: this.state.status || "Вкл"
       },
       fieldsIsRequired: [
-        "product_id",
         "name",
         "category_id",
         "description",
@@ -285,7 +284,10 @@ export default {
     },
     validation(product) {
       Object.keys(product).forEach(item => {
-        if (valid.isEmpty(product[item]) && this.fieldsIsRequired.some(item)) {
+        if (
+          this.fieldsIsRequired.some(element => element === item) &&
+          valid.isEmpty(product[item])
+        ) {
           this.errorInput.push(item);
           this.errorMessage.push(
             "Поля отмеченные звездочкой обязательны для заполнения"
@@ -297,6 +299,7 @@ export default {
       !this.state.product_id
         ? this.validation(this.product)
         : this.validation(this.state);
+      console.log(this.errorInput);
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
