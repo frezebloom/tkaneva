@@ -253,7 +253,7 @@ export default {
         length: this.state.length || "",
         density: this.state.density || "",
         price: this.state.price || "",
-        discount: this.state.discount || "",
+        discount: this.state.discount || "0",
         status: this.state.status || "Вкл"
       },
       fieldsIsRequired: [

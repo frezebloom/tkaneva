@@ -26,7 +26,13 @@
           :key="item.product_id"
         >
           <td>{{ item.product_id }}</td>
+          <td>{{ item.article }}</td>
           <td>{{ item.name }}</td>
+          <td>{{ item.category.name }}</td>
+          <td>{{ item.brand.name }}</td>
+          <td>{{ item.balance }} шт.</td>
+          <td>{{ item.price }} ₽</td>
+          <td>{{ item.discount }} %</td>
           <td>{{ item.status }}</td>
           <td>
             <input
@@ -80,6 +86,7 @@ export default {
         "Производитель",
         "Остаток",
         "Цена",
+        "Скидка",
         "Статус",
         ""
       ],
