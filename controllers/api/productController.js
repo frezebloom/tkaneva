@@ -50,7 +50,7 @@ module.exports = {
       status
     } = req.body.payload;
 
-    User.create({
+    Product.create({
       article,
       name,
       description,
