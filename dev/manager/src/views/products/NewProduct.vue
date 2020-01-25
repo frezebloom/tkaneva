@@ -3,6 +3,7 @@
     <ProductForm
       title="Создать товар"
       :state="product"
+      :products="products"
       :categories="categories"
       :brands="brands"
       :colors="colors"
@@ -42,15 +43,24 @@ export default {
     };
   },
   mounted() {
+    const products = services.get("/api/product/get");
+    products
+      .then(products => {
+        console.log(products);
+        this.products = products.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
     const categories = services.get("/api/category/get");
     categories
       .then(categories => {
+        console.log(categories);
         this.categories = categories.data;
       })
       .catch(error => {
         console.error(error);
       });
-
     const brands = services.get("/api/brand/get");
     brands
       .then(brands => {
@@ -59,7 +69,6 @@ export default {
       .catch(error => {
         console.error(error);
       });
-
     const colors = services.get("/api/color/get");
     colors
       .then(colors => {

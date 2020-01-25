@@ -217,6 +217,14 @@ export default {
       type: Object,
       required: true
     },
+    products: {
+      type: Object,
+      required: true
+    },
+    tabs: {
+      type: Array,
+      required: false
+    },
     categories: {
       type: Array,
       required: true
@@ -228,10 +236,6 @@ export default {
     colors: {
       type: Array,
       required: true
-    },
-    tabs: {
-      type: Array,
-      required: false
     }
   },
   data() {
@@ -290,11 +294,9 @@ export default {
       });
     },
     check() {
-      console.log("da");
       !this.state.product_id
         ? this.validation(this.product)
         : this.validation(this.state);
-
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
