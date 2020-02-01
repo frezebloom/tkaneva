@@ -5,14 +5,14 @@ const uuid = require("uuid/v1");
 
 module.exports = {
   upload: (req, res, next) => {
-    const imagePath = path.join(__dirname, "/../../public/images/products");
+    const imagePath = path.join(__dirname, "/../../tmp");
 
     const storage = multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, imagePath);
       },
       filename: (req, file, cb) => {
-        cb(null, file.originalname);
+        cb(null, uuid());
       }
     });
 
@@ -47,35 +47,50 @@ module.exports = {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       }
-      next();
-    });
-  },
-
-  resize: (req, res) => {
-    const sizes = {
-      sm: {
-        height: 128,
-        width: 128
-      }
-      // md: {
-      //   height: 256,
-      //   width: 256
-      // },
-      // lg: {
-      //   height: 512,
-      //   width: 512
-      // }
-    };
-
-    Object.keys(sizes).forEach(key => {
-      req.files.forEach(file => {
-        sharp(file.path)
-          .resize(sizes[key].height, sizes[key].width)
-          .toFile(`${file.destination}/${key}-${uuid()}`, (error, info) => {
-            if (error) res.status(404).send("Invalid request " + error);
-            console.log(info);
-          });
-      });
+      res.status(201).send(req.files);
+      // next();
     });
   }
+
+  // rename: (req, res) => {
+  //   req.files.forEach(file => {
+  //     const name = uuid();
+  //     sharp(file.path).toFile(
+  //       `${file.destination}/${name}`,
+  //       (error, info, name) => {
+  //         if (error) res.status(404).send("Invalid request " + error);
+  //         console.log(name);
+  //         res.status(201).send(name);
+  //       }
+  //     );
+  //   });
+  // }
+
+  // resize: (req, res) => {
+  //   const sizes = {
+  //     sm: {
+  //       height: 128,
+  //       width: 128
+  //     },
+  //     md: {
+  //       height: 256,
+  //       width: 256
+  //     },
+  //     lg: {
+  //       height: 512,
+  //       width: 512
+  //     }
+  //   };
+
+  //   Object.keys(sizes).forEach(key => {
+  //     req.files.forEach(file => {
+  //       sharp(file.path)
+  //         .resize(sizes[key].height, sizes[key].width)
+  //         .toFile(`${file.destination}/${key}-${uuid()}`, (error, info) => {
+  //           if (error) res.status(404).send("Invalid request " + error);
+  //           res.status(201).send("Ok");
+  //         });
+  //     });
+  //   });
+  // }
 };
