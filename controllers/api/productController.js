@@ -34,7 +34,6 @@ module.exports = {
 
   create(req, res) {
     const {
-      article,
       name,
       description,
       balance,
@@ -50,29 +49,43 @@ module.exports = {
       status
     } = req.body.payload;
 
-    Product.create({
-      article,
-      name,
-      description,
-      balance,
-      structure,
-      width,
-      length,
-      density,
-      price,
-      discount,
-      brand_id,
-      category_id,
-      color_id,
-      status
-    })
-      .then(() => {
-        res.status(201).send("Ok");
+    Product.count()
+      .then(count => {
+        return `${category_id}${brand_id}${color_id}${count}`;
+      })
+      .then(article => {
+        return createProduct(article);
       })
       .catch(error => {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
+
+    function createProduct(article) {
+      return Product.create({
+        article,
+        name,
+        description,
+        balance,
+        structure,
+        width,
+        length,
+        density,
+        price,
+        discount,
+        brand_id,
+        category_id,
+        color_id,
+        status
+      })
+        .then(() => {
+          res.status(201).send("Ok");
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(404).send("Invalid request " + error);
+        });
+    }
   },
 
   update(req, res) {
