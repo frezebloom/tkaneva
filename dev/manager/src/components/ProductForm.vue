@@ -166,6 +166,7 @@
             ref="myVueDropzone"
             id="dropzone"
             :options="dropzoneOptions"
+            @vdropzone-success="uploadedFile"
           ></vue-dropzone>
         </div>
       </div>
@@ -270,7 +271,8 @@ export default {
         url: `http://${window.location.hostname}:3000/api/upload/image`,
         thumbnailWidth: 150,
         maxFilesize: 5,
-        headers: { "My-Awesome-Header": "header value" }
+        headers: { "My-Awesome-Header": "header value" },
+        addRemoveLinks: true
       }
     };
   },
@@ -363,6 +365,9 @@ export default {
             );
           });
       }
+    },
+    uploadedFile(file, name) {
+      console.log(file, name);
     }
   }
 };
