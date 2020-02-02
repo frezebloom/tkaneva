@@ -167,6 +167,7 @@
             id="dropzone"
             :options="dropzoneOptions"
             @vdropzone-success="uploadedFile"
+            @vdropzone-removed-file="removeFile"
           ></vue-dropzone>
         </div>
       </div>
@@ -288,7 +289,6 @@ export default {
       }
     },
     validation(product) {
-      console.log(this.uploadedFiles);
       Object.keys(product).forEach(item => {
         if (
           this.fieldsIsRequired.some(element => element === item) &&
@@ -371,7 +371,14 @@ export default {
       }
     },
     uploadedFile(file) {
+      console.log(file);
       this.uploadedFiles.push(JSON.parse(file.xhr.response));
+      console.log(this.uploadedFiles);
+    },
+    removeFile(file) {
+      const fileName = JSON.parse(file.xhr.response).filename;
+      this.uploadedFiles.filter(file => file.filename !== fileName);
+      console.log(this.uploadedFiles);
     }
   }
 };
