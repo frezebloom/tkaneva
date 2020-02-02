@@ -14,7 +14,7 @@ module.exports = {
           throw new Error("invalid token");
         } else {
           next();
-          return null;
+          return true;
         }
       })
       .catch(() => {
