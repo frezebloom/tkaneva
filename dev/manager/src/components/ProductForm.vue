@@ -272,7 +272,9 @@ export default {
         thumbnailWidth: 150,
         maxFilesize: 5,
         headers: { "My-Awesome-Header": "header value" },
-        addRemoveLinks: true
+        addRemoveLinks: true,
+        dictDefaultMessage: "Поместите файлы сюда, чтобы загрузить",
+        dictRemoveFile: "Удалить файл"
       },
       uploadedFiles: []
     };
@@ -286,6 +288,7 @@ export default {
       }
     },
     validation(product) {
+      console.log(this.uploadedFiles);
       Object.keys(product).forEach(item => {
         if (
           this.fieldsIsRequired.some(element => element === item) &&
