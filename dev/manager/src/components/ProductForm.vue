@@ -273,7 +273,8 @@ export default {
         maxFilesize: 5,
         headers: { "My-Awesome-Header": "header value" },
         addRemoveLinks: true
-      }
+      },
+      uploadedFiles: []
     };
   },
   methods: {
@@ -366,8 +367,8 @@ export default {
           });
       }
     },
-    uploadedFile(file, name) {
-      console.log(file, name);
+    uploadedFile(file) {
+      this.uploadedFiles.push(JSON.parse(file.xhr.response));
     }
   }
 };

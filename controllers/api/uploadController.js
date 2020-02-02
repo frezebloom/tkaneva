@@ -47,6 +47,7 @@ module.exports = {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       }
+      console.log(req);
       res.status(201).send(req.files);
       // next();
     });
