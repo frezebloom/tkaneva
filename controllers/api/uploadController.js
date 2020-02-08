@@ -2,6 +2,9 @@ const path = require("path");
 const multer = require("multer");
 const sharp = require("sharp");
 const uuid = require("uuid/v1");
+const db = require("../../models/index");
+
+const Upload = db.upload;
 
 module.exports = {
   upload: (req, res, next) => {
@@ -47,9 +50,29 @@ module.exports = {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       }
-      res.status(201).send(req.files);
+      const fileInfo = processingFileInfo(req.files);
+      res.status(201).send(fileInfo);
       // next();
     });
+  },
+
+  processingFileInfo: file => {
+    const { filename, originalname, path, size } = file;
+
+    Upload.create({
+      filename,
+      originalname,
+      path,
+      size
+    })
+      .then(() => {
+        return file;
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(404).send("Invalid request" + error);
+      });
+    return file;
   }
 
   // rename: (req, res) => {
