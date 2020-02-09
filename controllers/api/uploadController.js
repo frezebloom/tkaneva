@@ -43,23 +43,23 @@ module.exports = {
     }).any();
 
     const processingFileInfo = files => {
-      files.forEach(file => {
+      return files.map(file => {
         const { filename, originalname, path, size } = file;
 
-        Upload.create({
-          filename,
-          originalname,
+        return Upload.create({
+          name: filename,
+          original_name: originalname,
           path,
           size
         })
           .then(data => {
-            self.files.push({
-              fileName: data.filename,
-              originalname: data.originalname,
+            console.log(data);
+            return {
+              fileName: data.name,
+              originalName: data.original_name,
               path: data.path,
               size: data.size
-            });
-            return data;
+            };
           })
           .catch(error => {
             console.log(error);
@@ -79,8 +79,10 @@ module.exports = {
 
       const fileInfo = processingFileInfo(req.files);
 
-      Promise.all(fileInfo).then(files => console.log(files));
-      res.status(201).send(req.files);
+      Promise.all(fileInfo).then(files => {
+        res.status(201).send(files);
+      });
+
       // next();
     });
   }
