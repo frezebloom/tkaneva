@@ -42,6 +42,32 @@ module.exports = {
       }
     }).any();
 
+    const processingFileInfo = files => {
+      files.forEach(file => {
+        const { filename, originalname, path, size } = file;
+
+        Upload.create({
+          filename,
+          originalname,
+          path,
+          size
+        })
+          .then(data => {
+            self.files.push({
+              fileName: data.filename,
+              originalname: data.originalname,
+              path: data.path,
+              size: data.size
+            });
+            return data;
+          })
+          .catch(error => {
+            console.log(error);
+            res.status(404).send("Invalid request" + error);
+          });
+      });
+    };
+
     upload(req, res, error => {
       if (error instanceof multer.MulterError) {
         console.log(error);
@@ -50,29 +76,13 @@ module.exports = {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       }
+
       const fileInfo = processingFileInfo(req.files);
-      res.status(201).send(fileInfo);
+
+      Promise.all(fileInfo).then(files => console.log(files));
+      res.status(201).send(req.files);
       // next();
     });
-  },
-
-  processingFileInfo: file => {
-    const { filename, originalname, path, size } = file;
-
-    Upload.create({
-      filename,
-      originalname,
-      path,
-      size
-    })
-      .then(() => {
-        return file;
-      })
-      .catch(error => {
-        console.log(error);
-        res.status(404).send("Invalid request" + error);
-      });
-    return file;
   }
 
   // rename: (req, res) => {
