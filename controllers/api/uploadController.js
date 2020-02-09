@@ -53,7 +53,6 @@ module.exports = {
           size
         })
           .then(data => {
-            console.log(data);
             return {
               fileName: data.name,
               originalName: data.original_name,

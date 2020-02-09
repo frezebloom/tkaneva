@@ -371,7 +371,6 @@ export default {
       }
     },
     uploadedFile(file) {
-      console.log(file);
       this.uploadedFiles.push(JSON.parse(file.xhr.response));
       console.log(this.uploadedFiles);
     },

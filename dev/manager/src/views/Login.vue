@@ -3,15 +3,20 @@
     <div class="login-header">Вход</div>
     <div class="login-form-wrapper">
       <div class="login-form-icon">
-        <img alt="login" src="../assets/icons/user.svg">
+        <img alt="login" src="../assets/icons/user.svg" />
       </div>
       <span class="header-search-icon">
-        <input v-model="login" class="login-form-input" placeholder="Логин" autocomplete="off">
+        <input
+          v-model="login"
+          class="login-form-input"
+          placeholder="Логин"
+          autocomplete="off"
+        />
       </span>
     </div>
     <div class="login-form-wrapper">
       <div class="login-form-icon">
-        <img alt="password" src="../assets/icons/key.svg">
+        <img alt="password" src="../assets/icons/key.svg" />
       </div>
       <span>
         <input
@@ -20,14 +25,15 @@
           class="login-form-input"
           placeholder="Пароль"
           autocomplete="off"
-        >
+        />
       </span>
     </div>
     <div class="login-footer">
       <div v-on:click="signup">
-        <Button value="Войти" styles="success"/>
+        <Button value="Войти" styles="success" />
       </div>
     </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -68,6 +74,7 @@ export default {
   border-radius: 3px;
   border-bottom: 2px solid #d5d5d5;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
 }
 .login-header {
   position: relative;
@@ -110,6 +117,12 @@ img {
   flex-direction: row-reverse;
   margin: 30px 20px 30px 0px;
 }
+.footer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  margin-top: 50px;
+  background-color: #f8f8f8;
+}
 </style>
- 
-
