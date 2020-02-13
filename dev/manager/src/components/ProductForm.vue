@@ -370,14 +370,15 @@ export default {
           });
       }
     },
-    uploadedFile(file) {
-      this.uploadedFiles.push(JSON.parse(file.xhr.response));
-      console.log(this.uploadedFiles);
+    uploadedFile(fileData) {
+      const files = JSON.parse(fileData.xhr.response);
+      files.forEach(file => this.uploadedFiles.push(file));
     },
-    removeFile(file) {
-      const fileName = JSON.parse(file.xhr.response).filename;
-      this.uploadedFiles.filter(file => file.filename !== fileName);
-      console.log(this.uploadedFiles);
+    removeFile(fileData) {
+      const files = JSON.parse(fileData.xhr.response);
+      files.forEach(file =>
+        this.uploadedFiles.filter(file => file.filename !== fileName)
+      );
     }
   }
 };
