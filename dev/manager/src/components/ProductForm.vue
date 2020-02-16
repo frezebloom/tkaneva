@@ -256,7 +256,8 @@ export default {
         density: this.state.density || "",
         price: this.state.price || "",
         discount: this.state.discount || "0",
-        status: this.state.status || "Вкл"
+        status: this.state.status || "Вкл",
+        uploadedFiles: []
       },
       fieldsIsRequired: [
         "name",
@@ -276,8 +277,7 @@ export default {
         addRemoveLinks: true,
         dictDefaultMessage: "Поместите файлы сюда, чтобы загрузить",
         dictRemoveFile: "Удалить файл"
-      },
-      uploadedFiles: []
+      }
     };
   },
   methods: {
@@ -305,7 +305,6 @@ export default {
       !this.state.product_id
         ? this.validation(this.product)
         : this.validation(this.state);
-      console.log(this.errorInput);
       if (this.errorMessage.length > 0) {
         this.showCornerDialog("Ошибка", this.errorMessage[0], "warning");
         this.errorMessage = [];
@@ -360,8 +359,7 @@ export default {
               });
             }
           })
-          .catch(error => {
-            console.log(error);
+          .catch(() => {
             this.showCornerDialog(
               "Ошибка",
               "Не удалось сохранить товар",
@@ -372,12 +370,15 @@ export default {
     },
     uploadedFile(fileData) {
       const files = JSON.parse(fileData.xhr.response);
-      files.forEach(file => this.uploadedFiles.push(file));
+      files.forEach(file => this.product.uploadedFiles.push(file));
     },
     removeFile(fileData) {
       const files = JSON.parse(fileData.xhr.response);
-      files.forEach(file =>
-        this.uploadedFiles.filter(file => file.filename !== fileName)
+      files.forEach(
+        file =>
+          (this.product.uploadedFiles = this.product.uploadedFiles.filter(
+            uploadedFile => file.fileName !== uploadedFile.fileName
+          ))
       );
     }
   }
