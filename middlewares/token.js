@@ -19,6 +19,7 @@ module.exports = {
       })
       .catch(() => {
         res.status(404).send("invalid token");
+        next();
         throw new Error("invalid token");
       });
   }

@@ -56,6 +56,11 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     },
 
+    images: {
+      type: Sequelize.STRING,
+      notEmpty: true
+    },
+
     status: {
       type: Sequelize.ENUM("Вкл", "Выкл")
     }
