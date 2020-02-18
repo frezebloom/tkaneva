@@ -17,7 +17,8 @@ module.exports = {
           return true;
         }
       })
-      .catch(() => {
+      .catch(error => {
+        console.log(error);
         res.status(404).send("invalid token");
         next();
         throw new Error("invalid token");

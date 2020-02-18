@@ -1,4 +1,6 @@
 const db = require("../../models/index");
+const path = require("path");
+const fs = require("fs");
 
 const Product = db.product;
 const Category = db.category;
@@ -46,12 +48,18 @@ module.exports = {
       brand_id,
       category_id,
       color_id,
+      uploadedFiles,
       status
     } = req.body.payload;
+
+    const publicPath = path.join(__dirname, "/../../tmp");
 
     Product.count()
       .then(count => {
         return `${category_id}${brand_id}${color_id}${count}`;
+      })
+      .then(acticle => {
+        return transferImages(acticle);
       })
       .then(article => {
         return createProduct(article);
@@ -60,6 +68,15 @@ module.exports = {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
+
+    function transferImages(article) {
+      if (uploadedFiles.length === 0) {
+        return article;
+      }
+      fs.mkdir(`${publicPath}/${article}`, { recursive: true }, err => {
+        if (err) throw err;
+      });
+    }
 
     function createProduct(article) {
       return Product.create({
