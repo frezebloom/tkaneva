@@ -52,7 +52,7 @@ module.exports = {
       status
     } = req.body.payload;
 
-    const publicPath = path.join(__dirname, "/../../tmp");
+    const publicPath = path.join(__dirname, "/../../public/images");
 
     Product.count()
       .then(count => {
@@ -73,9 +73,26 @@ module.exports = {
       if (uploadedFiles.length === 0) {
         return article;
       }
-      fs.mkdir(`${publicPath}/${article}`, { recursive: true }, err => {
-        if (err) throw err;
-      });
+      const dir = `${publicPath}/${article}`;
+      try {
+        if (!fs.existsSync(dir)) {
+          fs.mkdir(dir, function(error) {
+            if (error) {
+              console.log("Failed to create directory", error);
+              res.status(404).send("Invalid request " + error);
+            } else {
+              console.log(uploadedFiles);
+              return article;
+            }
+          });
+        } else {
+          console.log(uploadedFiles + "2");
+          return article;
+        }
+      } catch (err) {
+        console.error(err);
+        res.status(404).send("Invalid request " + error);
+      }
     }
 
     function createProduct(article) {
