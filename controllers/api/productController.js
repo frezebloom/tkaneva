@@ -52,7 +52,7 @@ module.exports = {
       status
     } = req.body.payload;
 
-    const publicPath = path.join(__dirname, "/../../public/images");
+    const publicPath = path.join(__dirname, "/../../public/images/products");
 
     Product.count()
       .then(count => {
@@ -81,7 +81,20 @@ module.exports = {
               console.log("Failed to create directory", error);
               res.status(404).send("Invalid request " + error);
             } else {
-              console.log(uploadedFiles);
+              const promises = uploadedFiles.map(file => {
+                const source = file.path;
+                const destination = path.join("/tmp", file.path);
+
+                return copyFile(source, destination);
+              });
+
+              Promise.all(promises)
+                .then(_ => {
+                  console.log("done");
+                })
+                .catch(err => {
+                  console.error(err);
+                });
               return article;
             }
           });
@@ -93,6 +106,17 @@ module.exports = {
         console.error(err);
         res.status(404).send("Invalid request " + error);
       }
+    }
+
+    function copyFile(source, destination) {
+      const input = fs.createReadStream(source);
+      const output = fs.createWriteStream(destination);
+      return new Promise((resolve, reject) => {
+        output.on("error", reject);
+        input.on("error", reject);
+        input.on("end", resolve);
+        input.pipe(output);
+      });
     }
 
     function createProduct(article) {
