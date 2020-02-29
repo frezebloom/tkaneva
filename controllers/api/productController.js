@@ -88,12 +88,12 @@ module.exports = {
               });
 
               Promise.all(promises)
-                .then(_ => {
-                  console.log("done");
+                .then(() => {
+                  clearTmp(uploadedFiles);
                 })
-                .catch(err => {
-                  console.log(promises);
-                  console.error(err);
+                .catch(error => {
+                  console.log(error);
+                  res.status(404).send("Invalid request " + error);
                 });
             }
           });
@@ -117,6 +117,10 @@ module.exports = {
         input.on("end", resolve);
         input.pipe(output);
       });
+    }
+
+    function clearTmp(files) {
+      console.log(files);
     }
 
     function createProduct(article) {
