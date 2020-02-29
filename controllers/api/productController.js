@@ -83,8 +83,7 @@ module.exports = {
             } else {
               const promises = uploadedFiles.map(file => {
                 const source = file.path;
-                const destination = path.join("/tmp", file.path);
-
+                const destination = `${dir}/${file.fileName}`;
                 return copyFile(source, destination);
               });
 
@@ -93,11 +92,12 @@ module.exports = {
                   console.log("done");
                 })
                 .catch(err => {
+                  console.log(promises);
                   console.error(err);
                 });
-              return article;
             }
           });
+          return article;
         } else {
           console.log(uploadedFiles + "2");
           return article;
