@@ -75,33 +75,28 @@ module.exports = {
       }
       const dir = `${publicPath}/${article}`;
       try {
-        if (!fs.existsSync(dir)) {
-          fs.mkdir(dir, function(error) {
-            if (error) {
-              console.log("Failed to create directory", error);
-              res.status(404).send("Invalid request " + error);
-            } else {
-              const promises = uploadedFiles.map(file => {
-                const source = file.path;
-                const destination = `${dir}/${file.fileName}`;
-                return copyFile(source, destination);
-              });
+        fs.mkdir(dir, function(error) {
+          if (error) {
+            console.log("Failed to create directory", error);
+            res.status(404).send("Invalid request " + error);
+          } else {
+            const promises = uploadedFiles.map(file => {
+              const source = file.path;
+              const destination = `${dir}/${file.fileName}`;
+              return copyFile(source, destination);
+            });
 
-              Promise.all(promises)
-                .then(() => {
-                  clearTmp(uploadedFiles);
-                })
-                .catch(error => {
-                  console.log(error);
-                  res.status(404).send("Invalid request " + error);
-                });
-            }
-          });
-          return article;
-        } else {
-          console.log(uploadedFiles + "2");
-          return article;
-        }
+            Promise.all(promises)
+              .then(() => {
+                clearTmp(uploadedFiles);
+              })
+              .catch(error => {
+                console.log(error);
+                res.status(404).send("Invalid request " + error);
+              });
+          }
+        });
+        return article;
       } catch (err) {
         console.error(err);
         res.status(404).send("Invalid request " + error);
@@ -120,7 +115,10 @@ module.exports = {
     }
 
     function clearTmp(files) {
-      console.log(files);
+      files.forEach(function({ path }) {
+        console.log(path);
+        fs.unlink(path);
+      });
     }
 
     function createProduct(article) {
