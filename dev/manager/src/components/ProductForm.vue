@@ -272,11 +272,14 @@ export default {
       dropzoneOptions: {
         url: `http://${window.location.hostname}:3000/api/upload/image`,
         thumbnailWidth: 150,
-        maxFilesize: 5,
+        maxFilesize: 1,
+        maxFiles: 20,
         headers: { "My-Awesome-Header": "header value" },
         addRemoveLinks: true,
         dictDefaultMessage: "Поместите файлы сюда, чтобы загрузить",
-        dictRemoveFile: "Удалить файл"
+        dictRemoveFile: "Удалить файл",
+        dictMaxFilesExceeded: "Максимум пять файлов",
+        dictFileSizeUnits: "Максимум 1 MB"
       }
     };
   },
