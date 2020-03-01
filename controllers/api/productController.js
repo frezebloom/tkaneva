@@ -116,8 +116,10 @@ module.exports = {
 
     function clearTmp(files) {
       files.forEach(function({ path }) {
-        console.log(path);
-        fs.unlink(path);
+        fs.unlink(path, error => {
+          if (error) throw error;
+          console.log("File deleted!");
+        });
       });
     }
 
