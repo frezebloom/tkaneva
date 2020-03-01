@@ -97,8 +97,8 @@ module.exports = {
           }
         });
         return article;
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
         res.status(404).send("Invalid request " + error);
       }
     }
