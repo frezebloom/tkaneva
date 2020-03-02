@@ -10,8 +10,8 @@ module.exports = {
           token.access_token !== accesstoken ||
           token.access_token_life < Date.now()
         ) {
+          console.log("invalid token");
           res.status(404).send("invalid token");
-          throw new Error("invalid token");
         } else {
           next();
           return true;

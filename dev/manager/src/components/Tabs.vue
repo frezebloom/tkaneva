@@ -8,14 +8,10 @@
       @click="eventClickTab(index)"
     >
       {{ changeString(tab.title) }}
-      <div 
-        class="tab-close"
-        @click.stop="eventClickCloseTab(index)"
-      >
+      <div class="tab-close" @click.stop="eventClickCloseTab(index)">
         X
       </div>
     </div>
-
   </div>
 </template>
 <script>
@@ -38,7 +34,7 @@ export default {
       this.activeTab = index;
     },
     eventClickCloseTab(index) {
-      this.$emit("eventClickCloseTab", index)
+      this.$emit("eventClickCloseTab", index);
       this.activeTab = 0;
     },
     changeString(string) {
@@ -51,4 +47,3 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/tabs.scss";
 </style>
-
