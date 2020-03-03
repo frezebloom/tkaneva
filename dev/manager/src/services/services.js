@@ -1,10 +1,9 @@
-import api from '@/services/api';
-import token from '@/utils/token';
+import api from "@/services/api";
+import token from "@/utils/token";
 
 export default {
-  async get(path) {
-    const data = await token.checkToken();
-    return api(data.id, data.accessToken).get(path);
+  get(path, token) {
+    return api(token.id, token.accessToken).get(path);
   },
   async create(path, payload) {
     const data = await token.checkToken();

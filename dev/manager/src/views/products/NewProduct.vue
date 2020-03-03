@@ -13,6 +13,7 @@
 <script>
 import ProductForm from "@/components/ProductForm";
 import services from "@/services/services";
+import token from "@/utils/token";
 
 export default {
   name: "NewProduct",
@@ -44,38 +45,43 @@ export default {
     };
   },
   mounted() {
-    const products = services.get("/api/product/get");
-    products
-      .then(products => {
-        this.products = products.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    const categories = services.get("/api/category/get");
-    categories
-      .then(categories => {
-        this.categories = categories.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    const brands = services.get("/api/brand/get");
-    brands
-      .then(brands => {
-        this.brands = brands.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    const colors = services.get("/api/color/get");
-    colors
-      .then(colors => {
-        this.colors = colors.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    token.checkToken().then(token => {
+      services
+        .get("/api/product/get", token)
+        .then(products => {
+          this.products = products.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+      services
+        .get("/api/category/get", token)
+        .then(categories => {
+          this.categories = categories.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+      services
+        .get("/api/brand/get", token)
+        .then(brands => {
+          this.brands = brands.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+      services
+        .get("/api/color/get", token)
+        .then(colors => {
+          this.colors = colors.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
   }
 };
 </script>
