@@ -45,43 +45,28 @@ export default {
     };
   },
   mounted() {
-    token.checkToken().then(token => {
-      services
-        .get("/api/product/get", token)
-        .then(products => {
+    token
+      .checkToken()
+      .then(token => {
+        services.get("/api/product/get", token).then(products => {
           this.products = products.data;
-        })
-        .catch(error => {
-          console.error(error);
         });
 
-      services
-        .get("/api/category/get", token)
-        .then(categories => {
+        services.get("/api/category/get", token).then(categories => {
           this.categories = categories.data;
-        })
-        .catch(error => {
-          console.error(error);
         });
 
-      services
-        .get("/api/brand/get", token)
-        .then(brands => {
+        services.get("/api/brand/get", token).then(brands => {
           this.brands = brands.data;
-        })
-        .catch(error => {
-          console.error(error);
         });
 
-      services
-        .get("/api/color/get", token)
-        .then(colors => {
+        services.get("/api/color/get", token).then(colors => {
           this.colors = colors.data;
-        })
-        .catch(error => {
-          console.error(error);
         });
-    });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 };
 </script>

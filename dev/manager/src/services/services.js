@@ -1,25 +1,21 @@
 import api from "@/services/api";
-import token from "@/utils/token";
 
 export default {
   get(path, token) {
     return api(token.id, token.accessToken).get(path);
   },
-  async create(path, payload) {
-    const data = await token.checkToken();
-    return api(data.id, data.accessToken).post(path, {
+  create(path, payload, token) {
+    return api(token.id, token.accessToken).post(path, {
       payload
     });
   },
-  async update(path, payload) {
-    const data = await token.checkToken();
-    return api(data.id, data.accessToken).put(path, {
+  update(path, payload, token) {
+    return api(token.id, token.accessToken).put(path, {
       payload
     });
   },
-  async delete(path, payload) {
-    const data = await token.checkToken();
-    return api(data.id, data.accessToken).post(path, {
+  delete(path, payload, token) {
+    return api(token.id, token.accessToken).post(path, {
       payload
     });
   },

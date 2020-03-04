@@ -59,6 +59,7 @@ import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
 import services from "@/services/services";
+import token from "@/utils/token";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -77,13 +78,14 @@ export default {
     };
   },
   mounted() {
-    const brands = services.get("/api/brand/get");
-    brands
-      .then(brand => {
-        this.brands = brand.data;
+    token
+      .checkToken()
+      .then(token => {
+        services.get("/api/brand/get", token).then(brand => {
+          this.brands = brand.data;
+        });
       })
       .catch(error => {
-        console.log(error);
         this.showCornerDialog(
           "Ошибка",
           "Не удалось связаться с сервером. Обратитесь к администратору",
@@ -153,17 +155,29 @@ export default {
         const selectBrands = this.getSelect(brands, selectElements).map(
           item => item.brand_id
         );
-        const brand = services.delete("/api/brand/delete", selectBrands);
-        brand
-          .then(() => {
-            this.brands = this.brands.filter(
-              item => !selectBrands.includes(item.brand_id)
-            );
-            this.showCornerDialog(
-              "Успех",
-              "Операция удаления успешна завершена",
-              "success"
-            );
+
+        token
+          .checkToken()
+          .then(token => {
+            services
+              .delete("/api/brand/delete", selectBrands, token)
+              .then(() => {
+                this.brands = this.brands.filter(
+                  item => !selectBrands.includes(item.brand_id)
+                );
+                this.showCornerDialog(
+                  "Успех",
+                  "Операция удаления успешна завершена",
+                  "success"
+                );
+              })
+              .catch(error => {
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось связаться с сервером. Обратитесь к администратору",
+                  "danger"
+                );
+              });
           })
           .catch(error => {
             this.showCornerDialog(
@@ -171,7 +185,6 @@ export default {
               "Не удалось связаться с сервером. Обратитесь к администратору",
               "danger"
             );
-            console.error(error);
           });
       }
     },

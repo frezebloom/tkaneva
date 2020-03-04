@@ -65,6 +65,7 @@ import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
 import services from "@/services/services";
+import token from "@/utils/token";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -94,13 +95,14 @@ export default {
     };
   },
   mounted() {
-    const products = services.get("/api/product/get");
-    products
-      .then(products => {
-        this.products = products.data;
+    token
+      .checkToken()
+      .then(token => {
+        services.get("/api/product/get", token).then(products => {
+          this.products = products.data;
+        });
       })
       .catch(error => {
-        console.log(error);
         this.showCornerDialog(
           "Ошибка",
           "Не удалось связаться с сервером. Обратитесь к администратору",
