@@ -43,9 +43,12 @@
 <script>
 import Button from "@/components/Button";
 import CornerDialog from "@/components/CornerDialog";
+
 import services from "@/services/services";
+import token from "@/utils/token";
 import valid from "@/utils/validation";
 import { cornerDialog } from "@/mixins/cornerDialog";
+
 export default {
   name: "BrandForm",
   mixins: [cornerDialog],
@@ -113,60 +116,58 @@ export default {
     },
     saveChange() {
       if (!this.state.brand_id) {
-        const brand = services.create("/api/brand/create", this.brand);
-        brand
-          .then(() => {
-            this.$router.push({
-              name: "brands",
-              params: {
-                status: true,
-                title: "Успех",
-                message: "Новый производитель успешно создан",
-                button: "success"
-              }
-            });
-          })
-          .catch(() => {
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить производителя",
-              "warning"
-            );
-          });
-      } else {
-        const brand = services.update("/api/brand/update", this.state);
-        brand
-          .then(() => {
-            const index = this.tabs.findIndex(
-              item => item.brand_id === this.state.brand_id
-            );
-            if (this.tabs.length > 1) {
-              this.$emit("eventClickSave", index);
-              this.showCornerDialog(
-                "Успех",
-                "Производитель изменен",
-                "success"
-              );
-            } else {
+        token.checkToken().then(token => {
+          services
+            .create("/api/brand/create", this.brand, token)
+            .then(brand => {
               this.$router.push({
                 name: "brands",
                 params: {
                   status: true,
                   title: "Успех",
-                  message: "Производитель изменен",
+                  message: "Новый производитель успешно создан",
                   button: "success"
                 }
               });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить производителя",
-              "warning"
-            );
-          });
+            });
+        });
+      } else {
+        token.checkToken().then(token => {
+          services
+            .update("/api/brand/update", this.state, token)
+            .then(() => {
+              const index = this.tabs.findIndex(
+                item => item.brand_id === this.state.brand_id
+              );
+
+              if (this.tabs.length > 1) {
+                this.$emit("eventClickSave", index);
+                this.showCornerDialog(
+                  "Успех",
+                  "Производитель изменен",
+                  "success"
+                );
+              } else {
+                this.$router.push({
+                  name: "brands",
+                  params: {
+                    status: true,
+                    title: "Успех",
+                    message: "Производитель изменен",
+                    button: "success"
+                  }
+                });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось сохранить производителя",
+                "warning"
+              );
+            });
+        });
       }
     }
   }

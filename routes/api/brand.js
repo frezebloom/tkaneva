@@ -18,13 +18,13 @@ router.post(
 
 router.put(
   "/brand/update",
-  (req, res) => tokenMiddleware.checkToken(req, res, next),
+  (req, res, next) => tokenMiddleware.checkToken(req, res, next),
   (req, res) => brandController.update(req, res)
 );
 
 router.post(
   "/brand/delete",
-  (req, res) => tokenMiddleware.checkToken(req, res, next),
+  (req, res, next) => tokenMiddleware.checkToken(req, res, next),
   (req, res) => brandController.delete(req, res)
 );
 
