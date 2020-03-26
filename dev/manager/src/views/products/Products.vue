@@ -98,11 +98,22 @@ export default {
     token
       .checkToken()
       .then(token => {
-        services.get("/api/product/get", token).then(products => {
-          this.products = products.data;
-        });
+        services
+          .get("/api/product/get", token)
+          .then(products => {
+            this.products = products.data;
+          })
+          .catch(error => {
+            console.log(`Products-1  ${error}`);
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось связаться с сервером. Обратитесь к администратору",
+              "danger"
+            );
+          });
       })
       .catch(error => {
+        console.log(`Products-2  ${error}`);
         this.showCornerDialog(
           "Ошибка",
           "Не удалось связаться с сервером. Обратитесь к администратору",
@@ -172,25 +183,37 @@ export default {
         const selectProducts = this.getSelect(products, selectElements).map(
           item => item.product_id
         );
-        const product = services.delete("/api/product/delete", selectProducts);
-        product
-          .then(() => {
-            this.producs = this.producs.filter(
-              item => !selectProducts.includes(item.product_id)
-            );
-            this.showCornerDialog(
-              "Успех",
-              "Операция удаления успешна завершена",
-              "success"
-            );
+        token
+          .checkToken()
+          .then(token => {
+            services
+              .delete("/api/product/delete", selectProducts, token)
+              .then(() => {
+                this.products = this.products.filter(
+                  item => !selectProducts.includes(item.product_id)
+                );
+                this.showCornerDialog(
+                  "Успех",
+                  "Операция удаления успешна завершена",
+                  "success"
+                );
+              })
+              .catch(error => {
+                console.log(`Products-3  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось связаться с сервером. Обратитесь к администратору",
+                  "danger"
+                );
+              });
           })
           .catch(error => {
+            console.log(`Products-4  ${error}`);
             this.showCornerDialog(
               "Ошибка",
               "Не удалось связаться с сервером. Обратитесь к администратору",
               "danger"
             );
-            console.error(error);
           });
       }
     },

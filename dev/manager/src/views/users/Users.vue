@@ -6,8 +6,8 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar 
-      title="Пользователи" 
+    <Topbar
+      title="Пользователи"
       @eventClickTopBar="route($event)"
       @eventHandlerSearch="eventSearch($event)"
       @eventClearSearch="clearSearch()"
@@ -59,6 +59,7 @@ import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
 import services from "@/services/services";
+import token from "@/utils/token";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -77,13 +78,25 @@ export default {
     };
   },
   mounted() {
-    const users = services.get('/api/user/get');
-    users
-      .then(users => {
-        this.users = users.data;
+    token
+      .checkToken()
+      .then(token => {
+        services
+          .get("/api/user/get", token)
+          .then(users => {
+            this.users = users.data;
+          })
+          .catch(error => {
+            console.log(`Users-1  ${error}`);
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось связаться с сервером. Обратитесь к администратору",
+              "danger"
+            );
+          });
       })
       .catch(error => {
-        console.error(error);
+        console.log(`Users-2  ${error}`);
         this.showCornerDialog(
           "Ошибка",
           "Не удалось связаться с сервером. Обратитесь к администратору",
@@ -94,7 +107,6 @@ export default {
   computed: {
     filter() {
       const foundItems = this.users.filter(item => {
-
         let found = false;
 
         Object.keys(item).forEach(obj => {
@@ -104,12 +116,10 @@ export default {
         });
 
         if (found) return item;
-
       });
 
       return foundItems;
-
-    },
+    }
   },
   methods: {
     route(event) {
@@ -153,33 +163,45 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { users, selectElements } = this;
-        const selectUsers = this.getSelect(users, selectElements).map((item) => item.user_id);
-        const user = services.delete('/api/user/delete', selectUsers);
-        user
-          .then(() => {
-            this.users = this.users.filter(
-              item => !selectUsers.includes(item.user_id)
-            );
-            this.showCornerDialog(
-              "Успех",
-              "Операция удаления успешна завершена",
-              "success"
-            );
+        const selectUsers = this.getSelect(users, selectElements).map(
+          item => item.user_id
+        );
+        token
+          .checkToken()
+          .then(token => {
+            services
+              .delete("/api/user/delete", selectUsers, token)
+              .then(() => {
+                this.users = this.users.filter(
+                  item => !selectUsers.includes(item.user_id)
+                );
+                this.showCornerDialog(
+                  "Успех",
+                  "Операция удаления успешна завершена",
+                  "success"
+                );
+              })
+              .catch(error => {
+                console.log(`Users-3  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось связаться с сервером. Обратитесь к администратору",
+                  "danger"
+                );
+              });
           })
           .catch(error => {
+            console.log(`Users-4  ${error}`);
             this.showCornerDialog(
               "Ошибка",
               "Не удалось связаться с сервером. Обратитесь к администратору",
               "danger"
             );
-            console.error(error);
           });
       }
     },
     getSelect(users, selectElements) {
-      return users.filter(user =>
-        selectElements.includes(user.user_id)
-      );
+      return users.filter(user => selectElements.includes(user.user_id));
     }
   }
 };

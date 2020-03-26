@@ -159,8 +159,7 @@ export default {
                 });
               }
             })
-            .catch(error => {
-              console.log(error);
+            .catch(() => {
               this.showCornerDialog(
                 "Ошибка",
                 "Не удалось сохранить производителя",

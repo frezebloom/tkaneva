@@ -59,6 +59,7 @@ import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
 import services from "@/services/services";
+import token from "@/utils/token";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -77,13 +78,25 @@ export default {
     };
   },
   mounted() {
-    const colors = services.get("/api/color/get");
-    colors
-      .then(color => {
-        this.colors = color.data;
+    token
+      .checkToken()
+      .then(token => {
+        services
+          .get("/api/color/get", token)
+          .then(colors => {
+            this.colors = colors.data;
+          })
+          .catch(error => {
+            console.log(`Colors-1  ${error}`);
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось связаться с сервером. Обратитесь к администратору",
+              "danger"
+            );
+          });
       })
       .catch(error => {
-        console.log(error);
+        console.log(`Colors-2  ${error}`);
         this.showCornerDialog(
           "Ошибка",
           "Не удалось связаться с сервером. Обратитесь к администратору",
@@ -153,25 +166,37 @@ export default {
         const selectColors = this.getSelect(colors, selectElements).map(
           item => item.color_id
         );
-        const color = services.delete("/api/color/delete", selectColors);
-        color
-          .then(() => {
-            this.colors = this.colors.filter(
-              item => !selectColors.includes(item.color_id)
-            );
-            this.showCornerDialog(
-              "Успех",
-              "Операция удаления успешна завершена",
-              "success"
-            );
+        token
+          .checkToken()
+          .then(token => {
+            services
+              .delete("/api/color/delete", selectColors, token)
+              .then(() => {
+                this.colors = this.colors.filter(
+                  item => !selectColors.includes(item.color_id)
+                );
+                this.showCornerDialog(
+                  "Успех",
+                  "Операция удаления успешна завершена",
+                  "success"
+                );
+              })
+              .catch(error => {
+                console.log(`Colors-3  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось связаться с сервером. Обратитесь к администратору",
+                  "danger"
+                );
+              });
           })
           .catch(error => {
+            console.log(`Colors-4  ${error}`);
             this.showCornerDialog(
               "Ошибка",
               "Не удалось связаться с сервером. Обратитесь к администратору",
               "danger"
             );
-            console.error(error);
           });
       }
     },

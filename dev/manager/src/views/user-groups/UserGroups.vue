@@ -6,8 +6,8 @@
       :question="checkQuestion"
       @eventClickCheck="check($event)"
     />
-    <Topbar 
-      title="Группы пользователей" 
+    <Topbar
+      title="Группы пользователей"
       @eventClickTopBar="route($event)"
       @eventHandlerSearch="eventSearch($event)"
       @eventClearSearch="clearSearch()"
@@ -33,7 +33,7 @@
               type="checkbox"
               :checked="checked(item.group_id)"
               @click.stop="select(item.group_id)"
-            >
+            />
           </td>
         </tr>
       </table>
@@ -55,6 +55,7 @@ import Check from "@/components/Check.vue";
 import CornerDialog from "@/components/CornerDialog";
 
 import services from "@/services/services";
+import token from "@/utils/token";
 import { table } from "@/mixins/table";
 import { cornerDialog } from "@/mixins/cornerDialog";
 
@@ -73,13 +74,25 @@ export default {
     };
   },
   mounted() {
-    const userGroups = services.get('/api/user-group/get');
-    userGroups
-      .then(userGroups => {
-        this.userGroups = userGroups.data;
+    token
+      .checkToken()
+      .then(token => {
+        services
+          .get("/api/user-group/get", token)
+          .then(userGroups => {
+            this.userGroups = userGroups.data;
+          })
+          .catch(error => {
+            console.log(`UserGroups-1  ${error}`);
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось связаться с сервером. Обратитесь к администратору",
+              "danger"
+            );
+          });
       })
       .catch(error => {
-        console.log(error);
+        console.log(`UserGroups-2  ${error}`);
         this.showCornerDialog(
           "Ошибка",
           "Не удалось связаться с сервером. Обратитесь к администратору",
@@ -90,7 +103,6 @@ export default {
   computed: {
     filter() {
       const foundItems = this.userGroups.filter(item => {
-
         let found = false;
 
         Object.keys(item).forEach(obj => {
@@ -100,12 +112,10 @@ export default {
         });
 
         if (found) return item;
-
       });
 
       return foundItems;
-
-    },
+    }
   },
   methods: {
     route(event) {
@@ -149,26 +159,40 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { userGroups, selectElements } = this;
-        const selectUserGroups = this.getSelect(userGroups, selectElements).map((item) => item.group_id);
-        const userGroup = services.delete('/api/user-group/delete', selectUserGroups);
-        userGroup
-          .then(() => {
-            this.userGroups = this.userGroups.filter(
-              item => !selectUserGroups.includes(item.group_id)
-            );
-            this.showCornerDialog(
-              "Успех",
-              "Операция удаления успешна завершена",
-              "success"
-            );
+        const selectUserGroups = this.getSelect(userGroups, selectElements).map(
+          item => item.group_id
+        );
+        token
+          .checkToken()
+          .then(token => {
+            services
+              .delete("/api/user-group/delete", selectUserGroups, token)
+              .then(() => {
+                this.userGroups = this.userGroups.filter(
+                  item => !selectUserGroups.includes(item.group_id)
+                );
+                this.showCornerDialog(
+                  "Успех",
+                  "Операция удаления успешна завершена",
+                  "success"
+                );
+              })
+              .catch(error => {
+                console.log(`UserGroups-3  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось связаться с сервером. Обратитесь к администратору",
+                  "danger"
+                );
+              });
           })
           .catch(error => {
+            console.log(`UserGroups-4  ${error}`);
             this.showCornerDialog(
               "Ошибка",
               "Не удалось связаться с сервером. Обратитесь к администратору",
               "danger"
             );
-            console.error(error);
           });
       }
     },

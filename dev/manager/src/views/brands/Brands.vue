@@ -81,11 +81,22 @@ export default {
     token
       .checkToken()
       .then(token => {
-        services.get("/api/brand/get", token).then(brand => {
-          this.brands = brand.data;
-        });
+        services
+          .get("/api/brand/get", token)
+          .then(brands => {
+            this.brands = brands.data;
+          })
+          .catch(error => {
+            console.log(`Brands-1  ${error}`);
+            this.showCornerDialog(
+              "Ошибка",
+              "Не удалось связаться с сервером. Обратитесь к администратору",
+              "danger"
+            );
+          });
       })
       .catch(error => {
+        console.log(`Brands-2  ${error}`);
         this.showCornerDialog(
           "Ошибка",
           "Не удалось связаться с сервером. Обратитесь к администратору",
@@ -155,7 +166,6 @@ export default {
         const selectBrands = this.getSelect(brands, selectElements).map(
           item => item.brand_id
         );
-
         token
           .checkToken()
           .then(token => {
@@ -172,6 +182,7 @@ export default {
                 );
               })
               .catch(error => {
+                console.log(`Brands-3  ${error}`);
                 this.showCornerDialog(
                   "Ошибка",
                   "Не удалось связаться с сервером. Обратитесь к администратору",
@@ -180,6 +191,7 @@ export default {
               });
           })
           .catch(error => {
+            console.log(`Brands-4  ${error}`);
             this.showCornerDialog(
               "Ошибка",
               "Не удалось связаться с сервером. Обратитесь к администратору",
