@@ -159,42 +159,47 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { userGroups, selectElements } = this;
+
         const selectUserGroups = this.getSelect(userGroups, selectElements).map(
           item => item.group_id
         );
-        token
-          .checkToken()
-          .then(token => {
-            services
-              .delete("/api/user-group/delete", selectUserGroups, token)
-              .then(() => {
-                this.userGroups = this.userGroups.filter(
-                  item => !selectUserGroups.includes(item.group_id)
-                );
-                this.showCornerDialog(
-                  "Успех",
-                  "Операция удаления успешна завершена",
-                  "success"
-                );
-              })
-              .catch(error => {
-                console.log(`UserGroups-3  ${error}`);
-                this.showCornerDialog(
-                  "Ошибка",
-                  "Не удалось связаться с сервером. Обратитесь к администратору",
-                  "danger"
-                );
-              });
-          })
-          .catch(error => {
-            console.log(`UserGroups-4  ${error}`);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось связаться с сервером. Обратитесь к администратору",
-              "danger"
-            );
-          });
+
+        this.deleteChange(selectUserGroups);
       }
+    },
+    deleteChange(selectUserGroups) {
+      token
+        .checkToken()
+        .then(token => {
+          services
+            .delete("/api/user-group/delete", selectUserGroups, token)
+            .then(() => {
+              this.userGroups = this.userGroups.filter(
+                item => !selectUserGroups.includes(item.group_id)
+              );
+              this.showCornerDialog(
+                "Успех",
+                "Операция удаления успешна завершена",
+                "success"
+              );
+            })
+            .catch(error => {
+              console.log(`UserGroups-3  ${error}`);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+            });
+        })
+        .catch(error => {
+          console.log(`UserGroups-4  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось связаться с сервером. Обратитесь к администратору",
+            "danger"
+          );
+        });
     },
     getSelect(userGroups, selectElements) {
       return userGroups.filter(userGroup =>

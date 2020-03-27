@@ -159,42 +159,47 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { categories, selectElements } = this;
+
         const selectCategories = this.getSelect(categories, selectElements).map(
           item => item.category_id
         );
-        token
-          .checkToken()
-          .then(token => {
-            services
-              .delete("/api/category/delete", selectCategories, token)
-              .then(() => {
-                this.categories = this.categories.filter(
-                  item => !selectCategories.includes(item.category_id)
-                );
-                this.showCornerDialog(
-                  "Успех",
-                  "Операция удаления успешна завершена",
-                  "success"
-                );
-              })
-              .catch(error => {
-                console.log(`Categories-3  ${error}`);
-                this.showCornerDialog(
-                  "Ошибка",
-                  "Не удалось связаться с сервером. Обратитесь к администратору",
-                  "danger"
-                );
-              });
-          })
-          .catch(error => {
-            console.log(`Categories-4  ${error}`);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось связаться с сервером. Обратитесь к администратору",
-              "danger"
-            );
-          });
+
+        this.deleteChange(selectCategories);
       }
+    },
+    deleteChange(selectCategories) {
+      token
+        .checkToken()
+        .then(token => {
+          services
+            .delete("/api/category/delete", selectCategories, token)
+            .then(() => {
+              this.categories = this.categories.filter(
+                item => !selectCategories.includes(item.category_id)
+              );
+              this.showCornerDialog(
+                "Успех",
+                "Операция удаления успешна завершена",
+                "success"
+              );
+            })
+            .catch(error => {
+              console.log(`Categories-3  ${error}`);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+            });
+        })
+        .catch(error => {
+          console.log(`Categories-4  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось связаться с сервером. Обратитесь к администратору",
+            "danger"
+          );
+        });
     },
     getSelect(categories, selectElements) {
       return categories.filter(category =>

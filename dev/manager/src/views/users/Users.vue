@@ -163,42 +163,47 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { users, selectElements } = this;
+
         const selectUsers = this.getSelect(users, selectElements).map(
           item => item.user_id
         );
-        token
-          .checkToken()
-          .then(token => {
-            services
-              .delete("/api/user/delete", selectUsers, token)
-              .then(() => {
-                this.users = this.users.filter(
-                  item => !selectUsers.includes(item.user_id)
-                );
-                this.showCornerDialog(
-                  "Успех",
-                  "Операция удаления успешна завершена",
-                  "success"
-                );
-              })
-              .catch(error => {
-                console.log(`Users-3  ${error}`);
-                this.showCornerDialog(
-                  "Ошибка",
-                  "Не удалось связаться с сервером. Обратитесь к администратору",
-                  "danger"
-                );
-              });
-          })
-          .catch(error => {
-            console.log(`Users-4  ${error}`);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось связаться с сервером. Обратитесь к администратору",
-              "danger"
-            );
-          });
+
+        this.deleteChange(selectUsers);
       }
+    },
+    deleteChange(selectUsers) {
+      token
+        .checkToken()
+        .then(token => {
+          services
+            .delete("/api/user/delete", selectUsers, token)
+            .then(() => {
+              this.users = this.users.filter(
+                item => !selectUsers.includes(item.user_id)
+              );
+              this.showCornerDialog(
+                "Успех",
+                "Операция удаления успешна завершена",
+                "success"
+              );
+            })
+            .catch(error => {
+              console.log(`Users-3  ${error}`);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+            });
+        })
+        .catch(error => {
+          console.log(`Users-4  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось связаться с сервером. Обратитесь к администратору",
+            "danger"
+          );
+        });
     },
     getSelect(users, selectElements) {
       return users.filter(user => selectElements.includes(user.user_id));

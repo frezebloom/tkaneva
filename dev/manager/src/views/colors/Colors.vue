@@ -163,42 +163,47 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { colors, selectElements } = this;
+
         const selectColors = this.getSelect(colors, selectElements).map(
           item => item.color_id
         );
-        token
-          .checkToken()
-          .then(token => {
-            services
-              .delete("/api/color/delete", selectColors, token)
-              .then(() => {
-                this.colors = this.colors.filter(
-                  item => !selectColors.includes(item.color_id)
-                );
-                this.showCornerDialog(
-                  "Успех",
-                  "Операция удаления успешна завершена",
-                  "success"
-                );
-              })
-              .catch(error => {
-                console.log(`Colors-3  ${error}`);
-                this.showCornerDialog(
-                  "Ошибка",
-                  "Не удалось связаться с сервером. Обратитесь к администратору",
-                  "danger"
-                );
-              });
-          })
-          .catch(error => {
-            console.log(`Colors-4  ${error}`);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось связаться с сервером. Обратитесь к администратору",
-              "danger"
-            );
-          });
+
+        this.deleteChange(selectColors);
       }
+    },
+    deleteChange(selectColors) {
+      token
+        .checkToken()
+        .then(token => {
+          services
+            .delete("/api/color/delete", selectColors, token)
+            .then(() => {
+              this.colors = this.colors.filter(
+                item => !selectColors.includes(item.color_id)
+              );
+              this.showCornerDialog(
+                "Успех",
+                "Операция удаления успешна завершена",
+                "success"
+              );
+            })
+            .catch(error => {
+              console.log(`Colors-3  ${error}`);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+            });
+        })
+        .catch(error => {
+          console.log(`Colors-4  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось связаться с сервером. Обратитесь к администратору",
+            "danger"
+          );
+        });
     },
     getSelect(colors, selectElements) {
       return colors.filter(color => selectElements.includes(color.color_id));

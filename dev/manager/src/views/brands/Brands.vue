@@ -163,42 +163,47 @@ export default {
       } else {
         this.hideCheck = !this.hideCheck;
         const { brands, selectElements } = this;
+
         const selectBrands = this.getSelect(brands, selectElements).map(
           item => item.brand_id
         );
-        token
-          .checkToken()
-          .then(token => {
-            services
-              .delete("/api/brand/delete", selectBrands, token)
-              .then(() => {
-                this.brands = this.brands.filter(
-                  item => !selectBrands.includes(item.brand_id)
-                );
-                this.showCornerDialog(
-                  "Успех",
-                  "Операция удаления успешна завершена",
-                  "success"
-                );
-              })
-              .catch(error => {
-                console.log(`Brands-3  ${error}`);
-                this.showCornerDialog(
-                  "Ошибка",
-                  "Не удалось связаться с сервером. Обратитесь к администратору",
-                  "danger"
-                );
-              });
-          })
-          .catch(error => {
-            console.log(`Brands-4  ${error}`);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось связаться с сервером. Обратитесь к администратору",
-              "danger"
-            );
-          });
+
+        this.deleteChange(selectBrands);
       }
+    },
+    deleteChange(selectBrands) {
+      token
+        .checkToken()
+        .then(token => {
+          services
+            .delete("/api/brand/delete", selectBrands, token)
+            .then(() => {
+              this.brands = this.brands.filter(
+                item => !selectBrands.includes(item.brand_id)
+              );
+              this.showCornerDialog(
+                "Успех",
+                "Операция удаления успешна завершена",
+                "success"
+              );
+            })
+            .catch(error => {
+              console.log(`Brands-3  ${error}`);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+            });
+        })
+        .catch(error => {
+          console.log(`Brands-4  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось связаться с сервером. Обратитесь к администратору",
+            "danger"
+          );
+        });
     },
     getSelect(brands, selectElements) {
       return brands.filter(brand => selectElements.includes(brand.brand_id));
