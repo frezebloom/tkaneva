@@ -112,65 +112,76 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.group_id) {
-        const userGroup = services.create(
-          "/api/user-group/create",
-          this.userGroup
-        );
-        userGroup
-          .then(() => {
-            this.$router.push({
-              name: "user groups",
-              params: {
-                status: true,
-                title: "Успех",
-                message: "Новая группа пользователей успешно создана",
-                button: "success"
-              }
-            });
-          })
-          .catch(() => {
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить группу пользователей",
-              "warning"
-            );
-          });
-      } else {
-        const userGroup = services.update("/api/user-group/update", this.state);
-        userGroup
-          .then(() => {
-            const index = this.tabs.findIndex(
-              item => item.group_id === this.state.group_id
-            );
-            if (this.tabs.length > 1) {
-              this.$emit("eventClickSave", index);
-              this.showCornerDialog(
-                "Успех",
-                "Группа пользователей изменена",
-                "success"
-              );
-            } else {
-              this.$router.push({
-                name: "user groups",
-                params: {
-                  status: true,
-                  title: "Успех",
-                  message: "Группа пользователей изменена",
-                  button: "success"
-                }
+      token
+        .checkToken()
+        .then(token => {
+          if (!this.state.group_id) {
+            services
+              .create("/api/user-group/create", this.userGroup, token)
+              .then(() => {
+                this.$router.push({
+                  name: "user groups",
+                  params: {
+                    status: true,
+                    title: "Успех",
+                    message: "Новая группа пользователей успешно создана",
+                    button: "success"
+                  }
+                });
+              })
+              .catch(error => {
+                console.log(`UserGroupForm-1  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить группу пользователей",
+                  "warning"
+                );
               });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить группу пользователей",
-              "warning"
-            );
-          });
-      }
+          } else {
+            services
+              .update("/api/user-group/update", this.state, token)
+              .then(() => {
+                const index = this.tabs.findIndex(
+                  item => item.group_id === this.state.group_id
+                );
+
+                if (this.tabs.length > 1) {
+                  this.$emit("eventClickSave", index);
+                  this.showCornerDialog(
+                    "Успех",
+                    "Группа пользователей изменена",
+                    "success"
+                  );
+                } else {
+                  this.$router.push({
+                    name: "user groups",
+                    params: {
+                      status: true,
+                      title: "Успех",
+                      message: "Группа пользователей изменена",
+                      button: "success"
+                    }
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(`UserGroupForm-2  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить группу пользователей",
+                  "warning"
+                );
+              });
+          }
+        })
+        .catch(error => {
+          console.log(`UserGroupForm-3  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось сохранить группу пользователей",
+            "warning"
+          );
+        });
     }
   }
 };

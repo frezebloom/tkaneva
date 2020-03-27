@@ -112,62 +112,76 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.category_id) {
-        const category = services.create("/api/category/create", this.category);
-        category
-          .then(() => {
-            this.$router.push({
-              name: "categories",
-              params: {
-                status: true,
-                title: "Успех",
-                message: "Новая категория товаров успешно создана",
-                button: "success"
-              }
-            });
-          })
-          .catch(() => {
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить категорию товаров",
-              "warning"
-            );
-          });
-      } else {
-        const category = services.update("/api/category/update", this.state);
-        category
-          .then(() => {
-            const index = this.tabs.findIndex(
-              item => item.category_id === this.state.category_id
-            );
-            if (this.tabs.length > 1) {
-              this.$emit("eventClickSave", index);
-              this.showCornerDialog(
-                "Успех",
-                "Категория товаров изменена",
-                "success"
-              );
-            } else {
-              this.$router.push({
-                name: "categories",
-                params: {
-                  status: true,
-                  title: "Успех",
-                  message: "Категория товаров изменена",
-                  button: "success"
-                }
+      token
+        .checkToken()
+        .then(token => {
+          if (!this.state.category_id) {
+            services
+              .create("/api/category/create", this.category, token)
+              .then(() => {
+                this.$router.push({
+                  name: "categories",
+                  params: {
+                    status: true,
+                    title: "Успех",
+                    message: "Новая категория товаров успешно создана",
+                    button: "success"
+                  }
+                });
+              })
+              .catch(error => {
+                console.log(`CategoryForm-1  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить категорию товаров",
+                  "warning"
+                );
               });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить категорию товаров",
-              "warning"
-            );
-          });
-      }
+          } else {
+            services
+              .update("/api/category/update", this.state, token)
+              .then(() => {
+                const index = this.tabs.findIndex(
+                  item => item.category_id === this.state.category_id
+                );
+
+                if (this.tabs.length > 1) {
+                  this.$emit("eventClickSave", index);
+                  this.showCornerDialog(
+                    "Успех",
+                    "Категория товаров изменена",
+                    "success"
+                  );
+                } else {
+                  this.$router.push({
+                    name: "categories",
+                    params: {
+                      status: true,
+                      title: "Успех",
+                      message: "Категория товаров изменена",
+                      button: "success"
+                    }
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(`CategoryForm-2  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить категорию товаров",
+                  "warning"
+                );
+              });
+          }
+        })
+        .catch(error => {
+          console.log(`CategoryForm-3  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось сохранить категорию товаров",
+            "warning"
+          );
+        });
     }
   }
 };

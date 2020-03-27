@@ -60,8 +60,7 @@
               :key="index"
               :value="option.group_id"
               :selected="option.group_id === state.group_id ? 'selected' : ''"
-              >{{ option.name }}</option
-            >
+            >{{ option.name }}</option>
           </select>
         </div>
         <div v-if="!this.state.user_id">
@@ -246,62 +245,76 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.user_id) {
-        const user = services.create("/api/user/create", this.user);
-        user
-          .then(() => {
-            this.$router.push({
-              name: "users",
-              params: {
-                status: true,
-                title: "Успех",
-                message: "Новый аккаунт успешно создан",
-                button: "success"
-              }
-            });
-          })
-          .catch(() => {
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить аккаунт",
-              "warning"
-            );
-          });
-      } else {
-        const user = services.update("/api/user/update", this.state);
-        user
-          .then(() => {
-            const index = this.tabs.findIndex(
-              item => item.user_id === this.state.user_id
-            );
-            if (this.tabs.length > 1) {
-              this.$emit("eventClickSave", index);
-              this.showCornerDialog(
-                "Успех",
-                "Учётная запись изменена",
-                "success"
-              );
-            } else {
-              this.$router.push({
-                name: "users",
-                params: {
-                  status: true,
-                  title: "Успех",
-                  message: "Учётная запись изменена",
-                  button: "success"
-                }
+      token
+        .checkToken()
+        .then(token => {
+          if (!this.state.user_id) {
+            services
+              .create("/api/user/create", this.user, token)
+              .then(() => {
+                this.$router.push({
+                  name: "users",
+                  params: {
+                    status: true,
+                    title: "Успех",
+                    message: "Не удалось сохранить аккаунт",
+                    button: "success"
+                  }
+                });
+              })
+              .catch(error => {
+                console.log(`UserForm-1  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить аккаунт",
+                  "warning"
+                );
               });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить аккаунт",
-              "warning"
-            );
-          });
-      }
+          } else {
+            services
+              .update("/api/user/update", this.state, token)
+              .then(() => {
+                const index = this.tabs.findIndex(
+                  item => item.user_id === this.state.user_id
+                );
+
+                if (this.tabs.length > 1) {
+                  this.$emit("eventClickSave", index);
+                  this.showCornerDialog(
+                    "Успех",
+                    "Учётная запись изменена",
+                    "success"
+                  );
+                } else {
+                  this.$router.push({
+                    name: "users",
+                    params: {
+                      status: true,
+                      title: "Успех",
+                      message: "Учётная запись изменена",
+                      button: "success"
+                    }
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(`UserForm-2  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить аккаунт",
+                  "warning"
+                );
+              });
+          }
+        })
+        .catch(error => {
+          console.log(`UserForm-3  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось сохранить аккаунт",
+            "warning"
+          );
+        });
     }
   }
 };

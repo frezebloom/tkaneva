@@ -115,59 +115,76 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.brand_id) {
-        token.checkToken().then(token => {
-          services
-            .create("/api/brand/create", this.brand, token)
-            .then(brand => {
-              this.$router.push({
-                name: "brands",
-                params: {
-                  status: true,
-                  title: "Успех",
-                  message: "Новый производитель успешно создан",
-                  button: "success"
-                }
-              });
-            });
-        });
-      } else {
-        token.checkToken().then(token => {
-          services
-            .update("/api/brand/update", this.state, token)
-            .then(() => {
-              const index = this.tabs.findIndex(
-                item => item.brand_id === this.state.brand_id
-              );
-
-              if (this.tabs.length > 1) {
-                this.$emit("eventClickSave", index);
-                this.showCornerDialog(
-                  "Успех",
-                  "Производитель изменен",
-                  "success"
-                );
-              } else {
+      token
+        .checkToken()
+        .then(token => {
+          if (!this.state.brand_id) {
+            services
+              .create("/api/brand/create", this.brand, token)
+              .then(() => {
                 this.$router.push({
                   name: "brands",
                   params: {
                     status: true,
                     title: "Успех",
-                    message: "Производитель изменен",
+                    message: "Новый производитель успешно создан",
                     button: "success"
                   }
                 });
-              }
-            })
-            .catch(() => {
-              this.showCornerDialog(
-                "Ошибка",
-                "Не удалось сохранить производителя",
-                "warning"
-              );
-            });
+              })
+              .catch(error => {
+                console.log(`BrandForm-1  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить производителя",
+                  "warning"
+                );
+              });
+          } else {
+            services
+              .update("/api/brand/update", this.state, token)
+              .then(() => {
+                const index = this.tabs.findIndex(
+                  item => item.category_id === this.state.category_id
+                );
+
+                if (this.tabs.length > 1) {
+                  this.$emit("eventClickSave", index);
+                  this.showCornerDialog(
+                    "Успех",
+                    "Производитель изменен",
+                    "success"
+                  );
+                } else {
+                  this.$router.push({
+                    name: "brands",
+                    params: {
+                      status: true,
+                      title: "Успех",
+                      message: "Производитель изменен",
+                      button: "success"
+                    }
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(`BrandForm-2  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить производителя",
+                  "warning"
+                );
+              });
+          }
+        })
+        .catch(error => {
+          console.log(`BrandForm-3  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось сохранить производителя",
+            "warning"
+          );
         });
-      }
     }
   }
 };

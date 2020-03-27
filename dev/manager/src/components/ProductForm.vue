@@ -18,10 +18,7 @@
         </div>
         <div class="form-wrapper">
           <label class="form-label">Категория *</label>
-          <select
-            class="form-select"
-            @input="inputHandler($event, 'category_id')"
-          >
+          <select class="form-select" @input="inputHandler($event, 'category_id')">
             <option
               v-for="(option, index) in categories"
               :key="index"
@@ -29,8 +26,7 @@
               :selected="
                 option.category_id === state.category_id ? 'selected' : ''
               "
-              >{{ option.name }}</option
-            >
+            >{{ option.name }}</option>
           </select>
         </div>
         <div class="form-wrapper">
@@ -43,8 +39,7 @@
               'form-input'
             ]"
             class="form-input form-area"
-          >
-          </textarea>
+          ></textarea>
         </div>
         <div class="form-wrapper">
           <label class="form-label">Количество</label>
@@ -80,8 +75,7 @@
               :key="index"
               :value="option.brand_id"
               :selected="option.brand_id === state.brand_id ? 'selected' : ''"
-              >{{ option.name }}</option
-            >
+            >{{ option.name }}</option>
           </select>
         </div>
         <div class="form-wrapper">
@@ -92,8 +86,7 @@
               :key="index"
               :value="option.color_id"
               :selected="option.color_id === state.color_id ? 'selected' : ''"
-              >{{ option.name }}</option
-            >
+            >{{ option.name }}</option>
           </select>
         </div>
         <div class="form-wrapper">
@@ -319,57 +312,72 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.product_id) {
-        const product = services.create("/api/product/create", this.product);
-        product
-          .then(() => {
-            this.$router.push({
-              name: "products",
-              params: {
-                status: true,
-                title: "Успех",
-                message: "Новый товар успешно создан",
-                button: "success"
-              }
-            });
-          })
-          .catch(() => {
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить товар",
-              "warning"
-            );
-          });
-      } else {
-        const product = services.update("/api/product/update", this.state);
-        product
-          .then(() => {
-            const index = this.tabs.findIndex(
-              item => item.product_id === this.state.product_id
-            );
-            if (this.tabs.length > 1) {
-              this.$emit("eventClickSave", index);
-              this.showCornerDialog("Успех", "Товар изменен", "success");
-            } else {
-              this.$router.push({
-                name: "products",
-                params: {
-                  status: true,
-                  title: "Успех",
-                  message: "Товар изменен",
-                  button: "success"
-                }
+      token
+        .checkToken()
+        .then(token => {
+          if (!this.state.product_id) {
+            services
+              .create("/api/product/create", this.product, token)
+              .then(() => {
+                this.$router.push({
+                  name: "products",
+                  params: {
+                    status: true,
+                    title: "Успех",
+                    message: "Новый товар успешно создан",
+                    button: "success"
+                  }
+                });
+              })
+              .catch(error => {
+                console.log(`ProductForm-1  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить товар",
+                  "warning"
+                );
               });
-            }
-          })
-          .catch(() => {
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить товар",
-              "warning"
-            );
-          });
-      }
+          } else {
+            services
+              .update("/api/product/update", this.state, token)
+              .then(() => {
+                const index = this.tabs.findIndex(
+                  item => item.product_id === this.state.product_id
+                );
+
+                if (this.tabs.length > 1) {
+                  this.$emit("eventClickSave", index);
+                  this.showCornerDialog("Успех", "Товар изменен", "success");
+                } else {
+                  this.$router.push({
+                    name: "products",
+                    params: {
+                      status: true,
+                      title: "Успех",
+                      message: "Товар изменен",
+                      button: "success"
+                    }
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(`ProductForm-2  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить товар",
+                  "warning"
+                );
+              });
+          }
+        })
+        .catch(error => {
+          console.log(`ProductForm-3  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось сохранить товар",
+            "warning"
+          );
+        });
     },
     uploadedFile(fileData) {
       const files = JSON.parse(fileData.xhr.response);

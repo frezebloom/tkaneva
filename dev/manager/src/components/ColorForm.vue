@@ -112,58 +112,76 @@ export default {
       }
     },
     saveChange() {
-      if (!this.state.color_id) {
-        const color = services.create("/api/color/create", this.color);
-        color
-          .then(() => {
-            this.$router.push({
-              name: "colors",
-              params: {
-                status: true,
-                title: "Успех",
-                message: "Новая расцветка успешно создана",
-                button: "success"
-              }
-            });
-          })
-          .catch(() => {
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить расцветку",
-              "warning"
-            );
-          });
-      } else {
-        const color = services.update("/api/color/update", this.state);
-        color
-          .then(() => {
-            const index = this.tabs.findIndex(
-              item => item.color_id === this.state.color_id
-            );
-            if (this.tabs.length > 1) {
-              this.$emit("eventClickSave", index);
-              this.showCornerDialog("Успех", "Расцветка изменена", "success");
-            } else {
-              this.$router.push({
-                name: "colors",
-                params: {
-                  status: true,
-                  title: "Успех",
-                  message: "Расцветка изменена",
-                  button: "success"
-                }
+      token
+        .checkToken()
+        .then(token => {
+          if (!this.state.color_id) {
+            services
+              .create("/api/color/create", this.color, token)
+              .then(() => {
+                this.$router.push({
+                  name: "colors",
+                  params: {
+                    status: true,
+                    title: "Успех",
+                    message: "Новая расцветка успешно создана",
+                    button: "success"
+                  }
+                });
+              })
+              .catch(error => {
+                console.log(`ColorForm-1  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить расцветку",
+                  "warning"
+                );
               });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            this.showCornerDialog(
-              "Ошибка",
-              "Не удалось сохранить расцветку",
-              "warning"
-            );
-          });
-      }
+          } else {
+            services
+              .update("/api/color/update", this.state, token)
+              .then(() => {
+                const index = this.tabs.findIndex(
+                  item => item.color_id === this.state.color_id
+                );
+
+                if (this.tabs.length > 1) {
+                  this.$emit("eventClickSave", index);
+                  this.showCornerDialog(
+                    "Успех",
+                    "Расцветка изменена",
+                    "success"
+                  );
+                } else {
+                  this.$router.push({
+                    name: "colors",
+                    params: {
+                      status: true,
+                      title: "Успех",
+                      message: "Расцветка изменена",
+                      button: "success"
+                    }
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(`ColorForm-2  ${error}`);
+                this.showCornerDialog(
+                  "Ошибка",
+                  "Не удалось сохранить расцветку",
+                  "warning"
+                );
+              });
+          }
+        })
+        .catch(error => {
+          console.log(`ColorForm-3  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось сохранить расцветку",
+            "warning"
+          );
+        });
     }
   }
 };
