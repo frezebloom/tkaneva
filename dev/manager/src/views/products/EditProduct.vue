@@ -65,10 +65,10 @@ export default {
     const { selectProducts } = this.$route.params;
     if (selectProducts) {
       selectProducts.forEach(element => {
-        element["title"] = element.fullName;
+        element["title"] = element.name;
       });
       this.tabs = selectProducts;
-      this.user = selectProducts[0];
+      this.product = selectProducts[0];
     }
   },
   methods: {
@@ -79,7 +79,7 @@ export default {
       this.tabs = this.tabs.filter((item, index) => {
         if (index !== element) return item;
       });
-      this.user = this.tabs[0];
+      this.product = this.tabs[0];
     }
   }
 };

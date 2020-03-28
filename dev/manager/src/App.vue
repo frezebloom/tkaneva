@@ -6,7 +6,7 @@
         <Sidebar />
         <Content />
       </div>
-      <Footer />
+      <!-- <Footer /> -->
     </div>
     <div v-else>
       <Content />
