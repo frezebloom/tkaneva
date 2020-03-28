@@ -3,12 +3,14 @@
     <ul class="sidebar-menu">
       <li class="sidebar-menu-header">Навигация</li>
       <li class="sidebar-menu-category" @click="open('product')">Продукт</li>
-      <ul
-        v-bind:class="{ active: isActive.product }"
-        class="sidebar-menu-subcategory"
-      >
+      <ul v-bind:class="{ active: isActive.product }" class="sidebar-menu-subcategory">
         <li>
-          <router-link to="/products">Товары</router-link>
+          <router-link to="/users">
+            <div class="sidebar-menu-wrapper">
+              <img alt="products" src="../assets/icons/products.svg" />
+              <div class="sidebar-menu-title">Товары</div>
+            </div>
+          </router-link>
         </li>
         <li>
           <router-link to="/categories">Категории</router-link>
@@ -21,13 +23,8 @@
         </li>
       </ul>
       <li class="sidebar-menu-category">Заказы</li>
-      <li class="sidebar-menu-category" @click="open('user')">
-        Учетные записи
-      </li>
-      <ul
-        v-bind:class="{ active: isActive.user }"
-        class="sidebar-menu-subcategory"
-      >
+      <li class="sidebar-menu-category" @click="open('user')">Учетные записи</li>
+      <ul v-bind:class="{ active: isActive.user }" class="sidebar-menu-subcategory">
         <li>
           <router-link to="/users">
             <div class="sidebar-menu-wrapper">
