@@ -5,7 +5,7 @@
       <li class="sidebar-menu-category" @click="open('product')">Продукт</li>
       <ul v-bind:class="{ active: isActive.product }" class="sidebar-menu-subcategory">
         <li>
-          <router-link to="/users">
+          <router-link to="/products">
             <div class="sidebar-menu-wrapper">
               <img alt="products" src="../assets/icons/products.svg" />
               <div class="sidebar-menu-title">Товары</div>

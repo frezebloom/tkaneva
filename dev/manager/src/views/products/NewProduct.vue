@@ -48,10 +48,6 @@ export default {
     token
       .checkToken()
       .then(token => {
-        services.get("/api/product/get", token).then(products => {
-          this.products = products.data;
-        });
-
         services.get("/api/category/get", token).then(categories => {
           this.categories = categories.data;
         });

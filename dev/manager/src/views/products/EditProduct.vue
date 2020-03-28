@@ -41,10 +41,6 @@ export default {
     token
       .checkToken()
       .then(token => {
-        services.get("/api/product/get", token).then(products => {
-          this.products = products.data;
-        });
-
         services.get("/api/category/get", token).then(categories => {
           this.categories = categories.data;
         });
@@ -63,6 +59,7 @@ export default {
   },
   created() {
     const { selectProducts } = this.$route.params;
+    console.log(this.$route.params);
     if (selectProducts) {
       selectProducts.forEach(element => {
         element["title"] = element.name;

@@ -62,7 +62,7 @@ module.exports = {
         return transferImages(acticle);
       })
       .then(article => {
-        return createProduct(article);
+        return createProduct(article, uploadedFiles);
       })
       .catch(error => {
         console.log(error);
@@ -96,7 +96,7 @@ module.exports = {
               });
           }
         });
-        return article;
+        return { article, uploadedFiles };
       } catch (error) {
         console.error(error);
         res.status(404).send("Invalid request " + error);
@@ -123,7 +123,10 @@ module.exports = {
       });
     }
 
-    function createProduct(article) {
+    function createProduct({ article, uploadedFiles }) {
+      console.log("das");
+      console.log(article);
+      console.log(uploadedFiles);
       return Product.create({
         article,
         name,

@@ -142,6 +142,7 @@ export default {
     route(event) {
       const { products, selectElements } = this;
       const selectProducts = this.getSelect(products, selectElements);
+      console.log(selectProducts);
       if (event === "delete") {
         if (selectProducts.length > 0) {
           this.hideCheck = !this.hideCheck;
