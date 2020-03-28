@@ -1,18 +1,14 @@
 <template>
   <div class="edit-user">
     <div v-if="tabs.length > 1">
-      <Tabs 
-        :tabs="tabs" 
-        @eventClickTab="route($event)" 
-        @eventClickCloseTab="closeTab($event)" 
-      />
+      <Tabs :tabs="tabs" @eventClickTab="route($event)" @eventClickCloseTab="closeTab($event)" />
     </div>
-    <UserForm 
+    <UserForm
       title="Редактировать акаунт"
-      @eventClickSave="closeTab($event)" 
-      :state="user" 
-      :userGroups="userGroups" 
-      :tabs="tabs" 
+      @eventClickSave="closeTab($event)"
+      :state="user"
+      :userGroups="userGroups"
+      :tabs="tabs"
       :users="users"
     />
   </div>
@@ -21,6 +17,7 @@
 import Tabs from "@/components/Tabs";
 import UserForm from "@/components/UserForm";
 import services from "@/services/services";
+import token from "@/utils/token";
 
 export default {
   name: "EditUser",
@@ -37,28 +34,26 @@ export default {
     };
   },
   mounted() {
-    const users = services.get('/api/user/get');
-    users
-      .then(users => {
-        this.users = users.data;
+    token
+      .checkToken()
+      .then(token => {
+        services.get("/api/user/get", token).then(users => {
+          this.users = users.data;
+        });
+
+        services.get("/api/user-group/get", token).then(userGroups => {
+          this.userGroups = userGroups.data;
+        });
       })
       .catch(error => {
-        console.error(error);
-      });
-    const userGroups = services.get('/api/user-group/get');
-    userGroups
-      .then(userGroups => {
-        this.userGroups = userGroups.data;
-      })
-      .catch(error => {
-        console.error(error);
+        console.log(`EditUser-1  ${error}`);
       });
   },
   created() {
     const { selectUsers } = this.$route.params;
     if (selectUsers) {
       selectUsers.forEach(element => {
-        element['title'] = element.fullName;
+        element["title"] = element.fullName;
       });
       this.tabs = selectUsers;
       this.user = selectUsers[0];
@@ -70,8 +65,8 @@ export default {
     },
     closeTab(element) {
       this.tabs = this.tabs.filter((item, index) => {
-        if(index !== element) return item
-      })
+        if (index !== element) return item;
+      });
       this.user = this.tabs[0];
     }
   }

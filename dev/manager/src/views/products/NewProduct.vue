@@ -65,7 +65,7 @@ export default {
         });
       })
       .catch(error => {
-        console.error(error);
+        console.log(`NewProduct-1  ${error}`);
       });
   }
 };

@@ -1,11 +1,7 @@
 <template>
   <div class="edit-product">
     <div v-if="tabs.length > 1">
-      <Tabs
-        :tabs="tabs"
-        @eventClickTab="route($event)"
-        @eventClickCloseTab="closeTab($event)"
-      />
+      <Tabs :tabs="tabs" @eventClickTab="route($event)" @eventClickCloseTab="closeTab($event)" />
     </div>
     <ProductForm
       title="Редактировать товар"
@@ -23,6 +19,7 @@
 import Tabs from "@/components/Tabs";
 import ProductForm from "@/components/ProductForm";
 import services from "@/services/services";
+import token from "@/utils/token";
 
 export default {
   name: "EditProduct",
@@ -41,37 +38,27 @@ export default {
     };
   },
   mounted() {
-    const products = services.get("/api/product/get");
-    products
-      .then(products => {
-        this.products = products.data;
+    token
+      .checkToken()
+      .then(token => {
+        services.get("/api/product/get", token).then(products => {
+          this.products = products.data;
+        });
+
+        services.get("/api/category/get", token).then(categories => {
+          this.categories = categories.data;
+        });
+
+        services.get("/api/brand/get", token).then(brands => {
+          this.brands = brands.data;
+        });
+
+        services.get("/api/color/get", token).then(colors => {
+          this.colors = colors.data;
+        });
       })
       .catch(error => {
-        console.error(error);
-      });
-    const categories = services.get("/api/category/get");
-    categories
-      .then(categories => {
-        this.categories = categories.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    const brands = services.get("/api/brand/get");
-    brands
-      .then(brands => {
-        this.brands = brands.data;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    const colors = services.get("/api/color/get");
-    colors
-      .then(colors => {
-        this.colors = colors.data;
-      })
-      .catch(error => {
-        console.error(error);
+        console.log(`EditProduct-1  ${error}`);
       });
   },
   created() {

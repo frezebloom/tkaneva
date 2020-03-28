@@ -1,16 +1,12 @@
 <template>
   <div class="new-user">
-    <UserForm 
-      title="Создать акаунт" 
-      :state="user"  
-      :users="users"
-      :userGroups="userGroups"
-    />
+    <UserForm title="Создать акаунт" :state="user" :users="users" :userGroups="userGroups" />
   </div>
 </template>
 <script>
 import UserForm from "@/components/UserForm";
 import services from "@/services/services";
+import token from "@/utils/token";
 
 export default {
   name: "NewUser",
@@ -34,20 +30,19 @@ export default {
     };
   },
   mounted() {
-    const users = services.get('/api/user/get');
-    users
-      .then(users => {
-        this.users = users.data;
+    token
+      .checkToken()
+      .then(token => {
+        services.get("/api/user/get", token).then(users => {
+          this.users = users.data;
+        });
+
+        services.get("/api/user-group/get", token).then(userGroups => {
+          this.userGroups = userGroups.data;
+        });
       })
       .catch(error => {
-        console.error(error);
-      });
-    const userGroups = services.get('/api/user-group/get');
-    userGroups
-      .then(userGroups => {
-        this.userGroups = userGroups.data;
-      })
-      .catch(error => {
+        console.log(`EditProduct-1  ${error}`);
         console.error(error);
       });
   }
