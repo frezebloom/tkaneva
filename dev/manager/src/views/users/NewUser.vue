@@ -42,8 +42,7 @@ export default {
         });
       })
       .catch(error => {
-        console.log(`EditProduct-1  ${error}`);
-        console.error(error);
+        console.log(`NewUser-1  ${error}`);
       });
   }
 };
