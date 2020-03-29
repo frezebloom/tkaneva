@@ -83,6 +83,7 @@ module.exports = {
             const promises = uploadedFiles.map(file => {
               const source = file.path;
               const destination = `${dir}/${file.fileName}`;
+              path.push(destination);
               return copyFile(source, destination);
             });
 
