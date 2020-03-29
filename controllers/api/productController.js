@@ -58,11 +58,11 @@ module.exports = {
       .then(count => {
         return `${category_id}${brand_id}${color_id}${count}`;
       })
-      .then(acticle => {
-        return transferImages(acticle);
-      })
       .then(article => {
-        return createProduct(article, uploadedFiles);
+        return transferImages(article);
+      })
+      .then(({ article, images }) => {
+        return createProduct(article, images);
       })
       .catch(error => {
         console.log(error);
@@ -74,6 +74,7 @@ module.exports = {
         return article;
       }
       const dir = `${publicPath}/${article}`;
+
       try {
         fs.mkdir(dir, function(error) {
           if (error) {
@@ -83,7 +84,6 @@ module.exports = {
             const promises = uploadedFiles.map(file => {
               const source = file.path;
               const destination = `${dir}/${file.fileName}`;
-              path.push(destination);
               return copyFile(source, destination);
             });
 
@@ -97,7 +97,9 @@ module.exports = {
               });
           }
         });
-        return { article, uploadedFiles };
+
+        const images = uploadedFiles.map(file => `${dir}/${file.fileName}`);
+        return { article, images };
       } catch (error) {
         console.error(error);
         res.status(404).send("Invalid request " + error);
@@ -124,10 +126,9 @@ module.exports = {
       });
     }
 
-    function createProduct({ article, uploadedFiles }) {
-      console.log("das");
-      console.log(article);
-      console.log(uploadedFiles);
+    function createProduct(article, imagePaths) {
+      const images = JSON.stringify(imagePaths);
+      console.log(images);
       return Product.create({
         article,
         name,
@@ -139,6 +140,7 @@ module.exports = {
         density,
         price,
         discount,
+        images,
         brand_id,
         category_id,
         color_id,
