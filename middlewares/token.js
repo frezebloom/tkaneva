@@ -10,6 +10,11 @@ module.exports = {
           token.access_token !== accesstoken ||
           token.access_token_life < Date.now()
         ) {
+          console.log("пришёл " + accesstoken);
+          console.log("сохранен " + token.access_token);
+          console.log("token_life " + token.access_token_life);
+          console.log("а сейчас " + Date.now());
+
           console.log("invalid token");
           res.status(404).send("invalid token");
         } else {

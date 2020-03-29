@@ -128,7 +128,6 @@ module.exports = {
 
     function createProduct(article, imagePaths) {
       const images = JSON.stringify(imagePaths);
-      console.log(images);
       return Product.create({
         article,
         name,

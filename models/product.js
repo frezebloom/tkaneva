@@ -57,7 +57,7 @@ module.exports = function(sequelize, Sequelize) {
     },
 
     images: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       notEmpty: true
     },
 

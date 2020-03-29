@@ -59,7 +59,6 @@ export default {
   },
   created() {
     const { selectProducts } = this.$route.params;
-    console.log(this.$route.params);
     if (selectProducts) {
       selectProducts.forEach(element => {
         element["title"] = element.name;

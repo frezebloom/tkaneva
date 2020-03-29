@@ -251,6 +251,7 @@ export default {
         density: this.state.density || "",
         price: this.state.price || "",
         discount: this.state.discount || "0",
+        images: this.state.images ? JSON.parse(this.state.images) : [],
         status: this.state.status || "Вкл",
         uploadedFiles: []
       },
