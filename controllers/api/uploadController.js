@@ -45,7 +45,6 @@ module.exports = {
     const processingFileInfo = files => {
       return files.map(file => {
         const { filename, originalname, path, size } = file;
-
         return Upload.create({
           name: filename,
           original_name: originalname,

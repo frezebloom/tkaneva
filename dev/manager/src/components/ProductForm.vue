@@ -251,7 +251,7 @@ export default {
         density: this.state.density || "",
         price: this.state.price || "",
         discount: this.state.discount || "0",
-        images: this.state.images ? JSON.parse(this.state.images) : [],
+        images: this.state.images ? this.state.images : [],
         status: this.state.status || "Вкл",
         uploadedFiles: []
       },
@@ -278,6 +278,12 @@ export default {
         dictFileSizeUnits: "Максимум 1 MB"
       }
     };
+  },
+  mounted() {
+    console.log(JSON.parse(this.state.images));
+    var file = { size: 123, name: "Icon", type: "image/png" };
+    var url = "https://myvizo.com/img/logo_sm.png";
+    this.$refs.myVueDropzone.manuallyAddFile(file, url);
   },
   methods: {
     inputHandler(event, params) {
