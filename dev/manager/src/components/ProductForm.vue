@@ -280,10 +280,12 @@ export default {
     };
   },
   mounted() {
-    console.log(JSON.parse(this.state.images));
     var file = { size: 123, name: "Icon", type: "image/png" };
-    var url = "https://myvizo.com/img/logo_sm.png";
-    this.$refs.myVueDropzone.manuallyAddFile(file, url);
+    this.state.images.split(",").forEach(path => {
+      const url = `http://${window.location.hostname}:3000/${path}`;
+      console.log(url);
+      this.$refs.myVueDropzone.manuallyAddFile(file, url);
+    });
   },
   methods: {
     inputHandler(event, params) {
@@ -389,17 +391,17 @@ export default {
         });
     },
     uploadedFile(fileData) {
-      const files = JSON.parse(fileData.xhr.response);
-      files.forEach(file => this.product.uploadedFiles.push(file));
+      // const files = JSON.parse(fileData.xhr.response);
+      // files.forEach(file => this.product.uploadedFiles.push(file));
     },
     removeFile(fileData) {
-      const files = JSON.parse(fileData.xhr.response);
-      files.forEach(
-        file =>
-          (this.product.uploadedFiles = this.product.uploadedFiles.filter(
-            uploadedFile => file.fileName !== uploadedFile.fileName
-          ))
-      );
+      // const files = JSON.parse(fileData.xhr.response);
+      // files.forEach(
+      //   file =>
+      //     (this.product.uploadedFiles = this.product.uploadedFiles.filter(
+      //       uploadedFile => file.fileName !== uploadedFile.fileName
+      //     ))
+      // );
     }
   }
 };
