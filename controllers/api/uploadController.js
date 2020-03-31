@@ -1,6 +1,7 @@
 const path = require("path");
 const multer = require("multer");
 const sharp = require("sharp");
+const mime = require("mime-types");
 const uuid = require("uuid/v1");
 const db = require("../../models/index");
 
@@ -15,7 +16,7 @@ module.exports = {
         cb(null, imagePath);
       },
       filename: (req, file, cb) => {
-        cb(null, uuid());
+        cb(null, `${uuid()}.${mime.extension(file.mimetype)}`);
       }
     });
 

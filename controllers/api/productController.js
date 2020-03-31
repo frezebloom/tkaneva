@@ -127,7 +127,12 @@ module.exports = {
     }
 
     function createProduct(article, imagePaths) {
-      const images = JSON.stringify(imagePaths);
+      let images = "";
+      imagePaths.forEach((path, index, arr) => {
+        const separator = arr.length !== index + 1 ? "," : "";
+        images += path.split("public/")[1] + separator;
+      });
+
       return Product.create({
         article,
         name,
