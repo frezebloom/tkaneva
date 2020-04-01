@@ -54,6 +54,7 @@ module.exports = {
         })
           .then(data => {
             return {
+              id: data.upload_id,
               fileName: data.name,
               originalName: data.original_name,
               path: data.path,

@@ -279,14 +279,14 @@ export default {
       }
     };
   },
-  mounted() {
-    var file = { size: 123, name: "Icon", type: "image/png" };
-    this.state.images.split(",").forEach(path => {
-      const url = `http://${window.location.hostname}:3000/${path}`;
-      console.log(url);
-      this.$refs.myVueDropzone.manuallyAddFile(file, url);
-    });
-  },
+  // mounted() {
+  //   var file = { size: 123, name: "Icon", type: "image/png" };
+  //   this.state.images.split(",").forEach(path => {
+  //     const url = `http://${window.location.hostname}:3000/${path}`;
+  //     console.log(url);
+  //     this.$refs.myVueDropzone.manuallyAddFile(file, url);
+  //   });
+  // },
   methods: {
     inputHandler(event, params) {
       if (!this.state.product_id) {
@@ -391,17 +391,18 @@ export default {
         });
     },
     uploadedFile(fileData) {
-      // const files = JSON.parse(fileData.xhr.response);
-      // files.forEach(file => this.product.uploadedFiles.push(file));
+      const files = JSON.parse(fileData.xhr.response);
+      files.forEach(file => this.product.uploadedFiles.push(file));
+      console.log(this.product.uploadedFiles);
     },
     removeFile(fileData) {
-      // const files = JSON.parse(fileData.xhr.response);
-      // files.forEach(
-      //   file =>
-      //     (this.product.uploadedFiles = this.product.uploadedFiles.filter(
-      //       uploadedFile => file.fileName !== uploadedFile.fileName
-      //     ))
-      // );
+      const files = JSON.parse(fileData.xhr.response);
+      files.forEach(
+        file =>
+          (this.product.uploadedFiles = this.product.uploadedFiles.filter(
+            uploadedFile => file.fileName !== uploadedFile.fileName
+          ))
+      );
     }
   }
 };
