@@ -251,7 +251,7 @@ export default {
         density: this.state.density || "",
         price: this.state.price || "",
         discount: this.state.discount || "0",
-        images: this.state.images ? this.state.images : [],
+        uploads_id: this.state.uploads_id ? this.state.uploads_id : [],
         status: this.state.status || "Вкл",
         uploadedFiles: []
       },
@@ -279,14 +279,19 @@ export default {
       }
     };
   },
-  // mounted() {
-  //   var file = { size: 123, name: "Icon", type: "image/png" };
-  //   this.state.images.split(",").forEach(path => {
-  //     const url = `http://${window.location.hostname}:3000/${path}`;
-  //     console.log(url);
-  //     this.$refs.myVueDropzone.manuallyAddFile(file, url);
-  //   });
-  // },
+  mounted() {
+    if (this.state.product_id && this.state.uploads_id) {
+      const id = JSON.parse(this.state.uploads_id);
+
+      console.log(id);
+    }
+    // var file = { size: 123, name: "Icon", type: "image/png" };
+    // this.state.images.split(",").forEach(path => {
+    //   const url = `http://${window.location.hostname}:3000/${path}`;
+    //   console.log(url);
+    //   this.$refs.myVueDropzone.manuallyAddFile(file, url);
+    // });
+  },
   methods: {
     inputHandler(event, params) {
       if (!this.state.product_id) {
@@ -393,7 +398,6 @@ export default {
     uploadedFile(fileData) {
       const files = JSON.parse(fileData.xhr.response);
       files.forEach(file => this.product.uploadedFiles.push(file));
-      console.log(this.product.uploadedFiles);
     },
     removeFile(fileData) {
       const files = JSON.parse(fileData.xhr.response);

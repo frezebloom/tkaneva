@@ -56,7 +56,7 @@ module.exports = function(sequelize, Sequelize) {
       notEmpty: true
     },
 
-    images: {
+    uploads_id: {
       type: Sequelize.TEXT,
       notEmpty: true
     },

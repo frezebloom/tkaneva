@@ -54,15 +54,18 @@ module.exports = {
 
     const publicPath = path.join(__dirname, "/../../public/images/products");
 
-    Product.count()
-      .then(count => {
-        return `${category_id}${brand_id}${color_id}${count}`;
-      })
+    // Product.count()
+    // .then(count => {
+    //   console.log(Product.primaryKeys);
+    //   return `${category_id}${brand_id}${color_id}${count}`;
+    // })
+    Product.max("product_id", {})
       .then(article => {
+        console.log(article);
         return transferImages(article);
       })
-      .then(({ article, images }) => {
-        return createProduct(article, images);
+      .then(({ article, uploads_id }) => {
+        return createProduct(article, uploads_id);
       })
       .catch(error => {
         console.log(error);
@@ -71,7 +74,8 @@ module.exports = {
 
     function transferImages(article) {
       if (uploadedFiles.length === 0) {
-        return article;
+        const uploads_id = "";
+        return { article, uploads_id };
       }
       const dir = `${publicPath}/${article}`;
 
@@ -97,9 +101,9 @@ module.exports = {
               });
           }
         });
-
-        const images = uploadedFiles.map(file => `${dir}/${file.fileName}`);
-        return { article, images };
+        const uploads_id = JSON.stringify(uploadedFiles.map(file => file.id));
+        console.log();
+        return { article, uploads_id };
       } catch (error) {
         console.error(error);
         res.status(404).send("Invalid request " + error);
@@ -126,13 +130,7 @@ module.exports = {
       });
     }
 
-    function createProduct(article, imagePaths) {
-      let images = "";
-      imagePaths.forEach((path, index, arr) => {
-        const separator = arr.length !== index + 1 ? "," : "";
-        images += path.split("public/")[1] + separator;
-      });
-
+    function createProduct(article, uploads_id) {
       return Product.create({
         article,
         name,
@@ -144,7 +142,7 @@ module.exports = {
         density,
         price,
         discount,
-        images,
+        uploads_id,
         brand_id,
         category_id,
         color_id,
