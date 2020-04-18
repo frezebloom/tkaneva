@@ -279,7 +279,7 @@ export default {
       }
     };
   },
-  updated() {
+  mounted() {
     if (this.state.product_id && this.state.uploads_id) {
       const uploadsId = JSON.parse(this.state.uploads_id);
       token
@@ -288,8 +288,25 @@ export default {
           services
             .get("/api/upload/get", token, uploadsId)
             .then(uploads => {
-              // this.colors = colors.data;
-              console.log(uploads);
+              const {
+                category_id,
+                brand_id,
+                color_id,
+                product_id
+              } = this.state;
+
+              const article = `${category_id}${brand_id}${color_id}${product_id}`;
+
+              uploads.data.forEach(item => {
+                const file = {
+                  size: item.size,
+                  name: item.original_name
+                };
+
+                const url = `http://${window.location.hostname}:3000/images/products/${article}/${item.name}`;
+
+                this.$refs.myVueDropzone.manuallyAddFile(file, url);
+              });
             })
             .catch(error => {
               console.log(`ProductForm-Upload-1  ${error}`);
@@ -309,12 +326,6 @@ export default {
           );
         });
     }
-    // var file = { size: 123, name: "Icon", type: "image/png" };
-    // this.state.images.split(",").forEach(path => {
-    //   const url = `http://${window.location.hostname}:3000/${path}`;
-    //   console.log(url);
-    //   this.$refs.myVueDropzone.manuallyAddFile(file, url);
-    // });
   },
   methods: {
     inputHandler(event, params) {
