@@ -2,12 +2,29 @@ const path = require("path");
 const multer = require("multer");
 const sharp = require("sharp");
 const mime = require("mime-types");
+const url = require("url");
 const uuid = require("uuid/v1");
 const db = require("../../models/index");
 
 const Upload = db.upload;
 
 module.exports = {
+  get: (req, res) => {
+    const query = url.parse(req.url, true).query.payload;
+    const params = JSON.parse(query);
+    Upload.findAll({
+      where: {
+        upload_id: params
+      }
+    })
+      .then(uploads => {
+        res.status(200).json(uploads);
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(404).send("Invalid request" + error);
+      });
+  },
   upload: (req, res, next) => {
     const imagePath = path.join(__dirname, "/../../tmp");
 

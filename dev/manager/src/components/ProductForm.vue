@@ -279,11 +279,35 @@ export default {
       }
     };
   },
-  mounted() {
+  updated() {
     if (this.state.product_id && this.state.uploads_id) {
-      const id = JSON.parse(this.state.uploads_id);
-
-      console.log(id);
+      const uploadsId = JSON.parse(this.state.uploads_id);
+      token
+        .checkToken()
+        .then(token => {
+          services
+            .get("/api/upload/get", token, uploadsId)
+            .then(uploads => {
+              // this.colors = colors.data;
+              console.log(uploads);
+            })
+            .catch(error => {
+              console.log(`ProductForm-Upload-1  ${error}`);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+            });
+        })
+        .catch(error => {
+          console.log(`ProductForm-Upload-1  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось связаться с сервером. Обратитесь к администратору",
+            "danger"
+          );
+        });
     }
     // var file = { size: 123, name: "Icon", type: "image/png" };
     // this.state.images.split(",").forEach(path => {

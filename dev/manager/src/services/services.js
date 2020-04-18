@@ -1,8 +1,11 @@
 import api from "@/services/api";
 
 export default {
-  get(path, token) {
-    return api(token.id, token.accessToken).get(path);
+  get(path, token, data) {
+    const payload = data ? data : undefined;
+    return api(token.id, token.accessToken).get(path, {
+      params: { payload: JSON.stringify(payload) }
+    });
   },
   create(path, payload, token) {
     return api(token.id, token.accessToken).post(path, {

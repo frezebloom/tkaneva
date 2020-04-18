@@ -1,6 +1,7 @@
 const db = require("../../models/index");
 const path = require("path");
 const fs = require("fs");
+const _ = require("lodash");
 
 const Product = db.product;
 const Category = db.category;
@@ -54,14 +55,10 @@ module.exports = {
 
     const publicPath = path.join(__dirname, "/../../public/images/products");
 
-    // Product.count()
-    // .then(count => {
-    //   console.log(Product.primaryKeys);
-    //   return `${category_id}${brand_id}${color_id}${count}`;
-    // })
     Product.max("product_id", {})
-      .then(article => {
-        console.log(article);
+      .then(maxId => {
+        const id = _.isNaN(maxId) ? 0 : maxId + 1;
+        const article = `${category_id}${brand_id}${color_id}${id}`;
         return transferImages(article);
       })
       .then(({ article, uploads_id }) => {
@@ -102,7 +99,6 @@ module.exports = {
           }
         });
         const uploads_id = JSON.stringify(uploadedFiles.map(file => file.id));
-        console.log();
         return { article, uploads_id };
       } catch (error) {
         console.error(error);
