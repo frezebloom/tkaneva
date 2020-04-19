@@ -295,10 +295,13 @@ export default {
                 product_id
               } = this.state;
 
+              this.product.uploadedFiles = uploads.data;
+
               const article = `${category_id}${brand_id}${color_id}${product_id}`;
 
               uploads.data.forEach(item => {
                 const file = {
+                  id: item.upload_id,
                   size: item.size,
                   name: item.original_name
                 };
@@ -435,11 +438,16 @@ export default {
       files.forEach(file => this.product.uploadedFiles.push(file));
     },
     removeFile(fileData) {
-      const files = JSON.parse(fileData.xhr.response);
+      let files = fileData.xhr ? JSON.parse(fileData.xhr.response) : fileData;
+
+      if (!Array.isArray(files)) {
+        files = new Array(files);
+      }
+
       files.forEach(
         file =>
           (this.product.uploadedFiles = this.product.uploadedFiles.filter(
-            uploadedFile => file.fileName !== uploadedFile.fileName
+            uploadedFile => file.id !== uploadedFile.id
           ))
       );
     }
