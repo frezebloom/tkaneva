@@ -251,9 +251,9 @@ export default {
         density: this.state.density || "",
         price: this.state.price || "",
         discount: this.state.discount || "0",
-        uploads_id: this.state.uploads_id ? this.state.uploads_id : [],
         status: this.state.status || "Вкл",
-        uploadedFiles: []
+        uploads_id: this.state.uploads_id ? this.state.uploads_id : [],
+        uploadedFiles: this.state.uploadedFiles ? this.state.uploadedFiles : []
       },
       fieldsIsRequired: [
         "name",
@@ -295,7 +295,7 @@ export default {
                 product_id
               } = this.state;
 
-              this.product.uploadedFiles = uploads.data;
+              this.state.uploadedFiles = uploads.data;
 
               const article = `${category_id}${brand_id}${color_id}${product_id}`;
 
@@ -434,8 +434,12 @@ export default {
         });
     },
     uploadedFile(fileData) {
+      const state = !this.state.product_id
+        ? this.product.uploadedFiles
+        : this.state.uploadedFiles;
+
       const files = JSON.parse(fileData.xhr.response);
-      files.forEach(file => this.product.uploadedFiles.push(file));
+      files.forEach(file => state.push(file));
     },
     removeFile(fileData) {
       let files = fileData.xhr ? JSON.parse(fileData.xhr.response) : fileData;
@@ -444,12 +448,17 @@ export default {
         files = new Array(files);
       }
 
-      files.forEach(
-        file =>
-          (this.product.uploadedFiles = this.product.uploadedFiles.filter(
+      files.forEach(file => {
+        if (!this.state.product_id) {
+          this.product.uploadedFiles = this.product.uploadedFiles.filter(
             uploadedFile => file.id !== uploadedFile.id
-          ))
-      );
+          );
+        } else {
+          this.state.uploadedFiles = this.state.uploadedFiles.filter(
+            uploadedFile => file.id !== uploadedFile.upload_id
+          );
+        }
+      });
     }
   }
 };

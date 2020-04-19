@@ -36,7 +36,8 @@ export default {
         density: "",
         price: "",
         discount: "",
-        status: ""
+        status: "",
+        uploadedFiles: []
       },
       products: [],
       categories: [],
