@@ -294,14 +294,21 @@ export default {
                 color_id,
                 product_id
               } = this.state;
+              this.state.uploadedFiles = uploads.data.map(upload => {
+                const newObject = Object.assign(upload, {
+                  id: upload.upload_id
+                });
+                delete newObject.upload_id;
+                return newObject;
+              });
 
-              this.state.uploadedFiles = uploads.data;
+              console.log(this.state.uploadedFiles);
 
               const article = `${category_id}${brand_id}${color_id}${product_id}`;
 
               uploads.data.forEach(item => {
                 const file = {
-                  id: item.upload_id,
+                  id: item.id,
                   size: item.size,
                   name: item.original_name
                 };
@@ -455,7 +462,7 @@ export default {
           );
         } else {
           this.state.uploadedFiles = this.state.uploadedFiles.filter(
-            uploadedFile => file.id !== uploadedFile.upload_id
+            uploadedFile => file.id !== uploadedFile.id
           );
         }
       });
