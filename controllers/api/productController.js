@@ -8,28 +8,30 @@ const Category = db.category;
 const Brand = db.brand;
 const Color = db.color;
 
+const publicPath = path.join(__dirname, "/../../public/images/products");
+
 module.exports = {
   get(req, res) {
     Product.findAll({
       include: [
         {
-          model: Category
+          model: Category,
         },
         {
-          model: Brand
+          model: Brand,
         },
         {
-          model: Color
-        }
-      ]
+          model: Color,
+        },
+      ],
     })
-      .then(products => {
+      .then((products) => {
         return products;
       })
-      .then(products => {
+      .then((products) => {
         res.status(200).json(products);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
@@ -50,13 +52,11 @@ module.exports = {
       category_id,
       color_id,
       uploadedFiles,
-      status
+      status,
     } = req.body.payload;
 
-    const publicPath = path.join(__dirname, "/../../public/images/products");
-
     Product.max("product_id", {})
-      .then(maxId => {
+      .then((maxId) => {
         const id = _.isNaN(maxId) ? 0 : maxId + 1;
         const article = `${category_id}${brand_id}${color_id}${id}`;
         return transferImages(article);
@@ -64,7 +64,7 @@ module.exports = {
       .then(({ article, uploads_id }) => {
         return createProduct(article, uploads_id);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
@@ -77,12 +77,12 @@ module.exports = {
       const dir = `${publicPath}/${article}`;
 
       try {
-        fs.mkdir(dir, function(error) {
+        fs.mkdir(dir, function (error) {
           if (error) {
             console.log("Failed to create directory", error);
             res.status(404).send("Invalid request " + error);
           } else {
-            const promises = uploadedFiles.map(file => {
+            const promises = uploadedFiles.map((file) => {
               const source = file.path;
               const destination = `${dir}/${file.fileName}`;
               return copyFile(source, destination);
@@ -92,13 +92,13 @@ module.exports = {
               .then(() => {
                 clearTmp(uploadedFiles);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
                 res.status(404).send("Invalid request " + error);
               });
           }
         });
-        const uploads_id = JSON.stringify(uploadedFiles.map(file => file.id));
+        const uploads_id = JSON.stringify(uploadedFiles.map((file) => file.id));
         return { article, uploads_id };
       } catch (error) {
         console.error(error);
@@ -118,8 +118,8 @@ module.exports = {
     }
 
     function clearTmp(files) {
-      files.forEach(function({ path }) {
-        fs.unlink(path, error => {
+      files.forEach(function ({ path }) {
+        fs.unlink(path, (error) => {
           if (error) throw error;
           console.log("File deleted!");
         });
@@ -142,12 +142,12 @@ module.exports = {
         brand_id,
         category_id,
         color_id,
-        status
+        status,
       })
         .then(() => {
           res.status(201).send("Ok");
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           res.status(404).send("Invalid request " + error);
         });
@@ -170,8 +170,23 @@ module.exports = {
       brand_id,
       category_id,
       color_id,
-      status
+      uploadedFiles,
+      status,
     } = req.body.payload;
+
+    Product.findAll({
+      where: {
+        product_id: uploadedFiles,
+      },
+    })
+      .then((uploads) => {
+        res.status(200).json(uploads);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(404).send("Invalid request" + error);
+      });
+
     Product.update(
       {
         product_id,
@@ -188,16 +203,16 @@ module.exports = {
         brand_id,
         category_id,
         color_id,
-        status
+        status,
       },
       {
-        where: { product_id }
+        where: { product_id },
       }
     )
       .then(() => {
         res.status(201).send("Ok");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
@@ -206,15 +221,15 @@ module.exports = {
   delete(req, res) {
     Product.destroy({
       where: {
-        product_id: req.body.payload
-      }
+        product_id: req.body.payload,
+      },
     })
       .then(() => {
         res.status(200).send("Ok");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
-  }
+  },
 };
