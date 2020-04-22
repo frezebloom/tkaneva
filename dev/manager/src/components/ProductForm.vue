@@ -292,8 +292,10 @@ export default {
                 category_id,
                 brand_id,
                 color_id,
-                product_id
+                product_id,
+                article
               } = this.state;
+
               this.state.uploadedFiles = uploads.data.map(upload => {
                 const newObject = Object.assign(upload, {
                   id: upload.upload_id
@@ -301,10 +303,6 @@ export default {
                 delete newObject.upload_id;
                 return newObject;
               });
-
-              console.log(this.state.uploadedFiles);
-
-              const article = `${category_id}${brand_id}${color_id}${product_id}`;
 
               uploads.data.forEach(item => {
                 const file = {

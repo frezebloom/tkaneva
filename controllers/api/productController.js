@@ -8,8 +8,6 @@ const Category = db.category;
 const Brand = db.brand;
 const Color = db.color;
 
-const publicPath = path.join(__dirname, "/../../public/images/products");
-
 module.exports = {
   get(req, res) {
     Product.findAll({
@@ -54,6 +52,8 @@ module.exports = {
       uploadedFiles,
       status,
     } = req.body.payload;
+
+    const publicPath = path.join(__dirname, "/../../public/images/products");
 
     Product.max("product_id", {})
       .then((maxId) => {
@@ -174,13 +174,19 @@ module.exports = {
       status,
     } = req.body.payload;
 
-    Product.findAll({
+    Product.findOne({
       where: {
-        product_id: uploadedFiles,
+        product_id,
       },
     })
-      .then((uploads) => {
-        res.status(200).json(uploads);
+      .then((product) => {
+        const { uploads_id } = product.dataValues;
+
+        const newUploads = uploadedFiles
+          .map((file) => file.id)
+          .filter((id) => !uploads_id.includes(id));
+
+        console.log(newUploads);
       })
       .catch((error) => {
         console.log(error);
