@@ -8,6 +8,28 @@ const Category = db.category;
 const Brand = db.brand;
 const Color = db.color;
 
+const publicPath = path.join(__dirname, "/../../public/images/products");
+
+function copyFile(source, destination) {
+  const input = fs.createReadStream(source);
+  const output = fs.createWriteStream(destination);
+  return new Promise((resolve, reject) => {
+    output.on("error", reject);
+    input.on("error", reject);
+    input.on("end", resolve);
+    input.pipe(output);
+  });
+}
+
+function clearTmp(files) {
+  files.forEach(function ({ path }) {
+    fs.unlink(path, (error) => {
+      if (error) throw error;
+      console.log("File deleted!");
+    });
+  });
+}
+
 module.exports = {
   get(req, res) {
     Product.findAll({
@@ -53,13 +75,11 @@ module.exports = {
       status,
     } = req.body.payload;
 
-    const publicPath = path.join(__dirname, "/../../public/images/products");
-
     Product.max("product_id", {})
       .then((maxId) => {
         const id = _.isNaN(maxId) ? 0 : maxId + 1;
         const article = `${category_id}${brand_id}${color_id}${id}`;
-        return transferImages(article);
+        return transferImages(article, uploadedFiles);
       })
       .then(({ article, uploads_id }) => {
         return createProduct(article, uploads_id);
@@ -69,11 +89,12 @@ module.exports = {
         res.status(404).send("Invalid request " + error);
       });
 
-    function transferImages(article) {
+    function transferImages(article, uploadedFiles) {
       if (uploadedFiles.length === 0) {
-        const uploads_id = "";
-        return { article, uploads_id };
+        return { article };
       }
+
+      const uploads_id = JSON.stringify(uploadedFiles.map((file) => file.id));
       const dir = `${publicPath}/${article}`;
 
       try {
@@ -82,11 +103,9 @@ module.exports = {
             console.log("Failed to create directory", error);
             res.status(404).send("Invalid request " + error);
           } else {
-            const promises = uploadedFiles.map((file) => {
-              const source = file.path;
-              const destination = `${dir}/${file.fileName}`;
-              return copyFile(source, destination);
-            });
+            const promises = uploadedFiles.map((file) =>
+              copyFile(file.path, `${dir}/${file.fileName}`)
+            );
 
             Promise.all(promises)
               .then(() => {
@@ -98,7 +117,7 @@ module.exports = {
               });
           }
         });
-        const uploads_id = JSON.stringify(uploadedFiles.map((file) => file.id));
+
         return { article, uploads_id };
       } catch (error) {
         console.error(error);
@@ -106,27 +125,7 @@ module.exports = {
       }
     }
 
-    function copyFile(source, destination) {
-      const input = fs.createReadStream(source);
-      const output = fs.createWriteStream(destination);
-      return new Promise((resolve, reject) => {
-        output.on("error", reject);
-        input.on("error", reject);
-        input.on("end", resolve);
-        input.pipe(output);
-      });
-    }
-
-    function clearTmp(files) {
-      files.forEach(function ({ path }) {
-        fs.unlink(path, (error) => {
-          if (error) throw error;
-          console.log("File deleted!");
-        });
-      });
-    }
-
-    function createProduct(article, uploads_id) {
+    function createProduct(article, uploads_id = "") {
       return Product.create({
         article,
         name,
@@ -182,11 +181,17 @@ module.exports = {
       .then((product) => {
         const { uploads_id } = product.dataValues;
 
-        const newUploads = uploadedFiles
-          .map((file) => file.id)
-          .filter((id) => !uploads_id.includes(id));
+        const uploadedFilesId = uploadedFiles.map((file) => file.id);
 
-        console.log(newUploads);
+        const deletedFiles = JSON.parse(uploads_id).filter(
+          (id) => !uploadedFilesId.includes(id)
+        );
+
+        const newUploadFiles = uploadedFiles.filter(
+          (file) => !uploads_id.includes(file.id)
+        );
+
+        console.log(deletedFiles);
       })
       .catch((error) => {
         console.log(error);
