@@ -183,8 +183,14 @@ module.exports = {
 
         const dir = `${publicPath}/${article}`;
 
-        fs.stat(dir, (error) => {
-          if (!error) {
+        fs.stat(dir, (error, stats) => {
+          if (error && error.code === "ENOENT") {
+            return resolve(false);
+          } else if (error) {
+            console.log(error);
+            res.status(404).send("Invalid request " + error);
+          }
+          if (stats.isDirectory()) {
             const promises = newUploadFiles.map((file) =>
               copyFile(file.path, `${dir}/${file.fileName}`)
             );
