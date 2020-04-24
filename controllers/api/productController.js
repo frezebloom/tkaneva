@@ -7,6 +7,7 @@ const Product = db.product;
 const Category = db.category;
 const Brand = db.brand;
 const Color = db.color;
+const Upload = db.upload;
 
 const publicPath = path.join(__dirname, "/../../public/images/products");
 
@@ -28,6 +29,25 @@ function clearDir(files) {
       console.log("File deleted!");
     });
   });
+}
+
+function clearFiles(filesId, directory) {
+  Upload.findAll({
+    where: {
+      upload_id: filesId,
+    },
+  })
+    .then((uploads) => {
+      const filesPath = uploads.map(({ name }) => {
+        return { path: `${directory}/${name}` };
+      });
+
+      clearDir(filesPath);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).send("Invalid request" + error);
+    });
 }
 
 module.exports = {
@@ -176,12 +196,21 @@ module.exports = {
     })
       .then((product) => {
         const { uploads_id } = product.dataValues;
+        const uploadsId = JSON.parse(uploads_id);
 
         const newUploadFiles = uploadedFiles.filter(
           (file) => !uploads_id.includes(file.id)
         );
 
+        const deletedFiles = uploadsId.filter(
+          (id) => !uploadedFiles.some((file) => file.id === id)
+        );
+
         const dir = `${publicPath}/${article}`;
+
+        const promises = newUploadFiles.map((file) =>
+          copyFile(file.path, `${dir}/${file.fileName}`)
+        );
 
         fs.stat(dir, (error, stats) => {
           if (error && error.code === "ENOENT") {
@@ -190,13 +219,13 @@ module.exports = {
                 console.log("Failed to create directory", error);
                 res.status(404).send("Invalid request " + error);
               } else {
-                const promises = newUploadFiles.map((file) =>
-                  copyFile(file.path, `${dir}/${file.fileName}`)
-                );
-
                 Promise.all(promises)
                   .then(() => {
                     clearDir(newUploadFiles);
+
+                    if (deletedFiles.length > 0) {
+                      clearFiles(deletedFiles, dir);
+                    }
                   })
                   .catch((error) => {
                     console.log(error);
@@ -208,13 +237,13 @@ module.exports = {
             console.log(error);
             res.status(404).send("Invalid request " + error);
           } else if (stats.isDirectory()) {
-            const promises = newUploadFiles.map((file) =>
-              copyFile(file.path, `${dir}/${file.fileName}`)
-            );
-
             Promise.all(promises)
               .then(() => {
                 clearDir(newUploadFiles);
+
+                if (deletedFiles.length > 0) {
+                  clearFiles(deletedFiles, dir);
+                }
               })
               .catch((error) => {
                 console.log(error);
@@ -223,49 +252,48 @@ module.exports = {
           }
         });
 
-        // const uploadedFiles = uploadedFiles.map((file) => file.id);
-        // const deletedFiles = JSON.parse(uploads_id).filter(
-        //   (id) => !uploadedFilesId.includes(id)
-        // );
+        return JSON.stringify(uploadedFiles.map((file) => file.id));
       })
-      // .then((isDir) => {
-      //   console.log(isDir);
-      //   // console.log(newUploadFiles);
-      // })
+      .then((uploads_id) => {
+        return updateProduct(uploads_id);
+      })
       .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request" + error);
       });
 
-    Product.update(
-      {
-        product_id,
-        article,
-        name,
-        description,
-        balance,
-        structure,
-        width,
-        length,
-        density,
-        price,
-        discount,
-        brand_id,
-        category_id,
-        color_id,
-        status,
-      },
-      {
-        where: { product_id },
-      }
-    )
-      .then(() => {
-        res.status(201).send("Ok");
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(404).send("Invalid request " + error);
-      });
+    function updateProduct(uploads_id) {
+      return Product.update(
+        {
+          product_id,
+          article,
+          name,
+          description,
+          balance,
+          structure,
+          width,
+          length,
+          density,
+          price,
+          discount,
+          uploads_id,
+          brand_id,
+          category_id,
+          color_id,
+          status,
+        },
+        {
+          where: { product_id },
+        }
+      )
+        .then(() => {
+          res.status(201).send("Ok");
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(404).send("Invalid request " + error);
+        });
+    }
   },
 
   delete(req, res) {
