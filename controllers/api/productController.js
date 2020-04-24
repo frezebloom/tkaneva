@@ -21,7 +21,7 @@ function copyFile(source, destination) {
   });
 }
 
-function clearTmp(files) {
+function clearDir(files) {
   files.forEach(function ({ path }) {
     fs.unlink(path, (error) => {
       if (error) throw error;
@@ -99,7 +99,7 @@ module.exports = {
 
               Promise.all(promises)
                 .then(() => {
-                  clearTmp(uploadedFiles);
+                  clearDir(uploadedFiles);
                 })
                 .catch((error) => {
                   console.log(error);
@@ -185,19 +185,36 @@ module.exports = {
 
         fs.stat(dir, (error, stats) => {
           if (error && error.code === "ENOENT") {
-            return resolve(false);
+            fs.mkdir(dir, function (error) {
+              if (error) {
+                console.log("Failed to create directory", error);
+                res.status(404).send("Invalid request " + error);
+              } else {
+                const promises = newUploadFiles.map((file) =>
+                  copyFile(file.path, `${dir}/${file.fileName}`)
+                );
+
+                Promise.all(promises)
+                  .then(() => {
+                    clearDir(newUploadFiles);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    res.status(404).send("Invalid request " + error);
+                  });
+              }
+            });
           } else if (error) {
             console.log(error);
             res.status(404).send("Invalid request " + error);
-          }
-          if (stats.isDirectory()) {
+          } else if (stats.isDirectory()) {
             const promises = newUploadFiles.map((file) =>
               copyFile(file.path, `${dir}/${file.fileName}`)
             );
 
             Promise.all(promises)
               .then(() => {
-                clearTmp(newUploadFiles);
+                clearDir(newUploadFiles);
               })
               .catch((error) => {
                 console.log(error);
