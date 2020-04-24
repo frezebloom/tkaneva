@@ -79,7 +79,39 @@ module.exports = {
       .then((maxId) => {
         const id = _.isNaN(maxId) ? 0 : maxId + 1;
         const article = `${category_id}${brand_id}${color_id}${id}`;
-        return transferImages(article, uploadedFiles);
+
+        if (uploadedFiles.length === 0) {
+          return { article };
+        }
+
+        const uploads_id = JSON.stringify(uploadedFiles.map((file) => file.id));
+        const dir = `${publicPath}/${article}`;
+
+        try {
+          fs.mkdir(dir, function (error) {
+            if (error) {
+              console.log("Failed to create directory", error);
+              res.status(404).send("Invalid request " + error);
+            } else {
+              const promises = uploadedFiles.map((file) =>
+                copyFile(file.path, `${dir}/${file.fileName}`)
+              );
+
+              Promise.all(promises)
+                .then(() => {
+                  clearTmp(uploadedFiles);
+                })
+                .catch((error) => {
+                  console.log(error);
+                  res.status(404).send("Invalid request " + error);
+                });
+            }
+          });
+          return { article, uploads_id };
+        } catch (error) {
+          console.error(error);
+          res.status(404).send("Invalid request " + error);
+        }
       })
       .then(({ article, uploads_id }) => {
         return createProduct(article, uploads_id);
@@ -88,42 +120,6 @@ module.exports = {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
-
-    function transferImages(article, uploadedFiles) {
-      if (uploadedFiles.length === 0) {
-        return { article };
-      }
-
-      const uploads_id = JSON.stringify(uploadedFiles.map((file) => file.id));
-      const dir = `${publicPath}/${article}`;
-
-      try {
-        fs.mkdir(dir, function (error) {
-          if (error) {
-            console.log("Failed to create directory", error);
-            res.status(404).send("Invalid request " + error);
-          } else {
-            const promises = uploadedFiles.map((file) =>
-              copyFile(file.path, `${dir}/${file.fileName}`)
-            );
-
-            Promise.all(promises)
-              .then(() => {
-                clearTmp(uploadedFiles);
-              })
-              .catch((error) => {
-                console.log(error);
-                res.status(404).send("Invalid request " + error);
-              });
-          }
-        });
-
-        return { article, uploads_id };
-      } catch (error) {
-        console.error(error);
-        res.status(404).send("Invalid request " + error);
-      }
-    }
 
     function createProduct(article, uploads_id = "") {
       return Product.create({
@@ -181,18 +177,38 @@ module.exports = {
       .then((product) => {
         const { uploads_id } = product.dataValues;
 
-        const uploadedFilesId = uploadedFiles.map((file) => file.id);
-
-        const deletedFiles = JSON.parse(uploads_id).filter(
-          (id) => !uploadedFilesId.includes(id)
-        );
-
         const newUploadFiles = uploadedFiles.filter(
           (file) => !uploads_id.includes(file.id)
         );
 
-        console.log(deletedFiles);
+        const dir = `${publicPath}/${article}`;
+
+        fs.stat(dir, (error) => {
+          if (!error) {
+            const promises = newUploadFiles.map((file) =>
+              copyFile(file.path, `${dir}/${file.fileName}`)
+            );
+
+            Promise.all(promises)
+              .then(() => {
+                clearTmp(newUploadFiles);
+              })
+              .catch((error) => {
+                console.log(error);
+                res.status(404).send("Invalid request " + error);
+              });
+          }
+        });
+
+        // const uploadedFiles = uploadedFiles.map((file) => file.id);
+        // const deletedFiles = JSON.parse(uploads_id).filter(
+        //   (id) => !uploadedFilesId.includes(id)
+        // );
       })
+      // .then((isDir) => {
+      //   console.log(isDir);
+      //   // console.log(newUploadFiles);
+      // })
       .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request" + error);
