@@ -427,14 +427,6 @@ export default {
           services
             .get("/api/upload/get", token, uploadsId)
             .then(uploads => {
-              const {
-                category_id,
-                brand_id,
-                color_id,
-                product_id,
-                article
-              } = this.state;
-
               this.state.uploadedFiles = uploads.data.map(upload => {
                 const newObject = Object.assign(upload, {
                   id: upload.upload_id
@@ -450,7 +442,7 @@ export default {
                   name: item.original_name
                 };
 
-                const url = `http://${window.location.hostname}:3000/images/products/${article}/${item.name}`;
+                const url = `http://${window.location.hostname}:3000/images/products/${this.state.article}/${item.name}`;
 
                 this.$refs.myVueDropzone.manuallyAddFile(file, url);
               });
