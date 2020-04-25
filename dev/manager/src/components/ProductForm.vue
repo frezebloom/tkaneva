@@ -280,59 +280,22 @@ export default {
     };
   },
   mounted() {
-    if (this.state.product_id && this.state.uploads_id) {
-      const uploadsId = JSON.parse(this.state.uploads_id);
-      token
-        .checkToken()
-        .then(token => {
-          services
-            .get("/api/upload/get", token, uploadsId)
-            .then(uploads => {
-              const {
-                category_id,
-                brand_id,
-                color_id,
-                product_id,
-                article
-              } = this.state;
+    // if (this.state.product_id && this.state.uploads_id) {
+    //   console.log(this.$refs.myVueDropzone.dropzone.files);
+    // }
+  },
 
-              this.state.uploadedFiles = uploads.data.map(upload => {
-                const newObject = Object.assign(upload, {
-                  id: upload.upload_id
-                });
-                delete newObject.upload_id;
-                return newObject;
-              });
+  updated() {
+    // console.log(this.$refs.myVueDropzone);
+    // const a = this.$refs.myVueDropzone.getAddedFiles();
+    // console.log(this.$refs.myVueDropzone.dropzone.files.length);
 
-              uploads.data.forEach(item => {
-                const file = {
-                  id: item.id,
-                  size: item.size,
-                  name: item.original_name
-                };
-
-                const url = `http://${window.location.hostname}:3000/images/products/${article}/${item.name}`;
-
-                this.$refs.myVueDropzone.manuallyAddFile(file, url);
-              });
-            })
-            .catch(error => {
-              console.log(`ProductForm-Upload-1  ${error}`);
-              this.showCornerDialog(
-                "Ошибка",
-                "Не удалось связаться с сервером. Обратитесь к администратору",
-                "danger"
-              );
-            });
-        })
-        .catch(error => {
-          console.log(`ProductForm-Upload-1  ${error}`);
-          this.showCornerDialog(
-            "Ошибка",
-            "Не удалось связаться с сервером. Обратитесь к администратору",
-            "danger"
-          );
-        });
+    if (
+      this.$refs.myVueDropzone.dropzone.files.length === 0 &&
+      this.state.product_id &&
+      this.state.uploads_id
+    ) {
+      this.getUploadFiles();
     }
   },
   methods: {
@@ -464,6 +427,60 @@ export default {
           );
         }
       });
+    },
+    getUploadFiles() {
+      const uploadsId = JSON.parse(this.state.uploads_id);
+      token
+        .checkToken()
+        .then(token => {
+          services
+            .get("/api/upload/get", token, uploadsId)
+            .then(uploads => {
+              const {
+                category_id,
+                brand_id,
+                color_id,
+                product_id,
+                article
+              } = this.state;
+
+              this.state.uploadedFiles = uploads.data.map(upload => {
+                const newObject = Object.assign(upload, {
+                  id: upload.upload_id
+                });
+                delete newObject.upload_id;
+                return newObject;
+              });
+
+              uploads.data.forEach(item => {
+                const file = {
+                  id: item.id,
+                  size: item.size,
+                  name: item.original_name
+                };
+
+                const url = `http://${window.location.hostname}:3000/images/products/${article}/${item.name}`;
+
+                this.$refs.myVueDropzone.manuallyAddFile(file, url);
+              });
+            })
+            .catch(error => {
+              console.log(`ProductForm-Upload-1  ${error}`);
+              this.showCornerDialog(
+                "Ошибка",
+                "Не удалось связаться с сервером. Обратитесь к администратору",
+                "danger"
+              );
+            });
+        })
+        .catch(error => {
+          console.log(`ProductForm-Upload-1  ${error}`);
+          this.showCornerDialog(
+            "Ошибка",
+            "Не удалось связаться с сервером. Обратитесь к администратору",
+            "danger"
+          );
+        });
     }
   }
 };
