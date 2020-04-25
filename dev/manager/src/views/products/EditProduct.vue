@@ -41,16 +41,14 @@ export default {
     token
       .checkToken()
       .then(token => {
-        services.get("/api/category/get", token).then(categories => {
-          this.categories = categories.data;
-        });
-
-        services.get("/api/brand/get", token).then(brands => {
-          this.brands = brands.data;
-        });
-
-        services.get("/api/color/get", token).then(colors => {
-          this.colors = colors.data;
+        Promise.all([
+          services.get("/api/category/get", token),
+          services.get("/api/brand/get", token),
+          services.get("/api/color/get", token)
+        ]).then(values => {
+          this.categories = values[0].data;
+          this.brands = values[1].data;
+          this.colors = values[2].data;
         });
       })
       .catch(error => {

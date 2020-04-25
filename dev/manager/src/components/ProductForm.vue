@@ -279,22 +279,9 @@ export default {
       }
     };
   },
-  mounted() {
-    // if (this.state.product_id && this.state.uploads_id) {
-    //   console.log(this.$refs.myVueDropzone.dropzone.files);
-    // }
-  },
-
-  updated() {
-    // console.log(this.$refs.myVueDropzone);
-    // const a = this.$refs.myVueDropzone.getAddedFiles();
-    // console.log(this.$refs.myVueDropzone.dropzone.files.length);
-
-    if (
-      this.$refs.myVueDropzone.dropzone.files.length === 0 &&
-      this.state.product_id &&
-      this.state.uploads_id
-    ) {
+  beforeUpdate() {
+    if (this.state.product_id && this.state.uploads_id) {
+      this.$refs.myVueDropzone.removeAllFiles();
       this.getUploadFiles();
     }
   },
@@ -410,6 +397,10 @@ export default {
       files.forEach(file => state.push(file));
     },
     removeFile(fileData) {
+      if (!this.state.uploadedFiles) {
+        return false;
+      }
+
       let files = fileData.xhr ? JSON.parse(fileData.xhr.response) : fileData;
 
       if (!Array.isArray(files)) {
