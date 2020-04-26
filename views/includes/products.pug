@@ -1,63 +1,10 @@
-div(class="products")
-  img(class="products-img" src="/images/products/01081815-4-900x600.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") АТЛАС ШЕЛКОВЫЙ ЧЕРНЫЙ PRT1-A3
-  div(class="products-footer")
-    div(class="products-price") 1300 ₽
-    div(class="products-button") Купить
+each product in products
+  div(class="product")
+    img(class="product-img" src="/images/products/01081815-4-900x600.jpg", alt="Картинка отсутствует")
+    p(class="product-title")
+      a(href="#")=product.name
+    div(class="product-footer")
+      div(class="product-price")=product.price
+      div(class="product-button") Купить
+          
 
-div(class="products")
-  img(class="products-img" src="/images/products/13081801-4-900x600.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") ШЕРСТЯНАЯ ШАНЕЛЬ ФУКСИЯ PRT
-  div(class="products-footer")
-    div(class="products-price") 1500 ₽
-    div(class="products-button") Купить
-
-div(class="products")
-  img(class="products-img" src="/images/products/800042-15109242100.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") Мебельная Ткань Ekaterina
-  div(class="products-footer")
-    div(class="products-price") 790 ₽
-    div(class="products-button") Купить
-
-div(class="products")
-  img(class="products-img" src="/images/products/12-15047942280.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") Мебельная Ткань Scarlett
-  div(class="products-footer")
-    div(class="products-price") 690 ₽
-    div(class="products-button") Купить
-
-div(class="products")
-  img(class="products-img" src="/images/products/800212-15058355990.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") Мебельная Ткань Thomas Vichy
-  div(class="products-footer")
-    div(class="products-price") 550 ₽
-    div(class="products-button") Купить
-
-div(class="products")
-  img(class="products-img" src="/images/products/800255-15179989370.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") Мебельная Ткань Constancia
-  div(class="products-footer")
-    div(class="products-price") 350 ₽
-    div(class="products-button") Купить
-
-div(class="products")
-  img(class="products-img" src="/images/products/800282-15221272720.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") Мебельная Ткань Don Quixote
-  div(class="products-footer")
-    div(class="products-price") 440 ₽
-    div(class="products-button") Купить
-
-div(class="products")
-  img(class="products-img" src="/images/products/800271-15220717770.jpg", alt="Картинка отсутствует")
-  p(class="products-title")
-    a(href="#") Мебельная Ткань Cleopatra
-  div(class="products-footer")
-    div(class="products-price") 440 ₽
-    div(class="products-button") Купить

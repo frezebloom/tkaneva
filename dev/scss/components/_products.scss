@@ -1,4 +1,4 @@
-.products {
+.product {
   background: $whiteColor;
   border-radius: 2px;
   display: flex;
@@ -13,20 +13,20 @@
   background-color: #fafafa;
   border: 1px solid #d8d8d8;
 }
-.products:last-child {
+.product:last-child {
   margin-right: auto;
 }
-.products-img {
+.product-img {
   width: 100%;
   max-height: 150px;
 }
 
-.products-title a {
+.product-title a {
   text-decoration: none;
   color: #353c44;
 }
 
-.products-title {
+.product-title {
   text-align: center;
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
@@ -35,20 +35,20 @@
   margin: 10px;
 }
 
-.products-footer {
+.product-footer {
   display: flex;
   justify-content: space-around;
   margin-bottom: 30px;
 }
 
-.products-price {
+.product-price {
   font-size: 16px;
   font-weight: bold;
   color: #333333;
   line-height: 36px;
 }
 
-.products-button {
+.product-button {
   background-color: $greenColor;
   width: 110px;
   height: 33px;
@@ -70,11 +70,11 @@
   transition: 0.3s ease-out;
 }
 
-.products-button:hover {
+.product-button:hover {
   background-color: #54b47e;
 }
 
-.products-title a:hover {
+.product-title a:hover {
   color: #364a5d;
   text-decoration: underline;
 }
