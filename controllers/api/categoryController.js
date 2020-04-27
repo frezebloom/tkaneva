@@ -1,3 +1,4 @@
+const limax = require("limax");
 const db = require("../../models/index");
 
 const Category = db.category;
@@ -6,10 +7,10 @@ const Product = db.product;
 module.exports = {
   get(req, res) {
     Category.findAll()
-      .then(categories => {
+      .then((categories) => {
         res.status(200).json(categories);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request" + error);
       });
@@ -17,14 +18,17 @@ module.exports = {
 
   create(req, res) {
     const { name, status } = req.body.payload;
+    const slug = limax(name);
+
     Category.create({
       name,
-      status
+      slug,
+      status,
     })
       .then(() => {
         res.status(201).send("Ok");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request" + error);
       });
@@ -35,16 +39,16 @@ module.exports = {
     Category.update(
       {
         name,
-        status
+        status,
       },
       {
-        where: { category_id }
+        where: { category_id },
       }
     )
       .then(() => {
         res.status(201).send("Ok");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
@@ -53,16 +57,16 @@ module.exports = {
   delete(req, res) {
     Product.update(
       {
-        category_id: 1
+        category_id: 1,
       },
       {
-        where: { category_id: req.body.payload }
+        where: { category_id: req.body.payload },
       }
     )
       .then(() => {
         return destroy(req.body.payload);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         res.status(404).send("Invalid request " + error);
       });
@@ -70,16 +74,16 @@ module.exports = {
     function destroy(id) {
       return Category.destroy({
         where: {
-          category_id: id
-        }
+          category_id: id,
+        },
       })
         .then(() => {
           res.status(200).send("Ok");
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           res.status(404).send("Invalid request " + error);
         });
     }
-  }
+  },
 };

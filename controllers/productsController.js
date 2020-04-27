@@ -7,9 +7,6 @@ const Brand = db.brand;
 const Color = db.color;
 const Upload = db.upload;
 
-const publicPath = `${address.ip()}:${config.PORT}`;
-// `http://${window.location.hostname}:3000/api/upload/image`
-
 module.exports = {
   getProducts: function () {
     return Product.findAll({
@@ -48,7 +45,9 @@ module.exports = {
         .then((uploads) => {
           product.imagesPath = uploads.map(
             (upload) =>
-              `http://${publicPath}/images/products/${article}/${upload.name}`
+              `http://${address.ip()}:${
+                config.PORT
+              }/images/products/${article}/${upload.name}`
           );
           return product;
         })
@@ -58,7 +57,11 @@ module.exports = {
         });
     });
 
-    return Promise.all(uploadPromises).then((result) => result);
+    return Promise.all(uploadPromises)
+      .then((result) => result)
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   getCategories: function () {
@@ -66,10 +69,15 @@ module.exports = {
   },
 
   render: function (req, res) {
-    Promise.all([this.getProducts(), this.getCategories()]).then((values) => {
-      const products = values[0];
-      const categories = values[1].map((category) => category.dataValues);
-      res.render("index", { products, categories });
-    });
+    Promise.all([this.getProducts(), this.getCategories()])
+      .then((values) => {
+        const products = values[0];
+        const categories = values[1].map((category) => category.dataValues);
+        res.render("index", { products, categories });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(404).send("Invalid request" + error);
+      });
   },
 };
