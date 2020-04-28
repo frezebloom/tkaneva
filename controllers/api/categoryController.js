@@ -22,7 +22,6 @@ module.exports = {
 
     Category.create({
       name,
-      slug,
       status,
     })
       .then(() => {

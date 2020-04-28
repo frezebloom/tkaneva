@@ -11,10 +11,10 @@ module.exports = function (sequelize, Sequelize) {
       notEmpty: true,
     },
 
-    slug: {
-      type: Sequelize.STRING,
-      notEmpty: true,
-    },
+    // slug: {
+    //   type: Sequelize.STRING,
+    //   notEmpty: true,
+    // },
 
     status: {
       type: Sequelize.ENUM("Вкл", "Выкл"),
