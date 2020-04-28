@@ -1,0 +1,19 @@
+{
+  "titlePage": {
+    "brands": "Производители"
+  },
+  "tables": {
+    "columnsName": {
+      "number": "№",
+      "name": "Название",
+      "status": "Статус",
+      "empty": ""
+    }
+  },
+  "dialogs": {
+    "status": {
+      "error": "Ошибка"
+    },
+    "message": {}
+  }
+}
