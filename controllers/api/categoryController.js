@@ -22,6 +22,7 @@ module.exports = {
 
     Category.create({
       name,
+      slug,
       status,
     })
       .then(() => {
@@ -35,9 +36,12 @@ module.exports = {
 
   update(req, res) {
     const { category_id, name, status } = req.body.payload;
+    const slug = limax(name);
+
     Category.update(
       {
         name,
+        slug,
         status,
       },
       {
